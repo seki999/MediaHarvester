@@ -1,0 +1,917 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MediaHarvester 测试报告</title><style>body{font:15px/1.65 system-ui,sans-serif;max-width:1400px;margin:32px auto;padding:0 24px;color:#17243b;background:#f4f7fc}h1,h2{color:#12306a}table{border-collapse:collapse;width:100%;margin:20px 0;background:white}th,td{padding:10px;border:1px solid #dbe2ed;text-align:left;word-break:break-word}th{background:#e4edfa;cursor:pointer}pre{white-space:pre-wrap;word-break:break-word;background:white;padding:16px}details{padding:8px;border-bottom:1px solid #cad4e2}</style><body><h1>MediaHarvester 实际自动化验证</h1><p>2026-10-12T11:56:59.186054+09:00</p><p>原有基线 70/70；新增复现失败 24；已验证修复 13。</p><p>本地 {&#x27;PASS&#x27;: 208, &#x27;SKIPPED&#x27;: 2}；实际执行通过率 100.0%。公网完整下载 2/4；平台提取不计下载成功。</p><h2>环境和提交</h2><pre>{
+  &quot;date&quot;: &quot;2026-10-12T11:54:40.098488+09:00&quot;,
+  &quot;timezone&quot;: &quot;Asia/Tokyo&quot;,
+  &quot;python&quot;: &quot;3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]&quot;,
+  &quot;os&quot;: &quot;Windows-11-10.0.26200-SP0&quot;,
+  &quot;packages&quot;: {
+    &quot;PySide6&quot;: &quot;6.8.3&quot;,
+    &quot;yt-dlp&quot;: &quot;2026.8.19&quot;,
+    &quot;httpx&quot;: &quot;0.28.1&quot;,
+    &quot;curl-cffi&quot;: &quot;0.16.3&quot;,
+    &quot;playwright&quot;: &quot;1.63.0&quot;,
+    &quot;pytest&quot;: &quot;9.1.1&quot;,
+    &quot;pyinstaller&quot;: &quot;6.22.3&quot;,
+    &quot;ruff&quot;: &quot;0.17.0&quot;
+  },
+  &quot;tools&quot;: {
+    &quot;ffmpeg&quot;: {
+      &quot;path&quot;: &quot;C:\\Users\\seki9\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-full_build\\bin\\ffmpeg.EXE&quot;,
+      &quot;version&quot;: &quot;ffmpeg version 9.0.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers&quot;
+    },
+    &quot;ffprobe&quot;: {
+      &quot;path&quot;: &quot;C:\\Users\\seki9\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-full_build\\bin\\ffprobe.EXE&quot;,
+      &quot;version&quot;: &quot;ffprobe version 9.0.1-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers&quot;
+    },
+    &quot;aria2c&quot;: {
+      &quot;path&quot;: null
+    }
+  },
+  &quot;commit&quot;: &quot;5b6703841441e8815c1454bc21eae3662c99fc1d&quot;,
+  &quot;branch&quot;: &quot;codex/automation-validation&quot;
+}</pre><h2>协议与模块</h2><table><thead><tr><th data-col="0">分类 ↕</th><th data-col="1">PASS ↕</th><th data-col="2">FAIL ↕</th><th data-col="3">SKIPPED ↕</th><th data-col="4">执行通过率 ↕</th></tr></thead><tbody><tr><td>Cookie/认证</td><td>23</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>DASH</td><td>3</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>GUI</td><td>1</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>HLS</td><td>9</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>HTML/动态页面</td><td>10</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>HTTP</td><td>40</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>aria2</td><td>1</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>其他单元/回归</td><td>27</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>图片</td><td>10</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>媒体验证</td><td>2</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>安全</td><td>22</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>续传/恢复</td><td>23</td><td>0</td><td>2</td><td>100.0%</td></tr><tr><td>网站解析</td><td>9</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>网络异常</td><td>14</td><td>0</td><td>0</td><td>100.0%</td></tr><tr><td>音频</td><td>14</td><td>0</td><td>0</td><td>100.0%</td></tr></tbody></table><h2>网站与完整性</h2><p>点击表头排序。PASS 表示真实下载并验证；SKIPPED/BLOCKED 不表示通过。</p><table><thead><tr><th data-col="0">ID / 网站 ↕</th><th data-col="1">状态 ↕</th><th data-col="2">提取 ↕</th><th data-col="3">字节 ↕</th><th data-col="4">SHA-256 ↕</th><th data-col="5">原因 ↕</th></tr></thead><tbody><tr><td>mdn-mp4 / MDN</td><td>PASS</td><td></td><td>1128375</td><td>0cd83d944a6ca7822b4a8306cecc60a36e859b041f6702c6a1ad9ead78924451</td><td>完整性验证通过</td></tr><tr><td>mdn-webm / MDN</td><td>PASS</td><td></td><td>554058</td><td>c6f8a348953395598a9a73b9bab1676436410797bce9f398f4be1531d6e76dda</td><td>完整性验证通过</td></tr><tr><td>commons-audio / Wikimedia Commons</td><td>BLOCKED</td><td></td><td></td><td></td><td>Client error &#x27;403 Forbidden&#x27; for url &#x27;[URL]
+For more information check: [URL]</td></tr><tr><td>commons-image / Wikimedia Commons</td><td>BLOCKED</td><td></td><td></td><td></td><td>Client error &#x27;403 Forbidden&#x27; for url &#x27;[URL]
+For more information check: [URL]</td></tr><tr><td>YoutubeIE-0 / YouTube</td><td>SKIPPED</td><td>PASS</td><td></td><td></td><td>仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证</td></tr><tr><td>VimeoIE-0 / Vimeo</td><td>BLOCKED</td><td></td><td></td><td></td><td>ERROR: [vimeo] 17466681: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  [URL]  for how to manually pass cookies</td></tr><tr><td>DailymotionIE-0 / Dailymotion</td><td>SKIPPED</td><td>PASS</td><td></td><td></td><td>仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证</td></tr><tr><td>TwitchVodIE-0 / Twitch VOD</td><td>BLOCKED</td><td>PASS</td><td></td><td></td><td>仅完成提取；未确认下载授权，未下载</td></tr><tr><td>TwitchClipsIE-0 / Twitch Clips</td><td>BLOCKED</td><td>PASS</td><td></td><td></td><td>仅完成提取；未确认下载授权，未下载</td></tr><tr><td>TikTokIE-0 / TikTok</td><td>BLOCKED</td><td></td><td></td><td></td><td>ERROR: [TikTok] 6748451240264420610: Your IP address is blocked from accessing this post</td></tr><tr><td>InstagramIE-1 / Instagram Reels</td><td>BLOCKED</td><td>PASS</td><td></td><td></td><td>仅完成提取；未确认下载授权，未下载</td></tr><tr><td>InstagramIE-0 / Instagram video</td><td>BLOCKED</td><td>PASS</td><td></td><td></td><td>仅完成提取；未确认下载授权，未下载</td></tr><tr><td>FacebookIE-0 / Facebook Video</td><td>FAIL</td><td></td><td></td><td></td><td>ERROR: [facebook] 3676516585958356: Cannot parse data; please report this issue on  [URL] , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U</td></tr><tr><td>TwitterIE-0 / X / Twitter</td><td>UNAVAILABLE</td><td></td><td></td><td></td><td>ERROR: [twitter] 643211948184596480: No video could be found in this tweet</td></tr><tr><td>BiliBiliIE-0 / Bilibili</td><td>SKIPPED</td><td>PASS</td><td></td><td></td><td>仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证</td></tr><tr><td>NiconicoIE-0 / Niconico</td><td>BLOCKED</td><td>PASS</td><td></td><td></td><td>仅完成提取；未确认下载授权，未下载</td></tr><tr><td>ArchiveOrgIE-1 / Internet Archive</td><td>SKIPPED</td><td>PASS</td><td></td><td></td><td>仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证</td></tr><tr><td>RedditIE-0 / Reddit</td><td>BLOCKED</td><td>PASS</td><td></td><td></td><td>仅完成提取；未确认下载授权，未下载</td></tr><tr><td>YouTube-Shorts / YouTube Shorts</td><td>BLOCKED</td><td></td><td></td><td></td><td>尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求</td></tr><tr><td>Instagram-single-image / Instagram single image</td><td>BLOCKED</td><td></td><td></td><td></td><td>尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求</td></tr><tr><td>Instagram-carousel / Instagram carousel</td><td>BLOCKED</td><td></td><td></td><td></td><td>尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求</td></tr><tr><td>Wikimedia-page / Wikimedia Commons</td><td>SKIPPED</td><td>PASS</td><td></td><td></td><td>仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证</td></tr></tbody></table><h2>自动修复前后</h2><table><thead><tr><th data-col="0">Bug ↕</th><th data-col="1">触发与问题 ↕</th><th data-col="2">修改文件 ↕</th><th data-col="3">重测 ↕</th><th data-col="4">对应测试 ↕</th></tr></thead><tbody><tr><td>MH-001</td><td>206 未验证 Content-Range 结束位置和分段长度；异常响应先追加文件才失败</td><td>mediaharvester/download.py</td><td>PASS</td><td>test_invalid_range_bounds</td></tr><tr><td>MH-002</td><td>DRM 音轨参与自动视频配对</td><td>mediaharvester/extractors.py</td><td>PASS</td><td>test_drm_audio_never_auto_paired</td></tr><tr><td>MH-003</td><td>错误或缺失扩展名未根据媒体类型规范化</td><td>mediaharvester/extractors.py</td><td>PASS</td><td>test_direct_wrong_extension_corrected, test_http_complete_hash_and_tracks</td></tr><tr><td>MH-004</td><td>忽略 Content-Disposition 的 UTF-8 文件名</td><td>mediaharvester/extractors.py</td><td>PASS</td><td>test_content_disposition_unicode</td></tr><tr><td>MH-005</td><td>选择包含音轨的视频下载后无音轨仍标为完成</td><td>mediaharvester/download.py, mediaharvester/media.py</td><td>PASS</td><td>test_video_with_expected_audio_rejects_silent_file</td></tr><tr><td>MH-006</td><td>提交日志恢复只更新状态，保留了旧下载字节数和总大小</td><td>mediaharvester/download.py</td><td>PASS</td><td>test_commit_recovery_restores_file_size</td></tr><tr><td>MH-007</td><td>权限拒绝、永久错误和限速仍自动重复请求；缺少 Retry-After 处理</td><td>mediaharvester/download.py</td><td>PASS</td><td>test_permanent_or_limited_status_stops_automatic_retry, test_retry_after_seconds, test_retry_after_date_and_exponential_floor</td></tr><tr><td>MH-008</td><td>HTML5/iframe/动态视频源解析缺口，以及 generic 多媒体页面下载失败</td><td>mediaharvester/extractors.py</td><td>PASS</td><td>test_html_video_actual_download, test_dynamic_video_deep_download</td></tr><tr><td>MH-009</td><td>未知 MIME 的 MP4 和 application/ogg 未识别为直链；video/ogg 声音文件被误分类</td><td>mediaharvester/extractors.py</td><td>PASS</td><td>test_octet_stream_mp4_detected, test_application_ogg_audio_detected</td></tr><tr><td>MH-010</td><td>Windows 短命子进程已退出时 Job Object 绑定失败导致误报</td><td>mediaharvester/processes.py</td><td>PASS</td><td>test_already_exited_child_does_not_fail_verification</td></tr><tr><td>MH-011</td><td>Instagram 原始视频格式未由 yt-dlp 生成 format_id，导致 Reels/视频被丢弃</td><td>mediaharvester/worker.py</td><td>PASS</td><td>test_instagram_raw_video_gets_format_ids</td></tr><tr><td>MH-012</td><td>重新解析多视频页面时比较播放列表父 ID，无法下载已选子项</td><td>mediaharvester/worker.py</td><td>PASS</td><td>test_selected_playlist_entry_reextracted_and_downloaded, test_playlist_identity_missing_or_ambiguous_rejected</td></tr><tr><td>MH-013</td><td>Playwright 隐式浏览器上下文在视频页面清理时阻塞；显式关闭上下文后解除超时</td><td>mediaharvester/worker.py</td><td>PASS</td><td>test_dynamic_video_deep_download</td></tr></tbody></table><details><summary>完整代码修改文件清单</summary><pre>.github/workflows/validation.yml
+.gitignore
+README.md
+docs/automated-testing.md
+docs/validation.md
+mediaharvester/download.py
+mediaharvester/extractors.py
+mediaharvester/media.py
+mediaharvester/processes.py
+mediaharvester/worker.py
+pyproject.toml
+requirements-dev.txt
+requirements-lock.txt
+scripts/diagnose_sites.py
+scripts/exe_smoke.py
+scripts/generate_test_report.py
+scripts/gui_workflow.py
+scripts/run_full_tests.py
+scripts/run_online_tests.py
+scripts/verify_build.py
+test_server/__init__.py
+test_server/engine_runner.py
+test_server/main.py
+test_server/media_generator.py
+test_server/network_faults.py
+tests/conftest.py
+tests/fixtures/public_image_urls.yaml
+tests/fixtures/public_video_urls.yaml
+tests/fixtures/site_samples.yaml
+tests/integration/__init__.py
+tests/integration/conftest.py
+tests/integration/helpers.py
+tests/integration/test_audio.py
+tests/integration/test_concurrency.py
+tests/integration/test_content_detection.py
+tests/integration/test_cookie_auth.py
+tests/integration/test_dash_download.py
+tests/integration/test_hls_download.py
+tests/integration/test_http_download.py
+tests/integration/test_images.py
+tests/integration/test_network_failure.py
+tests/integration/test_playlist_download.py
+tests/integration/test_playlist_identity.py
+tests/integration/test_process_lifecycle.py
+tests/integration/test_regressions.py
+tests/integration/test_reports.py
+tests/integration/test_resume.py
+tests/integration/test_retry_policy.py
+tests/integration/test_security.py
+tests/integration/test_site_extractors.py
+tests/integration/test_tls.py
+tests/integration/test_transport_faults.py
+tests/integration/test_web_extraction.py</pre></details><h2>命令、GUI 与 EXE</h2><table><thead><tr><th data-col="0">阶段 ↕</th><th data-col="1">状态 ↕</th><th data-col="2">秒 ↕</th><th data-col="3">可复现命令 ↕</th><th data-col="4">日志 ↕</th></tr></thead><tbody><tr><td>offline</td><td>FAIL</td><td>311.324</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe -m pytest -q --junitxml=reports/offline.xml</td><td>reports\offline.txt</td></tr><tr><td>static</td><td>PASS</td><td>0.185</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe -m ruff check --select E9,F63,F7,F82 mediaharvester scripts test_server tests</td><td>reports\static.txt</td></tr><tr><td>online</td><td>FAIL</td><td>85.923</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe scripts/run_online_tests.py --sites</td><td>reports\online.txt</td></tr><tr><td>gui</td><td>PASS</td><td>10.216</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe scripts/gui_workflow.py</td><td>reports\gui.txt</td></tr><tr><td>build-onedir</td><td>PASS</td><td>125.619</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onedir mediaharvester.spec</td><td>reports\build-onedir.txt</td></tr><tr><td>exe-onedir</td><td>PASS</td><td>62.396</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe scripts/exe_smoke.py dist/validation-onedir/MediaHarvester/MediaHarvester.exe</td><td>reports\exe-onedir.txt</td></tr><tr><td>build-onefile</td><td>PASS</td><td>124.51</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onefile mediaharvester.spec</td><td>reports\build-onefile.txt</td></tr><tr><td>exe-onefile</td><td>PASS</td><td>26.268</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe scripts/exe_smoke.py dist/validation-onefile/MediaHarvester.exe</td><td>reports\exe-onefile.txt</td></tr><tr><td>offline-final</td><td>PASS</td><td>244.42</td><td>.venv/Scripts/python.exe -m pytest -q --junitxml=reports/offline-final.xml</td><td>reports/offline-final.xml</td></tr><tr><td>gui-final</td><td>PASS</td><td>8.907</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe scripts/gui_workflow.py</td><td>reports\gui-final.txt</td></tr><tr><td>exe-onedir-final</td><td>PASS</td><td>10.88</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe scripts/exe_smoke.py dist/validation-onedir/MediaHarvester/MediaHarvester.exe --output reports/exe-onedir</td><td>reports\exe-onedir-final.txt</td></tr><tr><td>build-onedir-final</td><td>PASS</td><td>7.697</td><td>C:\Users\seki9\Documents\MediaHarvester\.venv\Scripts\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onedir mediaharvester.spec</td><td>reports\build-onedir-final.txt</td></tr><tr><td>stress</td><td>PASS</td><td>12.4</td><td>.venv/Scripts/python.exe -m pytest tests/integration/test_resume.py --stress -q --junitxml=reports/stress.xml</td><td>reports/stress.xml</td></tr><tr><td>source-audit</td><td>PASS</td><td></td><td>python scripts/verify_build.py EXE --output report.json</td><td>reports/exe-onedir/source-audit.json; reports/exe-onefile/source-audit.json</td></tr></tbody></table><h2>未解决与未执行</h2><table><thead><tr><th data-col="0">ID ↕</th><th data-col="1">状态 ↕</th><th data-col="2">原因 ↕</th></tr></thead><tbody><tr><td>real-login</td><td>BLOCKED</td><td>未使用个人浏览器登录态；本地 Cookie 认证与合成 Firefox 数据库已覆盖，真实账号授权仍需用户合法登录态</td></tr><tr><td>shorts-images</td><td>BLOCKED</td><td>YouTube Shorts、Instagram 单图/轮播未取得可验证授权的真实下载样例；照片最大候选和轮播处理有现有单元回归</td></tr><tr><td>source-limits</td><td>BLOCKED</td><td>Wikimedia 直链返回 403；Vimeo/Reddit 要求认证，TikTok 拒绝当前 IP；未绕过限制</td></tr><tr><td>upstream-sites</td><td>FAIL</td><td>Facebook 页面数据解析失败、X 样例未找到视频；上游 yt-dlp 同样复现，尚未证明样例或上游可修复</td></tr><tr><td>5gb-powerloss</td><td>SKIPPED</td><td>未执行可选 5GB/长期压力、物理断电、磁盘缓存损坏；已执行 100MB/1GB 确定性续传与提交恢复</td></tr><tr><td>clean-vm</td><td>SKIPPED</td><td>未在干净 Windows VM 验收，宿主仍安装 Python；EXE smoke 会移除 PATH 的 Python 和外部工具</td></tr><tr><td>python-311</td><td>SKIPPED</td><td>本机仅实际运行 Python 3.13.14；CI 定义 3.11/3.13，云端工作流尚未执行</td></tr><tr><td>wide-matrix</td><td>SKIPPED</td><td>尚未逐项完成全部 MIME/音频编码/DRM 制式、DASH 字幕、多 Representation、多天签名更新、TLS/DNS 故障组合与符号链接磁盘异常矩阵</td></tr><tr><td>stream-resume</td><td>UNSUPPORTED</td><td>不能证明跨会话一致的 HLS/DASH 分片安全重新下载；不承诺复用旧分片或破解 DRM</td></tr><tr><td>silent-ytdlp</td><td>UNSUPPORTED</td><td>仅视频格式且没有可配对音轨时，现有格式选择不提供选项；静音直链允许按预期验证</td></tr><tr><td>translation</td><td>UNSUPPORTED</td><td>日文仅预留翻译结构；英文动态错误信息仍不完全本地化</td></tr></tbody></table><h2>失败案例与堆栈</h2><details><summary>commons-audio / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;commons-audio&quot;,
+  &quot;site&quot;: &quot;Wikimedia Commons&quot;,
+  &quot;url&quot;: &quot;https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg&quot;,
+  &quot;source&quot;: &quot;https://commons.wikimedia.org/wiki/File:Example.ogg&quot;,
+  &quot;license&quot;: &quot;GFDL / CC BY-SA 3.0; JesseW&quot;,
+  &quot;kind&quot;: &quot;audio&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:08.704360+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;Client error &#x27;403 Forbidden&#x27; for url &#x27;[URL]\nFor more information check: [URL]&quot;,
+  &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\&quot;, line 108, in execute\n    result.update(direct_case(sample));result[&#x27;status&#x27;]=&#x27;PASS&#x27;\n                  ~~~~~~~~~~~^^^^^^^^\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\&quot;, line 72, in direct_case\n    response.raise_for_status()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\httpx\\_models.py\&quot;, line 829, in raise_for_status\n    raise HTTPStatusError(message, request=request, response=self)\nhttpx.HTTPStatusError: Client error &#x27;403 Forbidden&#x27; for url &#x27;[URL]\nFor more information check: [URL]\n&quot;,
+  &quot;seconds&quot;: 1.153
+}</pre></details><details><summary>commons-image / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;commons-image&quot;,
+  &quot;site&quot;: &quot;Wikimedia Commons&quot;,
+  &quot;url&quot;: &quot;https://upload.wikimedia.org/wikipedia/commons/a/a9/Example.jpg&quot;,
+  &quot;source&quot;: &quot;https://commons.wikimedia.org/wiki/File:Example.jpg&quot;,
+  &quot;license&quot;: &quot;Public domain example image&quot;,
+  &quot;kind&quot;: &quot;image&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:10.174653+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;Client error &#x27;403 Forbidden&#x27; for url &#x27;[URL]\nFor more information check: [URL]&quot;,
+  &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\&quot;, line 108, in execute\n    result.update(direct_case(sample));result[&#x27;status&#x27;]=&#x27;PASS&#x27;\n                  ~~~~~~~~~~~^^^^^^^^\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\&quot;, line 72, in direct_case\n    response.raise_for_status()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\httpx\\_models.py\&quot;, line 829, in raise_for_status\n    raise HTTPStatusError(message, request=request, response=self)\nhttpx.HTTPStatusError: Client error &#x27;403 Forbidden&#x27; for url &#x27;[URL]\nFor more information check: [URL]\n&quot;,
+  &quot;seconds&quot;: 0.913
+}</pre></details><details><summary>VimeoIE-0 / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;VimeoIE-0&quot;,
+  &quot;site&quot;: &quot;Vimeo&quot;,
+  &quot;url&quot;: &quot;https://vimeo.com/17466681&quot;,
+  &quot;source&quot;: &quot;https://vimeo.com/17466681&quot;,
+  &quot;license&quot;: &quot;CC BY; Blender Foundation&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:17.163468+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;ERROR: [vimeo] 17466681: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  [URL]  for how to manually pass cookies&quot;,
+  &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\&quot;, line 112, in execute\n    media=YtDlpExtractor({&#x27;auto_browser_cookies&#x27;:False}).extract(sample[&#x27;url&#x27;],threading.Event())\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\&quot;, line 104, in extract\n    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\&quot;, line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\&quot;, line 99, in _run_job\n    raise RuntimeError(payload[&#x27;error&#x27;])\nRuntimeError: ERROR: [vimeo] 17466681: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  [URL]  for how to manually pass cookies\n&quot;,
+  &quot;seconds&quot;: 2.358
+}</pre></details><details><summary>TwitchVodIE-0 / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;TwitchVodIE-0&quot;,
+  &quot;site&quot;: &quot;Twitch VOD&quot;,
+  &quot;url&quot;: &quot;http://www.twitch.tv/riotgames/v/6528877?[REDACTED]&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:25.681779+09:00&quot;,
+  &quot;stage&quot;: &quot;download&quot;,
+  &quot;extraction&quot;: &quot;PASS&quot;,
+  &quot;title&quot;: &quot;LCK Summer Split - Week 6 Day 1&quot;,
+  &quot;duration&quot;: 17208,
+  &quot;formats&quot;: 8,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;仅完成提取；未确认下载授权，未下载&quot;,
+  &quot;seconds&quot;: 4.95
+}</pre></details><details><summary>TwitchClipsIE-0 / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;TwitchClipsIE-0&quot;,
+  &quot;site&quot;: &quot;Twitch Clips&quot;,
+  &quot;url&quot;: &quot;https://clips.twitch.tv/FaintLightGullWholeWheat&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:30.986420+09:00&quot;,
+  &quot;stage&quot;: &quot;download&quot;,
+  &quot;extraction&quot;: &quot;PASS&quot;,
+  &quot;title&quot;: &quot;EA Play 2016 Live from the Novo Theatre&quot;,
+  &quot;duration&quot;: 32,
+  &quot;formats&quot;: 1,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;仅完成提取；未确认下载授权，未下载&quot;,
+  &quot;seconds&quot;: 2.891
+}</pre></details><details><summary>TikTokIE-0 / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;TikTokIE-0&quot;,
+  &quot;site&quot;: &quot;TikTok&quot;,
+  &quot;url&quot;: &quot;https://www.tiktok.com/@leenabhushan/video/6748451240264420610&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:34.263301+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;ERROR: [TikTok] 6748451240264420610: Your IP address is blocked from accessing this post&quot;,
+  &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\&quot;, line 112, in execute\n    media=YtDlpExtractor({&#x27;auto_browser_cookies&#x27;:False}).extract(sample[&#x27;url&#x27;],threading.Event())\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\&quot;, line 104, in extract\n    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\&quot;, line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\&quot;, line 99, in _run_job\n    raise RuntimeError(payload[&#x27;error&#x27;])\nRuntimeError: ERROR: [TikTok] 6748451240264420610: Your IP address is blocked from accessing this post\n&quot;,
+  &quot;seconds&quot;: 2.392
+}</pre></details><details><summary>InstagramIE-1 / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;InstagramIE-1&quot;,
+  &quot;site&quot;: &quot;Instagram Reels&quot;,
+  &quot;url&quot;: &quot;https://www.instagram.com/reel/Chunk8-jurw/&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:37.025090+09:00&quot;,
+  &quot;stage&quot;: &quot;download&quot;,
+  &quot;extraction&quot;: &quot;PASS&quot;,
+  &quot;title&quot;: &quot;Video by instagram&quot;,
+  &quot;duration&quot;: 0,
+  &quot;formats&quot;: 9,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;仅完成提取；未确认下载授权，未下载&quot;,
+  &quot;seconds&quot;: 4.856
+}</pre></details><details><summary>InstagramIE-0 / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;InstagramIE-0&quot;,
+  &quot;site&quot;: &quot;Instagram video&quot;,
+  &quot;url&quot;: &quot;https://instagram.com/p/aye83DjauH/?[REDACTED]&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:42.246029+09:00&quot;,
+  &quot;stage&quot;: &quot;download&quot;,
+  &quot;extraction&quot;: &quot;PASS&quot;,
+  &quot;title&quot;: &quot;Video by naomipq&quot;,
+  &quot;duration&quot;: 0,
+  &quot;formats&quot;: 4,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;仅完成提取；未确认下载授权，未下载&quot;,
+  &quot;seconds&quot;: 4.298
+}</pre></details><details><summary>FacebookIE-0 / FAIL</summary><pre>{
+  &quot;id&quot;: &quot;FacebookIE-0&quot;,
+  &quot;site&quot;: &quot;Facebook Video&quot;,
+  &quot;url&quot;: &quot;https://www.facebook.com/radiokicksfm/videos/3676516585958356/&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:46.894908+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;FAIL&quot;,
+  &quot;reason&quot;: &quot;ERROR: [facebook] 3676516585958356: Cannot parse data; please report this issue on  [URL] , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U&quot;,
+  &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\&quot;, line 112, in execute\n    media=YtDlpExtractor({&#x27;auto_browser_cookies&#x27;:False}).extract(sample[&#x27;url&#x27;],threading.Event())\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\&quot;, line 104, in extract\n    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\&quot;, line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\&quot;, line 99, in _run_job\n    raise RuntimeError(payload[&#x27;error&#x27;])\nRuntimeError: ERROR: [facebook] 3676516585958356: Cannot parse data; please report this issue on  [URL] , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U\n&quot;,
+  &quot;failure_owner&quot;: &quot;upstream yt-dlp / sample; see upstream-diagnostics.json&quot;,
+  &quot;seconds&quot;: 2.685
+}</pre></details><details><summary>TwitterIE-0 / UNAVAILABLE</summary><pre>{
+  &quot;id&quot;: &quot;TwitterIE-0&quot;,
+  &quot;site&quot;: &quot;X / Twitter&quot;,
+  &quot;url&quot;: &quot;https://twitter.com/freethenipple/status/643211948184596480&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T10:59:49.914857+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;UNAVAILABLE&quot;,
+  &quot;reason&quot;: &quot;ERROR: [twitter] 643211948184596480: No video could be found in this tweet&quot;,
+  &quot;traceback&quot;: &quot;Traceback (most recent call last):\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\&quot;, line 112, in execute\n    media=YtDlpExtractor({&#x27;auto_browser_cookies&#x27;:False}).extract(sample[&#x27;url&#x27;],threading.Event())\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\&quot;, line 104, in extract\n    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\&quot;, line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \&quot;C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\&quot;, line 99, in _run_job\n    raise RuntimeError(payload[&#x27;error&#x27;])\nRuntimeError: ERROR: [twitter] 643211948184596480: No video could be found in this tweet\n&quot;,
+  &quot;failure_owner&quot;: &quot;upstream yt-dlp / sample; see upstream-diagnostics.json&quot;,
+  &quot;seconds&quot;: 2.968
+}</pre></details><details><summary>NiconicoIE-0 / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;NiconicoIE-0&quot;,
+  &quot;site&quot;: &quot;Niconico&quot;,
+  &quot;url&quot;: &quot;https://www.nicovideo.jp/watch/1173108780&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T11:00:00.049000+09:00&quot;,
+  &quot;stage&quot;: &quot;download&quot;,
+  &quot;extraction&quot;: &quot;PASS&quot;,
+  &quot;title&quot;: &quot;新・豪血寺一族 -煩悩解放 - レッツゴー！陰陽師&quot;,
+  &quot;duration&quot;: 320,
+  &quot;formats&quot;: 6,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;仅完成提取；未确认下载授权，未下载&quot;,
+  &quot;seconds&quot;: 3.64
+}</pre></details><details><summary>RedditIE-0 / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;RedditIE-0&quot;,
+  &quot;site&quot;: &quot;Reddit&quot;,
+  &quot;url&quot;: &quot;https://www.reddit.com/r/videos/comments/6rrwyj/that_small_heart_attack/&quot;,
+  &quot;source&quot;: &quot;https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T11:00:08.073683+09:00&quot;,
+  &quot;stage&quot;: &quot;download&quot;,
+  &quot;extraction&quot;: &quot;PASS&quot;,
+  &quot;title&quot;: &quot;That small heart attack.&quot;,
+  &quot;duration&quot;: 12,
+  &quot;formats&quot;: 11,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;仅完成提取；未确认下载授权，未下载&quot;,
+  &quot;seconds&quot;: 6.659
+}</pre></details><details><summary>YouTube-Shorts / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;YouTube-Shorts&quot;,
+  &quot;site&quot;: &quot;YouTube Shorts&quot;,
+  &quot;url&quot;: &quot;&quot;,
+  &quot;source&quot;: &quot;No verified authorized URL found in this run&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;video&quot;,
+  &quot;date&quot;: &quot;2026-10-12T11:00:15.099925+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求&quot;,
+  &quot;seconds&quot;: 0.0
+}</pre></details><details><summary>Instagram-single-image / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;Instagram-single-image&quot;,
+  &quot;site&quot;: &quot;Instagram single image&quot;,
+  &quot;url&quot;: &quot;&quot;,
+  &quot;source&quot;: &quot;No verified authorized URL found in this run&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;image&quot;,
+  &quot;date&quot;: &quot;2026-10-12T11:00:15.393649+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求&quot;,
+  &quot;seconds&quot;: 0.0
+}</pre></details><details><summary>Instagram-carousel / BLOCKED</summary><pre>{
+  &quot;id&quot;: &quot;Instagram-carousel&quot;,
+  &quot;site&quot;: &quot;Instagram carousel&quot;,
+  &quot;url&quot;: &quot;&quot;,
+  &quot;source&quot;: &quot;No verified authorized URL found in this run&quot;,
+  &quot;license&quot;: &quot;&quot;,
+  &quot;kind&quot;: &quot;image&quot;,
+  &quot;date&quot;: &quot;2026-10-12T11:00:15.706955+09:00&quot;,
+  &quot;stage&quot;: &quot;extraction&quot;,
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;reason&quot;: &quot;尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求&quot;,
+  &quot;seconds&quot;: 0.0
+}</pre></details><h2>原始失败与修复证据</h2><details><summary>tests.integration.test_content_detection::test_octet_stream_mp4_detected</summary><pre>fixture_server = &lt;test_server.main.TestServer object at 0x0000022082442E40&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000002208257C4A0&gt;
+
+    def test_octet_stream_mp4_detected(fixture_server,local_network):
+&gt;       media=ExtractorRegistry(Settings.defaults).analyze(fixture_server.url+&#x27;/video/unknown-content-type&#x27;)[0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_content_detection.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:187: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\worker.py:37: in run_job
+    return _run_job(job,cancel,progress,timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {&#x27;action&#x27;: &#x27;extract&#x27;, &#x27;url&#x27;: &#x27;http://127.0.0.1:53237/video/unknown-content-type&#x27;, &#x27;cookie_file&#x27;: &#x27;&#x27;, &#x27;auto_browser_cookies&#x27;: True, ...}
+cancel = &lt;threading.Event at 0x2208256d2b0: unset&gt;, progress = None
+timeout = 180
+
+    def _run_job(job, cancel, progress=None, timeout=180):
+        with tempfile.TemporaryDirectory(prefix=&#x27;mh-job-&#x27;) as temp:
+            request, result, events = [Path(temp)/n for n in (&#x27;request.json&#x27;,&#x27;result.json&#x27;,&#x27;events.jsonl&#x27;)]
+            request.write_text(json.dumps(job), &#x27;utf-8&#x27;)
+            args = [sys.executable, &#x27;--worker&#x27;] if getattr(sys,&#x27;frozen&#x27;,False) else [sys.executable,&#x27;-m&#x27;,&#x27;mediaharvester.worker&#x27;]
+            flags = subprocess.CREATE_NO_WINDOW if os.name == &#x27;nt&#x27; else 0
+            proc = subprocess.Popen(args + [str(request),str(result),str(events)], stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, creationflags=flags)
+            attach_job(proc)
+            start, offset = time.monotonic(), 0
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.15):
+                        raise InterruptedError(&#x27;任务已暂停&#x27;)
+                    if timeout and time.monotonic()-start&gt;timeout:
+                        raise TimeoutError(&#x27;解析超时&#x27;)
+                    if events.exists() and progress:
+                        with events.open(&#x27;r&#x27;,encoding=&#x27;utf-8&#x27;) as stream:
+                            stream.seek(offset)
+                            for line in stream:
+                                try: progress(json.loads(line))
+                                except ValueError: pass
+                            offset=stream.tell()
+                if not result.exists():
+                    raise RuntimeError(&#x27;媒体引擎异常退出&#x27;)
+                payload=json.loads(result.read_text(&#x27;utf-8&#x27;))
+                if &#x27;error&#x27; in payload:
+&gt;                   raise RuntimeError(payload[&#x27;error&#x27;])
+E                   RuntimeError: 禁止访问本机、内网、链路本地或元数据地址
+
+mediaharvester\worker.py:84: RuntimeError</pre></details><details><summary>tests.integration.test_content_detection::test_application_ogg_audio_detected</summary><pre>local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000002208268C220&gt;
+fixture_server = &lt;test_server.main.TestServer object at 0x0000022082442E40&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000220821A1350&gt;
+
+    def test_application_ogg_audio_detected(local_network,fixture_server,monkeypatch):
+        import httpx
+        content=b&#x27;OggS&#x27;+b&#x27;\0&#x27;*24+b&#x27;\x01vorbis&#x27;+b&#x27;\0&#x27;*100
+        monkeypatch.setattr(&#x27;mediaharvester.extractors.client&#x27;,lambda:httpx.Client(transport=httpx.MockTransport(
+            lambda request:httpx.Response(200,headers={&#x27;Content-Type&#x27;:&#x27;application/ogg&#x27;},content=content))))
+        def no_engine(*args,**kwargs): raise AssertionError(&#x27;Direct Ogg must not invoke website engine&#x27;)
+        monkeypatch.setattr(&#x27;mediaharvester.extractors.run_job&#x27;,no_engine)
+&gt;       media=ExtractorRegistry(Settings.defaults).analyze(&#x27;https://example.com/audio&#x27;)[0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_content_detection.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:187: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+args = ({&#x27;action&#x27;: &#x27;extract&#x27;, &#x27;url&#x27;: &#x27;https://example.com/audio&#x27;, &#x27;cookie_file&#x27;: &#x27;&#x27;, &#x27;auto_browser_cookies&#x27;: True, ...}, &lt;threading.Event at 0x2208256d250: unset&gt;)
+kwargs = {}
+
+&gt;   def no_engine(*args,**kwargs): raise AssertionError(&#x27;Direct Ogg must not invoke website engine&#x27;)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Direct Ogg must not invoke website engine
+
+tests\integration\test_content_detection.py:16: AssertionError</pre></details><details><summary>tests.integration.test_web_extraction::test_dynamic_video_deep_download[javascript-video]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_dynamic_video_deep_downlo0&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1C0B560&gt;
+page = &#x27;javascript-video&#x27;
+
+    @pytest.mark.parametrize(&#x27;page&#x27;,[&#x27;javascript-video&#x27;,&#x27;lazy-loaded-video&#x27;])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+&#x27;/pages/&#x27;+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {&#x27;action&#x27;: &#x27;extract&#x27;, &#x27;url&#x27;: &#x27;http://127.0.0.1:64904/pages/javascript-video&#x27;, &#x27;cookie_file&#x27;: &#x27;&#x27;, &#x27;auto_browser_cookies&#x27;: False, ...}
+cancel = &lt;threading.Event at 0x245a1c03e30: unset&gt;, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix=&#x27;mh-test-engine-&#x27;) as directory:
+            request, result, events = [Path(directory) / n for n in (&#x27;request.json&#x27;, &#x27;result.json&#x27;, &#x27;events.jsonl&#x27;)]
+            request.write_text(json.dumps(job), encoding=&#x27;utf-8&#x27;)
+            proc = subprocess.Popen([sys.executable, &#x27;-m&#x27;, &#x27;test_server.engine_runner&#x27;, fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError(&#x27;test cancelled&#x27;)
+                    if time.monotonic() - start &gt; (timeout or 60): raise TimeoutError(&#x27;test worker timed out&#x27;)
+                assert result.exists(), f&#x27;Worker exit {proc.returncode}&#x27;
+                payload = json.loads(result.read_text(&#x27;utf-8&#x27;))
+&gt;               if &#x27;error&#x27; in payload: raise RuntimeError(payload[&#x27;error&#x27;])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError</pre></details><details><summary>tests.integration.test_web_extraction::test_dynamic_video_deep_download[lazy-loaded-video]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-134/test_dynamic_video_deep_downlo1&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x000002A6655D06E0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x000002A665E5E340&gt;
+page = &#x27;lazy-loaded-video&#x27;
+
+    @pytest.mark.parametrize(&#x27;page&#x27;,[&#x27;javascript-video&#x27;,&#x27;lazy-loaded-video&#x27;])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+&#x27;/pages/&#x27;+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:188: in analyze
+    rendered = run_job({&#x27;action&#x27;:&#x27;dynamic&#x27;,&#x27;url&#x27;:url}, cancel, timeout=45)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {&#x27;action&#x27;: &#x27;dynamic&#x27;, &#x27;url&#x27;: &#x27;http://127.0.0.1:64720/pages/lazy-loaded-video&#x27;}
+cancel = &lt;threading.Event at 0x2a665e998b0: unset&gt;, progress = None
+timeout = 45
+
+    def run(job, cancel, progress=None, timeout=60):
+        if job[&#x27;action&#x27;]==&#x27;dynamic&#x27;:
+            try:
+                from playwright.sync_api import sync_playwright
+            except ImportError:
+                pytest.skip(&#x27;Optional Playwright is not installed&#x27;)
+            with sync_playwright() as playwright:
+                if not Path(playwright.chromium.executable_path).exists():
+                    pytest.skip(&#x27;Optional Chromium is not installed&#x27;)
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix=&#x27;mh-test-engine-&#x27;) as directory:
+            request, result, events = [Path(directory) / n for n in (&#x27;request.json&#x27;, &#x27;result.json&#x27;, &#x27;events.jsonl&#x27;)]
+            request.write_text(json.dumps(job), encoding=&#x27;utf-8&#x27;)
+            proc = subprocess.Popen([sys.executable, &#x27;-m&#x27;, &#x27;test_server.engine_runner&#x27;, fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError(&#x27;test cancelled&#x27;)
+&gt;                   if time.monotonic() - start &gt; (timeout or 60): raise TimeoutError(&#x27;test worker timed out&#x27;)
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   TimeoutError: test worker timed out
+
+tests\integration\conftest.py:78: TimeoutError</pre></details><details><summary>tests.integration.test_site_extractors::test_instagram_raw_video_gets_format_ids[False]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-129/test_instagram_raw_video_gets_0&#x27;)
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002187E735350&gt;
+carousel = False
+
+    @pytest.mark.parametrize(&#x27;carousel&#x27;,[False,True])
+    def test_instagram_raw_video_gets_format_ids(tmp_path,monkeypatch,carousel):
+        video={&#x27;id&#x27;:&#x27;fixture-video&#x27;,&#x27;title&#x27;:&#x27;Self-owned fixture&#x27;,&#x27;formats&#x27;:[{
+            &#x27;url&#x27;:&#x27;https://example.com/fixture.mp4&#x27;,&#x27;ext&#x27;:&#x27;mp4&#x27;,&#x27;vcodec&#x27;:&#x27;avc1&#x27;,&#x27;acodec&#x27;:&#x27;aac&#x27;,&#x27;height&#x27;:360}]}
+        image={&#x27;id&#x27;:&#x27;fixture-photo&#x27;,&#x27;mh_image&#x27;:{&#x27;url&#x27;:&#x27;https://example.com/photo.jpg&#x27;,&#x27;width&#x27;:64,&#x27;height&#x27;:48}}
+        raw={&#x27;_type&#x27;:&#x27;playlist&#x27;,&#x27;id&#x27;:&#x27;mixed&#x27;,&#x27;entries&#x27;:[image,video]} if carousel else video
+        monkeypatch.setattr(&#x27;mediaharvester.instagram.InstagramMediaIE.extract&#x27;,lambda *args:raw)
+        request,result,events=[tmp_path/n for n in (&#x27;request.json&#x27;,&#x27;result.json&#x27;,&#x27;events.jsonl&#x27;)]
+        request.write_text(json.dumps({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:&#x27;https://www.instagram.com/p/fixture/&#x27;}),encoding=&#x27;utf-8&#x27;)
+        monkeypatch.setattr(sys,&#x27;argv&#x27;,[&#x27;worker&#x27;,str(request),str(result),str(events)])
+        worker_main()
+        info=json.loads(result.read_text(&#x27;utf-8&#x27;))
+        assert &#x27;error&#x27; not in info,info
+        entries=info.get(&#x27;entries&#x27;,[info])
+        actual=next(e for e in entries if e.get(&#x27;id&#x27;)==&#x27;fixture-video&#x27;)
+&gt;       assert format_options(actual[&#x27;formats&#x27;])
+E       AssertionError: assert []
+E        +  where [] = format_options([{&#x27;url&#x27;: &#x27;https://example.com/fixture.mp4&#x27;, &#x27;ext&#x27;: &#x27;mp4&#x27;, &#x27;vcodec&#x27;: &#x27;avc1&#x27;, &#x27;acodec&#x27;: &#x27;aac&#x27;, ...}])
+
+tests\integration\test_site_extractors.py:23: AssertionError</pre></details><details><summary>tests.integration.test_site_extractors::test_instagram_raw_video_gets_format_ids[True]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-129/test_instagram_raw_video_gets_1&#x27;)
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002187E5D1350&gt;
+carousel = True
+
+    @pytest.mark.parametrize(&#x27;carousel&#x27;,[False,True])
+    def test_instagram_raw_video_gets_format_ids(tmp_path,monkeypatch,carousel):
+        video={&#x27;id&#x27;:&#x27;fixture-video&#x27;,&#x27;title&#x27;:&#x27;Self-owned fixture&#x27;,&#x27;formats&#x27;:[{
+            &#x27;url&#x27;:&#x27;https://example.com/fixture.mp4&#x27;,&#x27;ext&#x27;:&#x27;mp4&#x27;,&#x27;vcodec&#x27;:&#x27;avc1&#x27;,&#x27;acodec&#x27;:&#x27;aac&#x27;,&#x27;height&#x27;:360}]}
+        image={&#x27;id&#x27;:&#x27;fixture-photo&#x27;,&#x27;mh_image&#x27;:{&#x27;url&#x27;:&#x27;https://example.com/photo.jpg&#x27;,&#x27;width&#x27;:64,&#x27;height&#x27;:48}}
+        raw={&#x27;_type&#x27;:&#x27;playlist&#x27;,&#x27;id&#x27;:&#x27;mixed&#x27;,&#x27;entries&#x27;:[image,video]} if carousel else video
+        monkeypatch.setattr(&#x27;mediaharvester.instagram.InstagramMediaIE.extract&#x27;,lambda *args:raw)
+        request,result,events=[tmp_path/n for n in (&#x27;request.json&#x27;,&#x27;result.json&#x27;,&#x27;events.jsonl&#x27;)]
+        request.write_text(json.dumps({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:&#x27;https://www.instagram.com/p/fixture/&#x27;}),encoding=&#x27;utf-8&#x27;)
+        monkeypatch.setattr(sys,&#x27;argv&#x27;,[&#x27;worker&#x27;,str(request),str(result),str(events)])
+        worker_main()
+        info=json.loads(result.read_text(&#x27;utf-8&#x27;))
+        assert &#x27;error&#x27; not in info,info
+        entries=info.get(&#x27;entries&#x27;,[info])
+        actual=next(e for e in entries if e.get(&#x27;id&#x27;)==&#x27;fixture-video&#x27;)
+&gt;       assert format_options(actual[&#x27;formats&#x27;])
+E       AssertionError: assert []
+E        +  where [] = format_options([{&#x27;url&#x27;: &#x27;https://example.com/fixture.mp4&#x27;, &#x27;ext&#x27;: &#x27;mp4&#x27;, &#x27;vcodec&#x27;: &#x27;avc1&#x27;, &#x27;acodec&#x27;: &#x27;aac&#x27;, ...}])
+
+tests\integration\test_site_extractors.py:23: AssertionError</pre></details><details><summary>tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[401]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat0&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1B1CF40&gt;
+code = 401
+
+    @pytest.mark.parametrize(&#x27;code&#x27;,[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f&#x27;/status/{code}&#x27;
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/&#x27;db&#x27;)
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,&#x27;&#x27;,&#x27;error&#x27;,&#x27;audio&#x27;,&#x27;bin&#x27;)))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</pre></details><details><summary>tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[403]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat1&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1BA4220&gt;
+code = 403
+
+    @pytest.mark.parametrize(&#x27;code&#x27;,[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f&#x27;/status/{code}&#x27;
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/&#x27;db&#x27;)
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,&#x27;&#x27;,&#x27;error&#x27;,&#x27;audio&#x27;,&#x27;bin&#x27;)))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</pre></details><details><summary>tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[404]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat2&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1B1D800&gt;
+code = 404
+
+    @pytest.mark.parametrize(&#x27;code&#x27;,[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f&#x27;/status/{code}&#x27;
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/&#x27;db&#x27;)
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,&#x27;&#x27;,&#x27;error&#x27;,&#x27;audio&#x27;,&#x27;bin&#x27;)))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</pre></details><details><summary>tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[410]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat3&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1BCA700&gt;
+code = 410
+
+    @pytest.mark.parametrize(&#x27;code&#x27;,[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f&#x27;/status/{code}&#x27;
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/&#x27;db&#x27;)
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,&#x27;&#x27;,&#x27;error&#x27;,&#x27;audio&#x27;,&#x27;bin&#x27;)))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</pre></details><details><summary>tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[429]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat4&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1B1D4E0&gt;
+code = 429
+
+    @pytest.mark.parametrize(&#x27;code&#x27;,[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f&#x27;/status/{code}&#x27;
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/&#x27;db&#x27;)
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,&#x27;&#x27;,&#x27;error&#x27;,&#x27;audio&#x27;,&#x27;bin&#x27;)))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</pre></details><details><summary>tests.integration.test_web_extraction::test_html_video_actual_download[iframe-video]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa2&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1BCA7A0&gt;
+page = &#x27;iframe-video&#x27;
+
+    @pytest.mark.parametrize(&#x27;page&#x27;,[&#x27;html5-video&#x27;,&#x27;multiple-source&#x27;,&#x27;iframe-video&#x27;,&#x27;nested-iframe&#x27;,&#x27;video-poster&#x27;,&#x27;multiple-videos&#x27;,&#x27;relative-url&#x27;,&#x27;redirected-media&#x27;])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+&#x27;/pages/&#x27;+page)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {&#x27;action&#x27;: &#x27;extract&#x27;, &#x27;url&#x27;: &#x27;http://127.0.0.1:64904/pages/iframe-video&#x27;, &#x27;cookie_file&#x27;: &#x27;&#x27;, &#x27;auto_browser_cookies&#x27;: False, ...}
+cancel = &lt;threading.Event at 0x245a1b4e390: unset&gt;, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix=&#x27;mh-test-engine-&#x27;) as directory:
+            request, result, events = [Path(directory) / n for n in (&#x27;request.json&#x27;, &#x27;result.json&#x27;, &#x27;events.jsonl&#x27;)]
+            request.write_text(json.dumps(job), encoding=&#x27;utf-8&#x27;)
+            proc = subprocess.Popen([sys.executable, &#x27;-m&#x27;, &#x27;test_server.engine_runner&#x27;, fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError(&#x27;test cancelled&#x27;)
+                    if time.monotonic() - start &gt; (timeout or 60): raise TimeoutError(&#x27;test worker timed out&#x27;)
+                assert result.exists(), f&#x27;Worker exit {proc.returncode}&#x27;
+                payload = json.loads(result.read_text(&#x27;utf-8&#x27;))
+&gt;               if &#x27;error&#x27; in payload: raise RuntimeError(payload[&#x27;error&#x27;])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError</pre></details><details><summary>tests.integration.test_web_extraction::test_html_video_actual_download[nested-iframe]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa3&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1C08B80&gt;
+page = &#x27;nested-iframe&#x27;
+
+    @pytest.mark.parametrize(&#x27;page&#x27;,[&#x27;html5-video&#x27;,&#x27;multiple-source&#x27;,&#x27;iframe-video&#x27;,&#x27;nested-iframe&#x27;,&#x27;video-poster&#x27;,&#x27;multiple-videos&#x27;,&#x27;relative-url&#x27;,&#x27;redirected-media&#x27;])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+&#x27;/pages/&#x27;+page)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({&#x27;action&#x27;:&#x27;extract&#x27;,&#x27;url&#x27;:url,&#x27;cookie_file&#x27;:cookie_file,&#x27;auto_browser_cookies&#x27;:self.settings.get(&#x27;auto_browser_cookies&#x27;,False),&#x27;cookie_browser&#x27;:self.settings.get(&#x27;cookie_browser&#x27;,&#x27;auto&#x27;)}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {&#x27;action&#x27;: &#x27;extract&#x27;, &#x27;url&#x27;: &#x27;http://127.0.0.1:64904/pages/nested-iframe&#x27;, &#x27;cookie_file&#x27;: &#x27;&#x27;, &#x27;auto_browser_cookies&#x27;: False, ...}
+cancel = &lt;threading.Event at 0x245a1b4d670: unset&gt;, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix=&#x27;mh-test-engine-&#x27;) as directory:
+            request, result, events = [Path(directory) / n for n in (&#x27;request.json&#x27;, &#x27;result.json&#x27;, &#x27;events.jsonl&#x27;)]
+            request.write_text(json.dumps(job), encoding=&#x27;utf-8&#x27;)
+            proc = subprocess.Popen([sys.executable, &#x27;-m&#x27;, &#x27;test_server.engine_runner&#x27;, fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError(&#x27;test cancelled&#x27;)
+                    if time.monotonic() - start &gt; (timeout or 60): raise TimeoutError(&#x27;test worker timed out&#x27;)
+                assert result.exists(), f&#x27;Worker exit {proc.returncode}&#x27;
+                payload = json.loads(result.read_text(&#x27;utf-8&#x27;))
+&gt;               if &#x27;error&#x27; in payload: raise RuntimeError(payload[&#x27;error&#x27;])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError</pre></details><details><summary>tests.integration.test_web_extraction::test_html_video_actual_download[multiple-videos]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa5&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1C09F80&gt;
+page = &#x27;multiple-videos&#x27;
+
+    @pytest.mark.parametrize(&#x27;page&#x27;,[&#x27;html5-video&#x27;,&#x27;multiple-source&#x27;,&#x27;iframe-video&#x27;,&#x27;nested-iframe&#x27;,&#x27;video-poster&#x27;,&#x27;multiple-videos&#x27;,&#x27;relative-url&#x27;,&#x27;redirected-media&#x27;])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+        results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+&#x27;/pages/&#x27;+page)
+        videos=[m for m in results if m.kind==&#x27;video&#x27;]
+        assert videos
+&gt;       result=download(tmp_path,videos[0],format_options(videos[0].formats)[0][1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa5&#x27;)
+media = Media(url=&#x27;http://127.0.0.1:64904/pages/multiple-videos&#x27;, page=&#x27;http://127.0.0.1:64904/pages/multiple-videos&#x27;, title=&#x27;...filesize_approx&#x27;: None, &#x27;format_id&#x27;: &#x27;0&#x27;, &#x27;format&#x27;: &#x27;0 - unknown&#x27;}], identity=&#x27;multiple-videos-1&#x27;, headers={}, auth={})
+selector = &#x27;0&#x27;, audio = &#x27;&#x27;, options = {}
+
+    def download(tmp_path, media, selector=&#x27;&#x27;, audio=&#x27;&#x27;, **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / &#x27;tasks.db&#x27;)
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: 媒体内容标识改变，已停止续传
+
+tests\integration\helpers.py:34: AssertionError</pre></details><details><summary>tests.integration.test_web_extraction::test_html_video_actual_download[redirected-media]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa7&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1C0B1A0&gt;
+page = &#x27;redirected-media&#x27;
+
+    @pytest.mark.parametrize(&#x27;page&#x27;,[&#x27;html5-video&#x27;,&#x27;multiple-source&#x27;,&#x27;iframe-video&#x27;,&#x27;nested-iframe&#x27;,&#x27;video-poster&#x27;,&#x27;multiple-videos&#x27;,&#x27;relative-url&#x27;,&#x27;redirected-media&#x27;])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+        results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+&#x27;/pages/&#x27;+page)
+        videos=[m for m in results if m.kind==&#x27;video&#x27;]
+        assert videos
+&gt;       result=download(tmp_path,videos[0],format_options(videos[0].formats)[0][1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa7&#x27;)
+media = Media(url=&#x27;http://127.0.0.1:64904/pages/redirected-media&#x27;, page=&#x27;http://127.0.0.1:64904/pages/redirected-media&#x27;, title...ilesize_approx&#x27;: None, &#x27;format_id&#x27;: &#x27;0&#x27;, &#x27;format&#x27;: &#x27;0 - unknown&#x27;}], identity=&#x27;redirected-media-1&#x27;, headers={}, auth={})
+selector = &#x27;0&#x27;, audio = &#x27;&#x27;, options = {}
+
+    def download(tmp_path, media, selector=&#x27;&#x27;, audio=&#x27;&#x27;, **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / &#x27;tasks.db&#x27;)
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: 媒体引擎没有产生唯一完整文件
+
+tests\integration\helpers.py:34: AssertionError</pre></details><details><summary>tests.integration.test_playlist_download::test_selected_playlist_entry_reextracted_and_downloaded</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-131/test_selected_playlist_entry_r0&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x000001B9D2767230&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x000001B9D28C37E0&gt;
+
+    def test_selected_playlist_entry_reextracted_and_downloaded(tmp_path,fixture_server,local_engine):
+        media=YtDlpExtractor().extract(fixture_server.url+&#x27;/pages/multiple-videos&#x27;,threading.Event())
+        assert len(media)==2
+&gt;       result=download(tmp_path,media[0],format_options(media[0].formats)[0][1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_playlist_download.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-131/test_selected_playlist_entry_r0&#x27;)
+media = Media(url=&#x27;http://127.0.0.1:58972/pages/multiple-videos&#x27;, page=&#x27;http://127.0.0.1:58972/pages/multiple-videos&#x27;, title=&#x27;...filesize_approx&#x27;: None, &#x27;format_id&#x27;: &#x27;0&#x27;, &#x27;format&#x27;: &#x27;0 - unknown&#x27;}], identity=&#x27;multiple-videos-1&#x27;, headers={}, auth={})
+selector = &#x27;0&#x27;, audio = &#x27;&#x27;, options = {}
+
+    def download(tmp_path, media, selector=&#x27;&#x27;, audio=&#x27;&#x27;, **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / &#x27;tasks.db&#x27;)
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: 媒体内容标识改变，已停止续传
+
+tests\integration\helpers.py:34: AssertionError</pre></details><details><summary>tests.integration.test_process_lifecycle::test_already_exited_child_does_not_fail_verification</summary><pre>@pytest.mark.skipif(os.name!=&#x27;nt&#x27;,reason=&#x27;Windows Job Object lifecycle&#x27;)
+    def test_already_exited_child_does_not_fail_verification():
+        proc=subprocess.Popen([sys.executable,&#x27;-c&#x27;,&#x27;pass&#x27;])
+        proc.wait(timeout=5)
+&gt;       attach_job(proc)
+
+tests\integration\test_process_lifecycle.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+process = &lt;Popen: returncode: 0 args: [&#x27;C:\\Users\\seki9\\Documents\\MediaHarvester\\....&gt;
+
+    def attach_job(process):
+        if os.name!=&#x27;nt&#x27;: return
+        class Basic(ctypes.Structure):
+            _fields_=[(&#x27;PerProcessUserTimeLimit&#x27;,ctypes.c_int64),(&#x27;PerJobUserTimeLimit&#x27;,ctypes.c_int64),
+                      (&#x27;LimitFlags&#x27;,wintypes.DWORD),(&#x27;MinimumWorkingSetSize&#x27;,ctypes.c_size_t),
+                      (&#x27;MaximumWorkingSetSize&#x27;,ctypes.c_size_t),(&#x27;ActiveProcessLimit&#x27;,wintypes.DWORD),
+                      (&#x27;Affinity&#x27;,ctypes.c_size_t),(&#x27;PriorityClass&#x27;,wintypes.DWORD),(&#x27;SchedulingClass&#x27;,wintypes.DWORD)]
+        class IO(ctypes.Structure):
+            _fields_=[(n,ctypes.c_uint64) for n in (&#x27;ReadOperationCount&#x27;,&#x27;WriteOperationCount&#x27;,&#x27;OtherOperationCount&#x27;,&#x27;ReadTransferCount&#x27;,&#x27;WriteTransferCount&#x27;,&#x27;OtherTransferCount&#x27;)]
+        class Extended(ctypes.Structure):
+            _fields_=[(&#x27;BasicLimitInformation&#x27;,Basic),(&#x27;IoInfo&#x27;,IO),(&#x27;ProcessMemoryLimit&#x27;,ctypes.c_size_t),
+                      (&#x27;JobMemoryLimit&#x27;,ctypes.c_size_t),(&#x27;PeakProcessMemoryUsed&#x27;,ctypes.c_size_t),(&#x27;PeakJobMemoryUsed&#x27;,ctypes.c_size_t)]
+        kernel=ctypes.WinDLL(&#x27;kernel32&#x27;,use_last_error=True)
+        kernel.CreateJobObjectW.argtypes=[ctypes.c_void_p,wintypes.LPCWSTR]; kernel.CreateJobObjectW.restype=wintypes.HANDLE
+        kernel.SetInformationJobObject.argtypes=[wintypes.HANDLE,ctypes.c_int,ctypes.c_void_p,wintypes.DWORD]
+        kernel.AssignProcessToJobObject.argtypes=[wintypes.HANDLE,wintypes.HANDLE]
+        kernel.CloseHandle.argtypes=[wintypes.HANDLE]
+        handle=kernel.CreateJobObjectW(None,None)
+        limits=Extended(); limits.BasicLimitInformation.LimitFlags=0x2000
+        if not handle or not kernel.SetInformationJobObject(handle,9,ctypes.byref(limits),ctypes.sizeof(limits)) or not kernel.AssignProcessToJobObject(handle,wintypes.HANDLE(int(process._handle))):
+            error=ctypes.get_last_error()
+            if handle: kernel.CloseHandle(handle)
+            process.kill(); process.wait()
+&gt;           raise OSError(error,&#x27;无法创建下载进程生命周期保护&#x27;)
+E           OSError: [Errno 5] 无法创建下载进程生命周期保护
+
+mediaharvester\processes.py:29: OSError</pre></details><details><summary>tests.integration.test_regressions::test_invalid_range_bounds[bad-end]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_invalid_range_bounds_bad_0&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x000001A741613380&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000001A7417B39C0&gt;
+endpoint = &#x27;bad-end&#x27;
+
+    @pytest.mark.parametrize(&#x27;endpoint&#x27;, [&#x27;bad-end&#x27;, &#x27;bad-total&#x27;])
+    def test_invalid_range_bounds(tmp_path, fixture_server, local_network, endpoint):
+        task = Task(asdict(Media(fixture_server.url + &#x27;/binary/&#x27; + endpoint, &#x27;&#x27;, &#x27;file&#x27;, &#x27;audio&#x27;, &#x27;bin&#x27;)), str(tmp_path), etag=&#x27;&quot;fixture-v1&quot;&#x27;)
+        (tmp_path / &#x27;payload.part&#x27;).write_bytes(b&#x27;x&#x27; * 32)
+&gt;       with pytest.raises(OSError, match=&#x27;Content-Range&#x27;):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: &#x27;Content-Range&#x27;
+E         Actual message: &#x27;下载数据长度不完整&#x27;
+
+tests\integration\test_regressions.py:20: AssertionError</pre></details><details><summary>tests.integration.test_regressions::test_invalid_range_bounds[bad-total]</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_invalid_range_bounds_bad_1&#x27;)
+fixture_server = &lt;test_server.main.TestServer object at 0x000001A741613380&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000001A741800900&gt;
+endpoint = &#x27;bad-total&#x27;
+
+    @pytest.mark.parametrize(&#x27;endpoint&#x27;, [&#x27;bad-end&#x27;, &#x27;bad-total&#x27;])
+    def test_invalid_range_bounds(tmp_path, fixture_server, local_network, endpoint):
+        task = Task(asdict(Media(fixture_server.url + &#x27;/binary/&#x27; + endpoint, &#x27;&#x27;, &#x27;file&#x27;, &#x27;audio&#x27;, &#x27;bin&#x27;)), str(tmp_path), etag=&#x27;&quot;fixture-v1&quot;&#x27;)
+        (tmp_path / &#x27;payload.part&#x27;).write_bytes(b&#x27;x&#x27; * 32)
+&gt;       with pytest.raises(OSError, match=&#x27;Content-Range&#x27;):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: &#x27;Content-Range&#x27;
+E         Actual message: &#x27;下载数据长度不完整&#x27;
+
+tests\integration\test_regressions.py:20: AssertionError</pre></details><details><summary>tests.integration.test_regressions::test_drm_audio_never_auto_paired</summary><pre>def test_drm_audio_never_auto_paired():
+        formats = [dict(format_id=&#x27;v&#x27;, vcodec=&#x27;avc1&#x27;, acodec=&#x27;none&#x27;, ext=&#x27;mp4&#x27;),
+                   dict(format_id=&#x27;a&#x27;, vcodec=&#x27;none&#x27;, acodec=&#x27;aac&#x27;, ext=&#x27;m4a&#x27;, has_drm=True)]
+&gt;       assert format_options(formats) == []
+E       AssertionError: assert [(&#x27;未知p | mp4 ...合并音轨&#x27;, &#x27;v+a&#x27;)] == []
+E         
+E         Left contains one more item: (&#x27;未知p | mp4 | avc1 / none | 未知 fps | 合并音轨&#x27;, &#x27;v+a&#x27;)
+E         Use -v to get more diff
+
+tests\integration\test_regressions.py:36: AssertionError</pre></details><details><summary>tests.integration.test_regressions::test_direct_wrong_extension_corrected</summary><pre>fixture_server = &lt;test_server.main.TestServer object at 0x000001A741613380&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000001A741801800&gt;
+
+    def test_direct_wrong_extension_corrected(fixture_server, local_network):
+        media = ExtractorRegistry(Settings.defaults).analyze(fixture_server.url + &#x27;/video/wrong-extension.jpg&#x27;)[0]
+        assert media.kind == &#x27;video&#x27; and media.ext == &#x27;mp4&#x27;
+&gt;       assert media.title.endswith(&#x27;.mp4&#x27;)
+E       AssertionError: assert False
+E        +  where False = &lt;built-in method endswith of str object at 0x000001A7417D6170&gt;(&#x27;.mp4&#x27;)
+E        +    where &lt;built-in method endswith of str object at 0x000001A7417D6170&gt; = &#x27;wrong-extension.jpg&#x27;.endswith
+E        +      where &#x27;wrong-extension.jpg&#x27; = Media(url=&#x27;http://127.0.0.1:60210/video/wrong-extension.jpg&#x27;, page=&#x27;http://127.0.0.1:60210/video/wrong-extension.jpg&#x27;,...e=36774, width=0, height=0, thumbnail=&#x27;&#x27;, source=&#x27;127.0.0.1&#x27;, duration=0, formats=[], identity=&#x27;&#x27;, headers={}, auth={}).title
+
+tests\integration\test_regressions.py:42: AssertionError</pre></details><details><summary>tests.integration.test_regressions::test_content_disposition_unicode</summary><pre>fixture_server = &lt;test_server.main.TestServer object at 0x000001A741613380&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000001A7418011C0&gt;
+
+    def test_content_disposition_unicode(fixture_server, local_network):
+        media = ExtractorRegistry(Settings.defaults).analyze(fixture_server.url + &#x27;/video/disposition&#x27;)[0]
+&gt;       assert media.title == &#x27;测试_日本.mp4&#x27;
+E       AssertionError: assert &#x27;disposition&#x27; == &#x27;测试_日本.mp4&#x27;
+E         
+E         - 测试_日本.mp4
+E         + disposition
+
+tests\integration\test_regressions.py:47: AssertionError</pre></details><details><summary>tests.integration.test_regressions::test_video_with_expected_audio_rejects_silent_file</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_video_with_expected_audio0&#x27;)
+media_root = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/controlled-media0&#x27;)
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000001A741801D00&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A741818150&gt;
+
+    def test_video_with_expected_audio_rejects_silent_file(tmp_path, media_root, local_network, monkeypatch):
+        def engine(job, *args, **kwargs):
+            target = Path(job[&#x27;temp&#x27;]) / &#x27;media.mp4&#x27;
+            target.write_bytes((media_root / &#x27;silent.mp4&#x27;).read_bytes())
+            return {&#x27;files&#x27;: [str(target)]}
+        monkeypatch.setattr(&#x27;mediaharvester.download.run_job&#x27;, engine)
+        repo = Repository(tmp_path / &#x27;db&#x27;)
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0)
+        manager = DownloadManager(repo, settings)
+        try:
+            media = asdict(Media(&#x27;https://example.com/video&#x27;, &#x27;&#x27;, &#x27;v&#x27;, &#x27;video&#x27;, &#x27;mp4&#x27;, identity=&#x27;v&#x27;,
+                                 formats=[dict(format_id=&#x27;av&#x27;, vcodec=&#x27;avc1&#x27;, acodec=&#x27;aac&#x27;, ext=&#x27;mp4&#x27;)]))
+            task = manager.add(media, &#x27;av&#x27;)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED))
+&gt;           assert task.state == State.FAILED
+E           AssertionError: assert &lt;State.COMPLETED: &#x27;COMPLETED&#x27;&gt; == &lt;State.FAILED: &#x27;FAILED&#x27;&gt;
+E             
+E             - FAILED
+E             + COMPLETED
+
+tests\integration\test_regressions.py:64: AssertionError</pre></details><details><summary>tests.integration.test_regressions::test_commit_recovery_restores_file_size</summary><pre>tmp_path = WindowsPath(&#x27;C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_commit_recovery_restores_0&#x27;)
+
+    def test_commit_recovery_restores_file_size(tmp_path):
+        repo = Repository(tmp_path / &#x27;db&#x27;)
+        task = Task(asdict(Media(&#x27;https://example.com/file&#x27;, &#x27;&#x27;, &#x27;v&#x27;, &#x27;audio&#x27;, &#x27;bin&#x27;)), str(tmp_path), state=State.VERIFYING, total=9999)
+        final = tmp_path / &#x27;done.bin&#x27;
+        final.write_bytes(b&#x27;complete&#x27;)
+        temp = tmp_path / &#x27;.mediaharvester&#x27; / task.id
+        temp.mkdir(parents=True)
+        (temp / &#x27;commit.json&#x27;).write_text(json.dumps({&#x27;path&#x27;: str(final), &#x27;digest&#x27;: sha256(final)}), encoding=&#x27;utf-8&#x27;)
+        repo.save(task)
+        manager = DownloadManager(repo, dict(Settings.defaults, auto_resume=True))
+        try:
+            wait(lambda: manager.tasks[task.id].state == State.COMPLETED)
+            restored = repo.all()[0]
+&gt;           assert restored.total == restored.downloaded == len(b&#x27;complete&#x27;)
+E           AssertionError: assert 9999 == 0
+E            +  where 9999 = Task(media={&#x27;url&#x27;: &#x27;https://example.com/file&#x27;, &#x27;page&#x27;: &#x27;&#x27;, &#x27;title&#x27;: &#x27;v&#x27;, &#x27;kind&#x27;: &#x27;audio&#x27;, &#x27;ext&#x27;: &#x27;bin&#x27;, &#x27;size&#x27;: 0, &#x27;wi...f9b97390f790ba443d60cfa44b607da7e5c40aa1cc1d&#x27;, engine=&#x27;&#x27;, phase=&#x27;&#x27;, cancel_requested=False, updated=1791768800.3149786).total
+E            +  and   0 = Task(media={&#x27;url&#x27;: &#x27;https://example.com/file&#x27;, &#x27;page&#x27;: &#x27;&#x27;, &#x27;title&#x27;: &#x27;v&#x27;, &#x27;kind&#x27;: &#x27;audio&#x27;, &#x27;ext&#x27;: &#x27;bin&#x27;, &#x27;size&#x27;: 0, &#x27;wi...f9b97390f790ba443d60cfa44b607da7e5c40aa1cc1d&#x27;, engine=&#x27;&#x27;, phase=&#x27;&#x27;, cancel_requested=False, updated=1791768800.3149786).downloaded
+
+tests\integration\test_regressions.py:83: AssertionError</pre></details><h2>判定说明</h2><ul><li>PASS 只代表该用例实际断言已通过；协议成功率只按执行用例计算，不能等同于所有场景覆盖率。</li><li>平台只有提取通过不等同下载通过；未确认授权或超预算的电影未下载。</li><li>本地 HTTP fixture 经测试依赖注入访问精确 loopback origin；正式安全策略没有私网豁免。</li><li>保留并测试了原有 extractors.py/ui.py/docs/artifacts.sha256 三处未提交修改，不将它们混入本次代码提交。</li><li>基线日志保留不覆盖。中途生成器路径错误和 GUI 视图断言错误属于测试工具问题，修正后独立重跑，未计为产品 Bug。</li></ul><h2>下一步</h2><ul><li>补充各平台短小授权样例与合法登录态，逐项复测 BLOCKED/UNAVAILABLE。</li><li>在干净 Windows VM 和 Python 3.11 执行同一套本地测试及 EXE smoke。</li><li>继续扩展完整故障组合、DASH 字幕与多清晰度、HLS 自动受限碎片重试。</li></ul><script>document.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{const table=th.closest('table'),body=table.tBodies[0],i=Number(th.dataset.col),direction=th.dataset.order==='asc'?-1:1;th.dataset.order=direction===1?'asc':'desc';[...body.rows].sort((a,b)=>direction*a.cells[i].textContent.localeCompare(b.cells[i].textContent,'zh-CN',{numeric:true})).forEach(row=>body.append(row));}));</script></body></html>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="10" skipped="0" tests="30" time="88.587" timestamp="2026-10-12T10:36:43.289783+09:00" hostname="GT12_Pro"><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[400]" time="1.375" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[401]" time="0.201" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[403]" time="0.192" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[404]" time="0.172" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[408]" time="0.176" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[410]" time="0.185" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[429]" time="0.273" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[500]" time="0.636" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[502]" time="0.606" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[503]" time="0.470" /><testcase classname="tests.integration.test_network_failure" name="test_http_errors_never_publish[504]" time="0.460" /><testcase classname="tests.integration.test_network_failure" name="test_dropped_tcp_never_reports_complete" time="0.432" /><testcase classname="tests.integration.test_network_failure" name="test_redirect_loop_bounded" time="0.437" /><testcase classname="tests.integration.test_network_failure" name="test_permanent_or_limited_status_stops_automatic_retry[401]" time="4.476"><failure message="assert (4 - 1) == 1">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat0')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1B1CF40&gt;
+code = 401
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</failure></testcase><testcase classname="tests.integration.test_network_failure" name="test_permanent_or_limited_status_stops_automatic_retry[403]" time="4.465"><failure message="assert (4 - 1) == 1">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat1')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1BA4220&gt;
+code = 403
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</failure></testcase><testcase classname="tests.integration.test_network_failure" name="test_permanent_or_limited_status_stops_automatic_retry[404]" time="5.070"><failure message="assert (4 - 1) == 1">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat2')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1B1D800&gt;
+code = 404
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</failure></testcase><testcase classname="tests.integration.test_network_failure" name="test_permanent_or_limited_status_stops_automatic_retry[410]" time="4.041"><failure message="assert (4 - 1) == 1">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat3')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1BCA700&gt;
+code = 410
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</failure></testcase><testcase classname="tests.integration.test_network_failure" name="test_permanent_or_limited_status_stops_automatic_retry[429]" time="4.033"><failure message="assert (4 - 1) == 1">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat4')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x00000245A1B1D4E0&gt;
+code = 429
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+&gt;           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError</failure></testcase><testcase classname="tests.integration.test_network_failure" name="test_retry_after_honored_and_retry_count_bounded" time="1.834" /><testcase classname="tests.integration.test_web_extraction" name="test_html_video_actual_download[html5-video]" time="5.017" /><testcase classname="tests.integration.test_web_extraction" name="test_html_video_actual_download[multiple-source]" time="5.091" /><testcase classname="tests.integration.test_web_extraction" name="test_html_video_actual_download[iframe-video]" time="2.359"><failure message="RuntimeError: ERROR: Unsupported URL: [URL]">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa2')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1BCA7A0&gt;
+page = 'iframe-video'
+
+    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/iframe-video', 'cookie_file': '', 'auto_browser_cookies': False, ...}
+cancel = &lt;threading.Event at 0x245a1b4e390: unset&gt;, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:
+            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]
+            request.write_text(json.dumps(job), encoding='utf-8')
+            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError('test cancelled')
+                    if time.monotonic() - start &gt; (timeout or 60): raise TimeoutError('test worker timed out')
+                assert result.exists(), f'Worker exit {proc.returncode}'
+                payload = json.loads(result.read_text('utf-8'))
+&gt;               if 'error' in payload: raise RuntimeError(payload['error'])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError</failure></testcase><testcase classname="tests.integration.test_web_extraction" name="test_html_video_actual_download[nested-iframe]" time="2.346"><failure message="RuntimeError: ERROR: Unsupported URL: [URL]">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa3')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1C08B80&gt;
+page = 'nested-iframe'
+
+    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/nested-iframe', 'cookie_file': '', 'auto_browser_cookies': False, ...}
+cancel = &lt;threading.Event at 0x245a1b4d670: unset&gt;, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:
+            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]
+            request.write_text(json.dumps(job), encoding='utf-8')
+            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError('test cancelled')
+                    if time.monotonic() - start &gt; (timeout or 60): raise TimeoutError('test worker timed out')
+                assert result.exists(), f'Worker exit {proc.returncode}'
+                payload = json.loads(result.read_text('utf-8'))
+&gt;               if 'error' in payload: raise RuntimeError(payload['error'])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError</failure></testcase><testcase classname="tests.integration.test_web_extraction" name="test_html_video_actual_download[video-poster]" time="5.029" /><testcase classname="tests.integration.test_web_extraction" name="test_html_video_actual_download[multiple-videos]" time="4.629"><failure message="AssertionError: 媒体内容标识改变，已停止续传">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa5')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1C09F80&gt;
+page = 'multiple-videos'
+
+    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+        results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)
+        videos=[m for m in results if m.kind=='video']
+        assert videos
+&gt;       result=download(tmp_path,videos[0],format_options(videos[0].formats)[0][1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa5')
+media = Media(url='http://127.0.0.1:64904/pages/multiple-videos', page='http://127.0.0.1:64904/pages/multiple-videos', title='...filesize_approx': None, 'format_id': '0', 'format': '0 - unknown'}], identity='multiple-videos-1', headers={}, auth={})
+selector = '0', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: 媒体内容标识改变，已停止续传
+
+tests\integration\helpers.py:34: AssertionError</failure></testcase><testcase classname="tests.integration.test_web_extraction" name="test_html_video_actual_download[relative-url]" time="5.181" /><testcase classname="tests.integration.test_web_extraction" name="test_html_video_actual_download[redirected-media]" time="5.131"><failure message="AssertionError: 媒体引擎没有产生唯一完整文件">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa7')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1C0B1A0&gt;
+page = 'redirected-media'
+
+    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+        results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)
+        videos=[m for m in results if m.kind=='video']
+        assert videos
+&gt;       result=download(tmp_path,videos[0],format_options(videos[0].formats)[0][1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa7')
+media = Media(url='http://127.0.0.1:64904/pages/redirected-media', page='http://127.0.0.1:64904/pages/redirected-media', title...ilesize_approx': None, 'format_id': '0', 'format': '0 - unknown'}], identity='redirected-media-1', headers={}, auth={})
+selector = '0', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: 媒体引擎没有产生唯一完整文件
+
+tests\integration\helpers.py:34: AssertionError</failure></testcase><testcase classname="tests.integration.test_web_extraction" name="test_dynamic_video_deep_download[javascript-video]" time="13.624"><failure message="RuntimeError: ERROR: Unsupported URL: [URL]">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_dynamic_video_deep_downlo0')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000245A194F4D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000245A1C0B560&gt;
+page = 'javascript-video'
+
+    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/javascript-video', 'cookie_file': '', 'auto_browser_cookies': False, ...}
+cancel = &lt;threading.Event at 0x245a1c03e30: unset&gt;, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:
+            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]
+            request.write_text(json.dumps(job), encoding='utf-8')
+            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError('test cancelled')
+                    if time.monotonic() - start &gt; (timeout or 60): raise TimeoutError('test worker timed out')
+                assert result.exists(), f'Worker exit {proc.returncode}'
+                payload = json.loads(result.read_text('utf-8'))
+&gt;               if 'error' in payload: raise RuntimeError(payload['error'])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError</failure></testcase><testcase classname="tests.integration.test_web_extraction" name="test_dynamic_video_deep_download[lazy-loaded-video]" time="9.355" /><testcase classname="tests.integration.test_web_extraction" name="test_large_html_rejected" time="0.908" /></testsuite></testsuites>

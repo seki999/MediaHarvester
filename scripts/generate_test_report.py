@@ -111,6 +111,8 @@ def generate(reports):
     data['exe']={kind:read_json(reports/f'exe-{kind}/result.json',{}) for kind in ('onedir','onefile')}
     data['stress_evidence_scope']='reports/stress.xml 是独立执行的有界压力测试记录；不计入默认本地用例数。'
     data['source_sha256']={str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'mediaharvester').rglob('*.py')}
+    data['modified_files']=subprocess.check_output(['git','diff','--name-only',data['base_commit'],'HEAD'],cwd=ROOT,text=True).splitlines()
+    data['build_source_audits']={kind:read_json(reports/f'exe-{kind}/source-audit.json',{}) for kind in ('onedir','onefile')}
     data=clean(data)
     (reports/'latest.json').write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     lines=['# MediaHarvester 实际自动化验证报告','',f'测试日期：{data["date"]}（Asia/Tokyo）',f'基线提交：`{data["base_commit"]}`；报告生成时提交：`{data["report_commit"]}`。',
@@ -129,6 +131,7 @@ def generate(reports):
     lines+=['','## 命令与构建证据','']
     for command in commands:lines.append(f'- {command["id"]}：{command["status"]}；`{command.get("command","")}`；日志 `{command.get("log","")}`。')
     lines+=['','## 未解决、未执行或能力边界','']
+    lines+=['','代码修改文件：'+', '.join(data['modified_files']),'']
     for gap in GAPS:lines.append(f'- **{gap["status"]}** {gap["id"]}：{gap["reason"]}')
     lines+=['','## 复现命令','', '```powershell', '.venv\\Scripts\\python.exe scripts\\run_full_tests.py --mode offline',
             '.venv\\Scripts\\python.exe scripts\\run_full_tests.py --mode online', '.venv\\Scripts\\python.exe scripts\\run_full_tests.py --mode full --build',
@@ -146,6 +149,7 @@ def generate(reports):
     body+='<h2>网站与完整性</h2><p>点击表头排序。PASS 表示真实下载并验证；SKIPPED/BLOCKED 不表示通过。</p>'
     body+=table(['ID / 网站','状态','提取','字节','SHA-256','原因'],[(r['id']+' / '+r['site'],r['status'],r.get('extraction',''),r.get('bytes',''),r.get('sha256',''),r.get('reason','完整性验证通过')) for r in online])
     body+='<h2>自动修复前后</h2>'+table(['Bug','触发与问题','修改文件','重测','对应测试'],[(f['id'],f['problem'],', '.join(f['files']),f['after'],', '.join(f['tests'])) for f in fixes])
+    body+='<details><summary>完整代码修改文件清单</summary><pre>'+html.escape('\n'.join(data['modified_files']))+'</pre></details>'
     body+='<h2>命令、GUI 与 EXE</h2>'+table(['阶段','状态','秒','可复现命令','日志'],[(c['id'],c['status'],c.get('seconds',''),c.get('command',''),c.get('log','')) for c in commands])
     body+='<h2>未解决与未执行</h2>'+table(['ID','状态','原因'],[(g['id'],g['status'],g['reason']) for g in GAPS])
     body+='<h2>失败案例与堆栈</h2>'

@@ -1,0 +1,92 @@
+........................................................................ [ 35%]
+...........................ss.............................FF............ [ 70%]
+...........................................................              [100%]
+================================== FAILURES ===================================
+_____________ test_dynamic_video_deep_download[javascript-video] ______________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-134/test_dynamic_video_deep_downlo0')
+fixture_server = <test_server.main.TestServer object at 0x000002A6655D06E0>
+local_engine = <function local_engine.<locals>.run at 0x000002A6659CA0C0>
+page = 'javascript-video'
+
+    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:199: in analyze
+    for item in self.analyze(candidate,cancel,_context=context,_depth=_depth+1):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <mediaharvester.extractors.ExtractorRegistry object at 0x000002A665897170>
+url = 'http://127.0.0.1:64720/video/direct.mp4'
+cancel = <threading.Event at 0x2a6659d3590: unset>, deep = False
+_context = {'seen': {'http://127.0.0.1:64720/pages/javascript-video'}, 'started': 1829219.5583403}
+_depth = 1
+
+    def analyze(self, url, cancel=None, deep=False, _context=None, _depth=0):
+        cancel = cancel or threading.Event()
+        validate_url(url)
+        context=_context if _context is not None else {'seen':set(),'started':time.monotonic()}
+        if cancel.is_set(): raise InterruptedError('解析已取消')
+        if _depth>3 or url in context['seen'] or len(context['seen'])>=20:
+            return []
+>       if time.monotonic()-context['started']>30: raise TimeoutError('网页解析超过 30 秒')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TimeoutError: 网页解析超过 30 秒
+
+mediaharvester\extractors.py:139: TimeoutError
+_____________ test_dynamic_video_deep_download[lazy-loaded-video] _____________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-134/test_dynamic_video_deep_downlo1')
+fixture_server = <test_server.main.TestServer object at 0x000002A6655D06E0>
+local_engine = <function local_engine.<locals>.run at 0x000002A665E5E340>
+page = 'lazy-loaded-video'
+
+    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:188: in analyze
+    rendered = run_job({'action':'dynamic','url':url}, cancel, timeout=45)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'dynamic', 'url': 'http://127.0.0.1:64720/pages/lazy-loaded-video'}
+cancel = <threading.Event at 0x2a665e998b0: unset>, progress = None
+timeout = 45
+
+    def run(job, cancel, progress=None, timeout=60):
+        if job['action']=='dynamic':
+            try:
+                from playwright.sync_api import sync_playwright
+            except ImportError:
+                pytest.skip('Optional Playwright is not installed')
+            with sync_playwright() as playwright:
+                if not Path(playwright.chromium.executable_path).exists():
+                    pytest.skip('Optional Chromium is not installed')
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:
+            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]
+            request.write_text(json.dumps(job), encoding='utf-8')
+            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError('test cancelled')
+>                   if time.monotonic() - start > (timeout or 60): raise TimeoutError('test worker timed out')
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   TimeoutError: test worker timed out
+
+tests\integration\conftest.py:78: TimeoutError
+=========================== short test summary info ===========================
+FAILED tests/integration/test_web_extraction.py::test_dynamic_video_deep_download[javascript-video]
+FAILED tests/integration/test_web_extraction.py::test_dynamic_video_deep_download[lazy-loaded-video]
+2 failed, 199 passed, 2 skipped in 310.82s (0:05:10)

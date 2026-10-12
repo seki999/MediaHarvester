@@ -1,0 +1,13 @@
+{
+  "id": "YouTube-Shorts",
+  "site": "YouTube Shorts",
+  "url": "",
+  "source": "No verified authorized URL found in this run",
+  "license": "",
+  "kind": "video",
+  "date": "2026-10-12T11:00:15.099925+09:00",
+  "stage": "extraction",
+  "status": "BLOCKED",
+  "reason": "尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求",
+  "seconds": 0.0
+}

@@ -1,0 +1,22 @@
+Real public MP4 detection passed
+Real httpx download passed: 4372373 bytes
+FFprobe verified downloaded media: {
+    "programs": [
+
+    ],
+    "stream_groups": [
+
+    ],
+    "streams": [
+        {
+            "codec_type": "video"
+        },
+        {
+            "codec_type": "audio"
+        }
+    ]
+}
+Real yt-dlp Python API extraction passed
+Real HTML image extraction and batch download passed: 2 images
+Real yt-dlp download passed
+Real FFmpeg MP3 conversion passed

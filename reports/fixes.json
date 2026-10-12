@@ -1,0 +1,178 @@
+[
+  {
+    "id": "MH-001",
+    "problem": "206 未验证 Content-Range 结束位置和分段长度；异常响应先追加文件才失败",
+    "files": [
+      "mediaharvester/download.py"
+    ],
+    "tests": [
+      "test_invalid_range_bounds"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-002",
+    "problem": "DRM 音轨参与自动视频配对",
+    "files": [
+      "mediaharvester/extractors.py"
+    ],
+    "tests": [
+      "test_drm_audio_never_auto_paired"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-003",
+    "problem": "错误或缺失扩展名未根据媒体类型规范化",
+    "files": [
+      "mediaharvester/extractors.py"
+    ],
+    "tests": [
+      "test_direct_wrong_extension_corrected",
+      "test_http_complete_hash_and_tracks"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-004",
+    "problem": "忽略 Content-Disposition 的 UTF-8 文件名",
+    "files": [
+      "mediaharvester/extractors.py"
+    ],
+    "tests": [
+      "test_content_disposition_unicode"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-005",
+    "problem": "选择包含音轨的视频下载后无音轨仍标为完成",
+    "files": [
+      "mediaharvester/download.py",
+      "mediaharvester/media.py"
+    ],
+    "tests": [
+      "test_video_with_expected_audio_rejects_silent_file"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-006",
+    "problem": "提交日志恢复只更新状态，保留了旧下载字节数和总大小",
+    "files": [
+      "mediaharvester/download.py"
+    ],
+    "tests": [
+      "test_commit_recovery_restores_file_size"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-007",
+    "problem": "权限拒绝、永久错误和限速仍自动重复请求；缺少 Retry-After 处理",
+    "files": [
+      "mediaharvester/download.py"
+    ],
+    "tests": [
+      "test_permanent_or_limited_status_stops_automatic_retry",
+      "test_retry_after_seconds",
+      "test_retry_after_date_and_exponential_floor"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-008",
+    "problem": "HTML5/iframe/动态视频源解析缺口，以及 generic 多媒体页面下载失败",
+    "files": [
+      "mediaharvester/extractors.py"
+    ],
+    "tests": [
+      "test_html_video_actual_download",
+      "test_dynamic_video_deep_download"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-009",
+    "problem": "未知 MIME 的 MP4 和 application/ogg 未识别为直链；video/ogg 声音文件被误分类",
+    "files": [
+      "mediaharvester/extractors.py"
+    ],
+    "tests": [
+      "test_octet_stream_mp4_detected",
+      "test_application_ogg_audio_detected"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 2
+  },
+  {
+    "id": "MH-010",
+    "problem": "Windows 短命子进程已退出时 Job Object 绑定失败导致误报",
+    "files": [
+      "mediaharvester/processes.py"
+    ],
+    "tests": [
+      "test_already_exited_child_does_not_fail_verification"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-011",
+    "problem": "Instagram 原始视频格式未由 yt-dlp 生成 format_id，导致 Reels/视频被丢弃",
+    "files": [
+      "mediaharvester/worker.py"
+    ],
+    "tests": [
+      "test_instagram_raw_video_gets_format_ids"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-012",
+    "problem": "重新解析多视频页面时比较播放列表父 ID，无法下载已选子项",
+    "files": [
+      "mediaharvester/worker.py"
+    ],
+    "tests": [
+      "test_selected_playlist_entry_reextracted_and_downloaded",
+      "test_playlist_identity_missing_or_ambiguous_rejected"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  },
+  {
+    "id": "MH-013",
+    "problem": "Playwright 隐式浏览器上下文在视频页面清理时阻塞；显式关闭上下文后解除超时",
+    "files": [
+      "mediaharvester/worker.py"
+    ],
+    "tests": [
+      "test_dynamic_video_deep_download"
+    ],
+    "before": "FAIL",
+    "after": "PASS",
+    "rounds": 1
+  }
+]

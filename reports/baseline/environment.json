@@ -1,0 +1,10 @@
+{
+  "base_commit": "43d66e354027b9f617cc846fbb6234a3d99a0051",
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "os": "Windows-11-10.0.26200-SP0",
+  "tools": {
+    "ffmpeg": "C:\\Users\\seki9\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-full_build\\bin\\ffmpeg.EXE",
+    "ffprobe": "C:\\Users\\seki9\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-full_build\\bin\\ffprobe.EXE",
+    "aria2c": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "commons-image",
+  "site": "Wikimedia Commons",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Example.jpg",
+  "source": "https://commons.wikimedia.org/wiki/File:Example.jpg",
+  "license": "Public domain example image",
+  "kind": "image",
+  "date": "2026-10-12T10:59:10.174653+09:00",
+  "stage": "extraction",
+  "status": "BLOCKED",
+  "reason": "Client error '403 Forbidden' for url '[URL]\nFor more information check: [URL]",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 108, in execute\n    result.update(direct_case(sample));result['status']='PASS'\n                  ~~~~~~~~~~~^^^^^^^^\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 72, in direct_case\n    response.raise_for_status()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\httpx\\_models.py\", line 829, in raise_for_status\n    raise HTTPStatusError(message, request=request, response=self)\nhttpx.HTTPStatusError: Client error '403 Forbidden' for url '[URL]\nFor more information check: [URL]\n",
+  "seconds": 0.913
+}

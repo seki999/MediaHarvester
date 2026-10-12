@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="2" tests="57" time="82.180" timestamp="2026-10-12T10:34:29.377660+09:00" hostname="GT12_Pro"><testcase classname="tests.integration.test_audio" name="test_direct_audio_tracks_and_integrity[mp3]" time="2.491" /><testcase classname="tests.integration.test_audio" name="test_direct_audio_tracks_and_integrity[m4a]" time="0.855" /><testcase classname="tests.integration.test_audio" name="test_direct_audio_tracks_and_integrity[aac]" time="0.853" /><testcase classname="tests.integration.test_audio" name="test_direct_audio_tracks_and_integrity[opus]" time="0.884" /><testcase classname="tests.integration.test_audio" name="test_direct_audio_tracks_and_integrity[webm]" time="0.850" /><testcase classname="tests.integration.test_audio" name="test_video_audio_conversion[mp3]" time="1.062" /><testcase classname="tests.integration.test_audio" name="test_video_audio_conversion[m4a]" time="1.052" /><testcase classname="tests.integration.test_audio" name="test_video_audio_conversion[opus]" time="1.041" /><testcase classname="tests.integration.test_dash_download" name="test_dash_separate_audio_video[manifest.mpd-720]" time="3.189"><failure message="AssertionError: ERROR: &#13;[download] Got error: HTTP Error 404: Not Found">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video0')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000216635378C0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x000002166371A520&gt;
+path = 'manifest.mpd', height = 720
+
+    @pytest.mark.parametrize('path,height', [('manifest.mpd',720), ('list/manifest.mpd',360), ('template/manifest.mpd',360)])
+    def test_dash_separate_audio_video(tmp_path, fixture_server, local_engine, path, height):
+        media = YtDlpExtractor().extract(fixture_server.url + '/dash/' + path, threading.Event())[0]
+        assert any(f.get('vcodec')=='none' and f.get('acodec')!='none' for f in media.formats)
+        selector = next(s for label, s in format_options(media.formats) if '+' in s)
+&gt;       result = download(tmp_path, media, selector)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_dash_download.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video0')
+media = Media(url='http://127.0.0.1:51370/dash/manifest.mpd', page='http://127.0.0.1:51370/dash/manifest.mpd', title='manifest...0.5', 'Sec-Fetch-Mode': 'navigate'}, 'format': '0 - 1280x720 (DASH video)'}], identity='manifest', headers={}, auth={})
+selector = '0+1', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: ERROR: [download] Got error: HTTP Error 404: Not Found
+
+tests\integration\helpers.py:34: AssertionError</failure></testcase><testcase classname="tests.integration.test_dash_download" name="test_dash_separate_audio_video[list/manifest.mpd-360]" time="3.126"><failure message="AssertionError: ERROR: &#13;[download] Got error: HTTP Error 404: Not Found">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video1')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000216635378C0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000216637D0900&gt;
+path = 'list/manifest.mpd', height = 360
+
+    @pytest.mark.parametrize('path,height', [('manifest.mpd',720), ('list/manifest.mpd',360), ('template/manifest.mpd',360)])
+    def test_dash_separate_audio_video(tmp_path, fixture_server, local_engine, path, height):
+        media = YtDlpExtractor().extract(fixture_server.url + '/dash/' + path, threading.Event())[0]
+        assert any(f.get('vcodec')=='none' and f.get('acodec')!='none' for f in media.formats)
+        selector = next(s for label, s in format_options(media.formats) if '+' in s)
+&gt;       result = download(tmp_path, media, selector)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_dash_download.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video1')
+media = Media(url='http://127.0.0.1:51370/dash/list/manifest.mpd', page='http://127.0.0.1:51370/dash/list/manifest.mpd', title...=0.5', 'Sec-Fetch-Mode': 'navigate'}, 'format': '0 - 640x360 (DASH video)'}], identity='manifest', headers={}, auth={})
+selector = '0+1', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: ERROR: [download] Got error: HTTP Error 404: Not Found
+
+tests\integration\helpers.py:34: AssertionError</failure></testcase><testcase classname="tests.integration.test_dash_download" name="test_dash_separate_audio_video[template/manifest.mpd-360]" time="3.443"><failure message="AssertionError: ERROR: &#13;[download] Got error: HTTP Error 404: Not Found">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video2')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000216635378C0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000216637D1580&gt;
+path = 'template/manifest.mpd', height = 360
+
+    @pytest.mark.parametrize('path,height', [('manifest.mpd',720), ('list/manifest.mpd',360), ('template/manifest.mpd',360)])
+    def test_dash_separate_audio_video(tmp_path, fixture_server, local_engine, path, height):
+        media = YtDlpExtractor().extract(fixture_server.url + '/dash/' + path, threading.Event())[0]
+        assert any(f.get('vcodec')=='none' and f.get('acodec')!='none' for f in media.formats)
+        selector = next(s for label, s in format_options(media.formats) if '+' in s)
+&gt;       result = download(tmp_path, media, selector)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_dash_download.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video2')
+media = Media(url='http://127.0.0.1:51370/dash/template/manifest.mpd', page='http://127.0.0.1:51370/dash/template/manifest.mpd...=0.5', 'Sec-Fetch-Mode': 'navigate'}, 'format': '0 - 640x360 (DASH video)'}], identity='manifest', headers={}, auth={})
+selector = '0+1', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: ERROR: [download] Got error: HTTP Error 404: Not Found
+
+tests\integration\helpers.py:34: AssertionError</failure></testcase><testcase classname="tests.integration.test_hls_download" name="test_hls_selected_resolution_and_audio[360]" time="4.973" /><testcase classname="tests.integration.test_hls_download" name="test_hls_selected_resolution_and_audio[720]" time="4.708" /><testcase classname="tests.integration.test_hls_download" name="test_hls_selected_resolution_and_audio[1080]" time="4.671" /><testcase classname="tests.integration.test_hls_download" name="test_hls_fmp4_real_merge" time="4.965"><failure message="AssertionError: FFprobe 媒体验证失败，文件不是有效媒体">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_hls_fmp4_real_merge0')
+fixture_server = &lt;test_server.main.TestServer object at 0x00000216635378C0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x00000216637D07C0&gt;
+
+    def test_hls_fmp4_real_merge(tmp_path, fixture_server, local_engine):
+        media = YtDlpExtractor().extract(fixture_server.url + '/hls/fmp4/index.m3u8?token=fixture', threading.Event())[0]
+&gt;       result = download(tmp_path, media, format_options(media.formats)[0][1])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_hls_download.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_hls_fmp4_real_merge0')
+media = Media(url='http://127.0.0.1:51370/hls/fmp4/index.m3u8?token=fixture', page='http://127.0.0.1:51370/hls/fmp4/index.m3u8...ge': 'en-us,en;q=0.5', 'Sec-Fetch-Mode': 'navigate'}, 'format': '0 - unknown'}], identity='index', headers={}, auth={})
+selector = '0', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+&gt;           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: FFprobe 媒体验证失败，文件不是有效媒体
+
+tests\integration\helpers.py:34: AssertionError</failure></testcase><testcase classname="tests.integration.test_hls_download" name="test_hls_invalid_or_missing_never_succeeds[broken]" time="1.569" /><testcase classname="tests.integration.test_hls_download" name="test_hls_invalid_or_missing_never_succeeds[missing]" time="4.229" /><testcase classname="tests.integration.test_http_download" name="test_http_complete_hash_and_tracks[direct.mp4-video360.mp4]" time="1.674" /><testcase classname="tests.integration.test_http_download" name="test_http_complete_hash_and_tracks[direct.webm-direct.webm]" time="1.561" /><testcase classname="tests.integration.test_http_download" name="test_http_complete_hash_and_tracks[direct.mov-direct.mov]" time="1.627" /><testcase classname="tests.integration.test_http_download" name="test_http_complete_hash_and_tracks[no-extension?id=123-video360.mp4]" time="1.463" /><testcase classname="tests.integration.test_http_download" name="test_http_complete_hash_and_tracks[wrong-extension.jpg-video360.mp4]" time="1.566" /><testcase classname="tests.integration.test_http_download" name="test_http_complete_hash_and_tracks[chunked-video360.mp4]" time="1.433" /><testcase classname="tests.integration.test_http_download" name="test_http_complete_hash_and_tracks[no-content-length-video360.mp4]" time="1.394" /><testcase classname="tests.integration.test_http_download" name="test_http_complete_hash_and_tracks[disposition-video360.mp4]" time="1.718" /><testcase classname="tests.integration.test_http_download" name="test_redirect_download[301]" time="1.520" /><testcase classname="tests.integration.test_http_download" name="test_redirect_download[302]" time="1.301" /><testcase classname="tests.integration.test_http_download" name="test_redirect_download[303]" time="1.524" /><testcase classname="tests.integration.test_http_download" name="test_redirect_download[307]" time="1.555" /><testcase classname="tests.integration.test_http_download" name="test_redirect_download[308]" time="1.481" /><testcase classname="tests.integration.test_http_download" name="test_unknown_content_type_bytes_still_verified" time="0.548" /><testcase classname="tests.integration.test_http_download" name="test_filename_collision_never_overwrites" time="1.661" /><testcase classname="tests.integration.test_images" name="test_image_download_decode_and_hash[jpg]" time="1.286" /><testcase classname="tests.integration.test_images" name="test_image_download_decode_and_hash[png]" time="1.414" /><testcase classname="tests.integration.test_images" name="test_image_download_decode_and_hash[webp]" time="1.406" /><testcase classname="tests.integration.test_images" name="test_image_download_decode_and_hash[gif]" time="1.701" /><testcase classname="tests.integration.test_images" name="test_image_download_decode_and_hash[avif]" time="1.393" /><testcase classname="tests.integration.test_images" name="test_image_candidates_largest_deduplicated" time="0.507" /><testcase classname="tests.integration.test_regressions" name="test_invalid_range_bounds[bad-end]" time="0.470" /><testcase classname="tests.integration.test_regressions" name="test_invalid_range_bounds[bad-total]" time="0.474" /><testcase classname="tests.integration.test_regressions" name="test_weak_etag_with_last_modified_can_resume" time="0.451" /><testcase classname="tests.integration.test_regressions" name="test_drm_audio_never_auto_paired" time="0.001" /><testcase classname="tests.integration.test_regressions" name="test_direct_wrong_extension_corrected" time="0.413" /><testcase classname="tests.integration.test_regressions" name="test_content_disposition_unicode" time="0.372" /><testcase classname="tests.integration.test_regressions" name="test_video_with_expected_audio_rejects_silent_file" time="0.644" /><testcase classname="tests.integration.test_regressions" name="test_commit_recovery_restores_file_size" time="0.247" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[normal-0.1]" time="0.563" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[normal-0.5]" time="0.581" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[normal-0.9]" time="0.517" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[ignore-0.1]" time="0.522" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[ignore-0.5]" time="0.563" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[ignore-0.9]" time="0.465" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[changed-0.1]" time="0.445" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[changed-0.5]" time="0.555" /><testcase classname="tests.integration.test_resume" name="test_10mb_resume_full_hash[changed-0.9]" time="0.525" /><testcase classname="tests.integration.test_resume" name="test_large_local_resume_streaming_hash[100]" time="0.000"><skipped type="pytest.skip" message="Explicit --stress required">C:\Users\seki9\Documents\MediaHarvester\tests\integration\test_resume.py:21: Explicit --stress required</skipped></testcase><testcase classname="tests.integration.test_resume" name="test_large_local_resume_streaming_hash[1024]" time="0.399"><skipped type="pytest.skip" message="Explicit --stress required">C:\Users\seki9\Documents\MediaHarvester\tests\integration\test_resume.py:21: Explicit --stress required</skipped></testcase></testsuite></testsuites>

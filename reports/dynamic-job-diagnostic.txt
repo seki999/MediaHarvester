@@ -1,0 +1,65 @@
+.F                                                                       [100%]
+================================== FAILURES ===================================
+_____________ test_dynamic_video_deep_download[lazy-loaded-video] _____________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-138/test_dynamic_video_deep_downlo1')
+fixture_server = <test_server.main.TestServer object at 0x0000020E661034D0>
+local_engine = <function local_engine.<locals>.run at 0x0000020E662B6FC0>
+page = 'lazy-loaded-video'
+
+    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:188: in analyze
+    rendered = run_job({'action':'dynamic','url':url}, cancel, timeout=45)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'dynamic', 'url': 'http://127.0.0.1:58555/pages/lazy-loaded-video'}
+cancel = <threading.Event at 0x20e66266030: unset>, progress = None
+timeout = 45
+
+    def run(job, cancel, progress=None, timeout=60):
+        if job['action']=='dynamic':
+            try:
+                from playwright.sync_api import sync_playwright
+            except ImportError:
+                pytest.skip('Optional Playwright is not installed')
+            with sync_playwright() as playwright:
+                if not Path(playwright.chromium.executable_path).exists():
+                    pytest.skip('Optional Chromium is not installed')
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:
+            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]
+            request.write_text(json.dumps(job), encoding='utf-8')
+            stderr=Path(directory)/'stderr.txt'
+            errors=stderr.open('wb')
+            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=errors,
+                                    env=dict(os.environ,DEBUG='pw:browser') if job['action']=='dynamic' else None)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError('test cancelled')
+                    if time.monotonic() - start > (timeout or 60):
+                        from scripts.run_online_tests import sanitize
+>                       raise TimeoutError('test worker timed out: '+sanitize(stderr.read_text('utf-8',errors='replace')))
+E                       TimeoutError: test worker timed out: 2026-10-12T02:01:02.391Z pw:browser <launching> C:\Users\seki9\AppData\Local\ms-playwright\chromium_headless_shell-1243\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --proxy-server=[URL] --proxy-bypass-list=<-loopback> --disable-quic --force-webrtc-ip-handling-policy=disable_non_proxied_udp --user-data-dir=C:\Users\seki9\AppData\Local\Temp\playwright_chromiumdev_profile-G0AZeL --remote-debugging-pipe --no-startup-window
+E                       2026-10-12T02:01:02.402Z pw:browser <launched> pid=19980
+E                       2026-10-12T02:01:05.338Z pw:browser [pid=19980] <gracefully close start>
+E                       2026-10-12T02:01:35.341Z pw:browser [pid=19980] <kill>
+E                       2026-10-12T02:01:35.342Z pw:browser [pid=19980] <will force kill>
+E                       2026-10-12T02:01:35.650Z pw:browser [pid=19980] taskkill stderr: ERROR: The process with PID 26744 (child process of PID 19980) could not be terminated.
+E                       Reason: There is no running instance of the task.
+E                       
+E                       ERROR: The process with PID 19980 (child process of PID 14296) could not be terminated.
+E                       Reason: There is no running instance of the task.
+
+tests\integration\conftest.py:84: TimeoutError
+=========================== short test summary info ===========================
+FAILED tests/integration/test_web_extraction.py::test_dynamic_video_deep_download[lazy-loaded-video]
+1 failed, 1 passed, 9 deselected in 79.08s (0:01:19)

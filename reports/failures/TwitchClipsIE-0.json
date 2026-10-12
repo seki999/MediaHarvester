@@ -1,0 +1,17 @@
+{
+  "id": "TwitchClipsIE-0",
+  "site": "Twitch Clips",
+  "url": "https://clips.twitch.tv/FaintLightGullWholeWheat",
+  "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+  "license": "",
+  "kind": "video",
+  "date": "2026-10-12T10:59:30.986420+09:00",
+  "stage": "download",
+  "extraction": "PASS",
+  "title": "EA Play 2016 Live from the Novo Theatre",
+  "duration": 32,
+  "formats": 1,
+  "status": "BLOCKED",
+  "reason": "仅完成提取；未确认下载授权，未下载",
+  "seconds": 2.891
+}

@@ -1,0 +1,15 @@
+{
+  "id": "TwitterIE-0",
+  "site": "X / Twitter",
+  "url": "https://twitter.com/freethenipple/status/643211948184596480",
+  "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+  "license": "",
+  "kind": "video",
+  "date": "2026-10-12T10:59:49.914857+09:00",
+  "stage": "extraction",
+  "status": "UNAVAILABLE",
+  "reason": "ERROR: [twitter] 643211948184596480: No video could be found in this tweet",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 112, in execute\n    media=YtDlpExtractor({'auto_browser_cookies':False}).extract(sample['url'],threading.Event())\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\", line 104, in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 99, in _run_job\n    raise RuntimeError(payload['error'])\nRuntimeError: ERROR: [twitter] 643211948184596480: No video could be found in this tweet\n",
+  "failure_owner": "upstream yt-dlp / sample; see upstream-diagnostics.json",
+  "seconds": 2.968
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "InstagramIE-1",
+    "url": "https://www.instagram.com/reel/Chunk8-jurw/",
+    "version": "2026.08.19",
+    "status": "PASS",
+    "entries": [
+      {
+        "type": null,
+        "id": "Chunk8-jurw",
+        "format_count": 9,
+        "thumbnail_count": 13
+      }
+    ]
+  },
+  {
+    "id": "InstagramIE-0",
+    "url": "https://instagram.com/p/aye83DjauH/?foo=bar#abc",
+    "version": "2026.08.19",
+    "status": "PASS",
+    "entries": [
+      {
+        "type": null,
+        "id": "aye83DjauH",
+        "format_count": 4,
+        "thumbnail_count": 11
+      }
+    ]
+  },
+  {
+    "id": "FacebookIE-0",
+    "url": "https://www.facebook.com/radiokicksfm/videos/3676516585958356/",
+    "version": "2026.08.19",
+    "status": "FAIL",
+    "reason": "ERROR: [facebook] 3676516585958356: Cannot parse data; please report this issue on  [URL] , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U"
+  },
+  {
+    "id": "TwitterIE-0",
+    "url": "https://twitter.com/freethenipple/status/643211948184596480",
+    "version": "2026.08.19",
+    "status": "FAIL",
+    "reason": "ERROR: [twitter] 643211948184596480: No video could be found in this tweet"
+  }
+]

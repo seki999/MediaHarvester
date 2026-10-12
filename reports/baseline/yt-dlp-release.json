@@ -1,0 +1,7 @@
+{
+  "checked_on": "2026-10-12",
+  "source": "https://github.com/yt-dlp/yt-dlp/releases/latest",
+  "latest_stable": "2026.08.19",
+  "installed": "2026.8.19",
+  "decision": "No upgrade: installed stable matches official latest release"
+}

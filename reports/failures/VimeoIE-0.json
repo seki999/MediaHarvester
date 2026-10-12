@@ -1,0 +1,14 @@
+{
+  "id": "VimeoIE-0",
+  "site": "Vimeo",
+  "url": "https://vimeo.com/17466681",
+  "source": "https://vimeo.com/17466681",
+  "license": "CC BY; Blender Foundation",
+  "kind": "video",
+  "date": "2026-10-12T10:59:17.163468+09:00",
+  "stage": "extraction",
+  "status": "BLOCKED",
+  "reason": "ERROR: [vimeo] 17466681: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  [URL]  for how to manually pass cookies",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 112, in execute\n    media=YtDlpExtractor({'auto_browser_cookies':False}).extract(sample['url'],threading.Event())\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\", line 104, in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 99, in _run_job\n    raise RuntimeError(payload['error'])\nRuntimeError: ERROR: [vimeo] 17466681: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  [URL]  for how to manually pass cookies\n",
+  "seconds": 2.358
+}

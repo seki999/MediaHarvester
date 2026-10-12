@@ -1,0 +1,356 @@
+.............FFFFF...FF.F.FF..                                           [100%]
+================================== FAILURES ===================================
+_________ test_permanent_or_limited_status_stops_automatic_retry[401] _________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat0')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_network = <function local_network.<locals>.client at 0x00000245A1B1CF40>
+code = 401
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+>           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task f1820e6417c642c6943b71f23e73250c: Client error '401 Unauthorized' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task f1820e6417c642c6943b71f23e73250c: Client error '401 Unauthorized' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task f1820e6417c642c6943b71f23e73250c: Client error '401 Unauthorized' for url '[URL]
+For more information check: [URL]
+_________ test_permanent_or_limited_status_stops_automatic_retry[403] _________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat1')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_network = <function local_network.<locals>.client at 0x00000245A1BA4220>
+code = 403
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+>           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task 427ad6fc3871439b93ecc492839a12fc: Client error '403 Forbidden' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task 427ad6fc3871439b93ecc492839a12fc: Client error '403 Forbidden' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task 427ad6fc3871439b93ecc492839a12fc: Client error '403 Forbidden' for url '[URL]
+For more information check: [URL]
+_________ test_permanent_or_limited_status_stops_automatic_retry[404] _________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat2')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_network = <function local_network.<locals>.client at 0x00000245A1B1D800>
+code = 404
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+>           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task 787c55ecd1d64fb4b4b7671a19876d51: Client error '404 Not Found' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task 787c55ecd1d64fb4b4b7671a19876d51: Client error '404 Not Found' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task 787c55ecd1d64fb4b4b7671a19876d51: Client error '404 Not Found' for url '[URL]
+For more information check: [URL]
+_________ test_permanent_or_limited_status_stops_automatic_retry[410] _________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat3')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_network = <function local_network.<locals>.client at 0x00000245A1BCA700>
+code = 410
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+>           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task cf60fad73a10466f8305b531c72031ff: Client error '410 Gone' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task cf60fad73a10466f8305b531c72031ff: Client error '410 Gone' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task cf60fad73a10466f8305b531c72031ff: Client error '410 Gone' for url '[URL]
+For more information check: [URL]
+_________ test_permanent_or_limited_status_stops_automatic_retry[429] _________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat4')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_network = <function local_network.<locals>.client at 0x00000245A1B1D4E0>
+code = 429
+
+    @pytest.mark.parametrize('code',[401,403,404,410,429])
+    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):
+        path=f'/status/{code}'
+        start=fixture_server.counts[path]
+        repo=Repository(tmp_path/'db')
+        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))
+        try:
+            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))
+            wait(lambda:task.state==State.FAILED and task.id not in manager.running)
+>           assert fixture_server.counts[path]-start==1
+E           assert (4 - 1) == 1
+
+tests\integration\test_network_failure.py:46: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task 3d85047f8f754c96a1a0f72d898bb98f: Client error '429 Too Many Requests' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task 3d85047f8f754c96a1a0f72d898bb98f: Client error '429 Too Many Requests' for url '[URL]
+For more information check: [URL]
+WARNING  mediaharvester.download:download.py:232 Task 3d85047f8f754c96a1a0f72d898bb98f: Client error '429 Too Many Requests' for url '[URL]
+For more information check: [URL]
+________________ test_html_video_actual_download[iframe-video] ________________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa2')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_engine = <function local_engine.<locals>.run at 0x00000245A1BCA7A0>
+page = 'iframe-video'
+
+    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/iframe-video', 'cookie_file': '', 'auto_browser_cookies': False, ...}
+cancel = <threading.Event at 0x245a1b4e390: unset>, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:
+            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]
+            request.write_text(json.dumps(job), encoding='utf-8')
+            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError('test cancelled')
+                    if time.monotonic() - start > (timeout or 60): raise TimeoutError('test worker timed out')
+                assert result.exists(), f'Worker exit {proc.returncode}'
+                payload = json.loads(result.read_text('utf-8'))
+>               if 'error' in payload: raise RuntimeError(payload['error'])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError
+_______________ test_html_video_actual_download[nested-iframe] ________________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa3')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_engine = <function local_engine.<locals>.run at 0x00000245A1C08B80>
+page = 'nested-iframe'
+
+    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:10: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/nested-iframe', 'cookie_file': '', 'auto_browser_cookies': False, ...}
+cancel = <threading.Event at 0x245a1b4d670: unset>, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:
+            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]
+            request.write_text(json.dumps(job), encoding='utf-8')
+            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError('test cancelled')
+                    if time.monotonic() - start > (timeout or 60): raise TimeoutError('test worker timed out')
+                assert result.exists(), f'Worker exit {proc.returncode}'
+                payload = json.loads(result.read_text('utf-8'))
+>               if 'error' in payload: raise RuntimeError(payload['error'])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError
+______________ test_html_video_actual_download[multiple-videos] _______________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa5')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_engine = <function local_engine.<locals>.run at 0x00000245A1C09F80>
+page = 'multiple-videos'
+
+    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+        results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)
+        videos=[m for m in results if m.kind=='video']
+        assert videos
+>       result=download(tmp_path,videos[0],format_options(videos[0].formats)[0][1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa5')
+media = Media(url='http://127.0.0.1:64904/pages/multiple-videos', page='http://127.0.0.1:64904/pages/multiple-videos', title='...filesize_approx': None, 'format_id': '0', 'format': '0 - unknown'}], identity='multiple-videos-1', headers={}, auth={})
+selector = '0', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+>           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: \u5a92\u4f53\u5185\u5bb9\u6807\u8bc6\u6539\u53d8\uff0c\u5df2\u505c\u6b62\u7eed\u4f20
+
+tests\integration\helpers.py:34: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task d5f9db9865d54e9eb2510f5965f95b31: \u5a92\u4f53\u5185\u5bb9\u6807\u8bc6\u6539\u53d8\uff0c\u5df2\u505c\u6b62\u7eed\u4f20
+______________ test_html_video_actual_download[redirected-media] ______________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa7')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_engine = <function local_engine.<locals>.run at 0x00000245A1C0B1A0>
+page = 'redirected-media'
+
+    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])
+    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):
+        results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)
+        videos=[m for m in results if m.kind=='video']
+        assert videos
+>       result=download(tmp_path,videos[0],format_options(videos[0].formats)[0][1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa7')
+media = Media(url='http://127.0.0.1:64904/pages/redirected-media', page='http://127.0.0.1:64904/pages/redirected-media', title...ilesize_approx': None, 'format_id': '0', 'format': '0 - unknown'}], identity='redirected-media-1', headers={}, auth={})
+selector = '0', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+>           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: \u5a92\u4f53\u5f15\u64ce\u6ca1\u6709\u4ea7\u751f\u552f\u4e00\u5b8c\u6574\u6587\u4ef6
+
+tests\integration\helpers.py:34: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task 241562f739604b7faae47044388b18fb: \u5a92\u4f53\u5f15\u64ce\u6ca1\u6709\u4ea7\u751f\u552f\u4e00\u5b8c\u6574\u6587\u4ef6
+_____________ test_dynamic_video_deep_download[javascript-video] ______________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_dynamic_video_deep_downlo0')
+fixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>
+local_engine = <function local_engine.<locals>.run at 0x00000245A1C0B560>
+page = 'javascript-video'
+
+    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:167: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/javascript-video', 'cookie_file': '', 'auto_browser_cookies': False, ...}
+cancel = <threading.Event at 0x245a1c03e30: unset>, progress = None
+timeout = 60
+
+    def run(job, cancel, progress=None, timeout=60):
+        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.
+        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:
+            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]
+            request.write_text(json.dumps(job), encoding='utf-8')
+            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,
+                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            start = time.monotonic()
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.05): raise InterruptedError('test cancelled')
+                    if time.monotonic() - start > (timeout or 60): raise TimeoutError('test worker timed out')
+                assert result.exists(), f'Worker exit {proc.returncode}'
+                payload = json.loads(result.read_text('utf-8'))
+>               if 'error' in payload: raise RuntimeError(payload['error'])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: ERROR: Unsupported URL: [URL]
+
+tests\integration\conftest.py:73: RuntimeError
+=========================== short test summary info ===========================
+FAILED tests/integration/test_network_failure.py::test_permanent_or_limited_status_stops_automatic_retry[401]
+FAILED tests/integration/test_network_failure.py::test_permanent_or_limited_status_stops_automatic_retry[403]
+FAILED tests/integration/test_network_failure.py::test_permanent_or_limited_status_stops_automatic_retry[404]
+FAILED tests/integration/test_network_failure.py::test_permanent_or_limited_status_stops_automatic_retry[410]
+FAILED tests/integration/test_network_failure.py::test_permanent_or_limited_status_stops_automatic_retry[429]
+FAILED tests/integration/test_web_extraction.py::test_html_video_actual_download[iframe-video]
+FAILED tests/integration/test_web_extraction.py::test_html_video_actual_download[nested-iframe]
+FAILED tests/integration/test_web_extraction.py::test_html_video_actual_download[multiple-videos]
+FAILED tests/integration/test_web_extraction.py::test_html_video_actual_download[redirected-media]
+FAILED tests/integration/test_web_extraction.py::test_dynamic_video_deep_download[javascript-video]
+10 failed, 20 passed in 88.64s (0:01:28)

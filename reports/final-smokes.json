@@ -1,0 +1,16 @@
+[
+  {
+    "id": "gui-final",
+    "status": "PASS",
+    "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/gui_workflow.py",
+    "seconds": 8.907,
+    "log": "reports\\gui-final.txt"
+  },
+  {
+    "id": "exe-onedir-final",
+    "status": "PASS",
+    "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/exe_smoke.py dist/validation-onedir/MediaHarvester/MediaHarvester.exe --output reports/exe-onedir",
+    "seconds": 10.88,
+    "log": "reports\\exe-onedir-final.txt"
+  }
+]

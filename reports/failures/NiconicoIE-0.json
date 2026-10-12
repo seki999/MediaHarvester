@@ -1,0 +1,17 @@
+{
+  "id": "NiconicoIE-0",
+  "site": "Niconico",
+  "url": "https://www.nicovideo.jp/watch/1173108780",
+  "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+  "license": "",
+  "kind": "video",
+  "date": "2026-10-12T11:00:00.049000+09:00",
+  "stage": "download",
+  "extraction": "PASS",
+  "title": "新・豪血寺一族 -煩悩解放 - レッツゴー！陰陽師",
+  "duration": 320,
+  "formats": 6,
+  "status": "BLOCKED",
+  "reason": "仅完成提取；未确认下载授权，未下载",
+  "seconds": 3.64
+}

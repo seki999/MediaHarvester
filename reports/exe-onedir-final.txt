@@ -1,0 +1,3 @@
+Frozen GUI started without Python on PATH, screenshot captured, normal shutdown passed
+Frozen yt-dlp Python API extracted real public media without Python on PATH
+Frozen yt-dlp downloaded 4372373 bytes without Python on PATH or external tools

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="1.280" timestamp="2026-10-12T10:46:23.815801+09:00" hostname="GT12_Pro"><testcase classname="tests.integration.test_site_extractors" name="test_instagram_raw_video_gets_format_ids[False]" time="0.627"><failure message="AssertionError: assert []&#10; +  where [] = format_options([{'url': 'https://example.com/fixture.mp4', 'ext': 'mp4', 'vcodec': 'avc1', 'acodec': 'aac', ...}])">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-129/test_instagram_raw_video_gets_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002187E735350&gt;
+carousel = False
+
+    @pytest.mark.parametrize('carousel',[False,True])
+    def test_instagram_raw_video_gets_format_ids(tmp_path,monkeypatch,carousel):
+        video={'id':'fixture-video','title':'Self-owned fixture','formats':[{
+            'url':'https://example.com/fixture.mp4','ext':'mp4','vcodec':'avc1','acodec':'aac','height':360}]}
+        image={'id':'fixture-photo','mh_image':{'url':'https://example.com/photo.jpg','width':64,'height':48}}
+        raw={'_type':'playlist','id':'mixed','entries':[image,video]} if carousel else video
+        monkeypatch.setattr('mediaharvester.instagram.InstagramMediaIE.extract',lambda *args:raw)
+        request,result,events=[tmp_path/n for n in ('request.json','result.json','events.jsonl')]
+        request.write_text(json.dumps({'action':'extract','url':'https://www.instagram.com/p/fixture/'}),encoding='utf-8')
+        monkeypatch.setattr(sys,'argv',['worker',str(request),str(result),str(events)])
+        worker_main()
+        info=json.loads(result.read_text('utf-8'))
+        assert 'error' not in info,info
+        entries=info.get('entries',[info])
+        actual=next(e for e in entries if e.get('id')=='fixture-video')
+&gt;       assert format_options(actual['formats'])
+E       AssertionError: assert []
+E        +  where [] = format_options([{'url': 'https://example.com/fixture.mp4', 'ext': 'mp4', 'vcodec': 'avc1', 'acodec': 'aac', ...}])
+
+tests\integration\test_site_extractors.py:23: AssertionError</failure></testcase><testcase classname="tests.integration.test_site_extractors" name="test_instagram_raw_video_gets_format_ids[True]" time="0.523"><failure message="AssertionError: assert []&#10; +  where [] = format_options([{'url': 'https://example.com/fixture.mp4', 'ext': 'mp4', 'vcodec': 'avc1', 'acodec': 'aac', ...}])">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-129/test_instagram_raw_video_gets_1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002187E5D1350&gt;
+carousel = True
+
+    @pytest.mark.parametrize('carousel',[False,True])
+    def test_instagram_raw_video_gets_format_ids(tmp_path,monkeypatch,carousel):
+        video={'id':'fixture-video','title':'Self-owned fixture','formats':[{
+            'url':'https://example.com/fixture.mp4','ext':'mp4','vcodec':'avc1','acodec':'aac','height':360}]}
+        image={'id':'fixture-photo','mh_image':{'url':'https://example.com/photo.jpg','width':64,'height':48}}
+        raw={'_type':'playlist','id':'mixed','entries':[image,video]} if carousel else video
+        monkeypatch.setattr('mediaharvester.instagram.InstagramMediaIE.extract',lambda *args:raw)
+        request,result,events=[tmp_path/n for n in ('request.json','result.json','events.jsonl')]
+        request.write_text(json.dumps({'action':'extract','url':'https://www.instagram.com/p/fixture/'}),encoding='utf-8')
+        monkeypatch.setattr(sys,'argv',['worker',str(request),str(result),str(events)])
+        worker_main()
+        info=json.loads(result.read_text('utf-8'))
+        assert 'error' not in info,info
+        entries=info.get('entries',[info])
+        actual=next(e for e in entries if e.get('id')=='fixture-video')
+&gt;       assert format_options(actual['formats'])
+E       AssertionError: assert []
+E        +  where [] = format_options([{'url': 'https://example.com/fixture.mp4', 'ext': 'mp4', 'vcodec': 'avc1', 'acodec': 'aac', ...}])
+
+tests\integration\test_site_extractors.py:23: AssertionError</failure></testcase></testsuite></testsuites>

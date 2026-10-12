@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="70.062" timestamp="2026-10-12T11:00:18.110877+09:00" hostname="GT12_Pro"><testcase classname="tests.integration.test_web_extraction" name="test_dynamic_video_deep_download[javascript-video]" time="35.367"><failure message="TimeoutError: 网页解析超过 30 秒">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-137/test_dynamic_video_deep_downlo0')
+fixture_server = &lt;test_server.main.TestServer object at 0x0000018C147074D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x0000018C148B45E0&gt;
+page = 'javascript-video'
+
+    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:199: in analyze
+    for item in self.analyze(candidate,cancel,_context=context,_depth=_depth+1):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;mediaharvester.extractors.ExtractorRegistry object at 0x0000018C148C42F0&gt;
+url = 'http://127.0.0.1:53693/video/direct.mp4'
+cancel = &lt;threading.Event at 0x18c1486a3f0: unset&gt;, deep = False
+_context = {'seen': {'http://127.0.0.1:53693/pages/javascript-video'}, 'started': 1829439.2608883}
+_depth = 1
+
+    def analyze(self, url, cancel=None, deep=False, _context=None, _depth=0):
+        cancel = cancel or threading.Event()
+        validate_url(url)
+        context=_context if _context is not None else {'seen':set(),'started':time.monotonic()}
+        if cancel.is_set(): raise InterruptedError('解析已取消')
+        if _depth&gt;3 or url in context['seen'] or len(context['seen'])&gt;=20:
+            return []
+&gt;       if time.monotonic()-context['started']&gt;30: raise TimeoutError('网页解析超过 30 秒')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TimeoutError: 网页解析超过 30 秒
+
+mediaharvester\extractors.py:139: TimeoutError</failure></testcase><testcase classname="tests.integration.test_web_extraction" name="test_dynamic_video_deep_download[lazy-loaded-video]" time="34.363"><failure message="TimeoutError: 网页解析超过 30 秒">tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-137/test_dynamic_video_deep_downlo1')
+fixture_server = &lt;test_server.main.TestServer object at 0x0000018C147074D0&gt;
+local_engine = &lt;function local_engine.&lt;locals&gt;.run at 0x0000018C14C3B7E0&gt;
+page = 'lazy-loaded-video'
+
+    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])
+    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):
+&gt;       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_web_extraction.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:199: in analyze
+    for item in self.analyze(candidate,cancel,_context=context,_depth=_depth+1):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;mediaharvester.extractors.ExtractorRegistry object at 0x0000018C14A87390&gt;
+url = 'http://127.0.0.1:53693/video/direct.mp4'
+cancel = &lt;threading.Event at 0x18c14bb3d10: unset&gt;, deep = False
+_context = {'seen': {'http://127.0.0.1:53693/pages/lazy-loaded-video'}, 'started': 1829473.273295}
+_depth = 1
+
+    def analyze(self, url, cancel=None, deep=False, _context=None, _depth=0):
+        cancel = cancel or threading.Event()
+        validate_url(url)
+        context=_context if _context is not None else {'seen':set(),'started':time.monotonic()}
+        if cancel.is_set(): raise InterruptedError('解析已取消')
+        if _depth&gt;3 or url in context['seen'] or len(context['seen'])&gt;=20:
+            return []
+&gt;       if time.monotonic()-context['started']&gt;30: raise TimeoutError('网页解析超过 30 秒')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TimeoutError: 网页解析超过 30 秒
+
+mediaharvester\extractors.py:139: TimeoutError</failure></testcase></testsuite></testsuites>

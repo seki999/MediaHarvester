@@ -1,0 +1,133 @@
+154 INFO: PyInstaller: 6.22.3, contrib hooks: 2026.8
+154 INFO: Python: 3.13.14
+198 INFO: Platform: Windows-11-10.0.26200-SP0
+198 INFO: Python environment: C:\Users\seki9\Documents\MediaHarvester\.venv
+1235 INFO: Module search paths (PYTHONPATH):
+['C:\\Users\\seki9\\Documents\\MediaHarvester',
+ 'C:\\Program '
+ 'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python313.zip',
+ 'C:\\Program '
+ 'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\DLLs',
+ 'C:\\Program '
+ 'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib',
+ 'C:\\Program '
+ 'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0',
+ 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv',
+ 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages',
+ 'C:\\Users\\seki9\\Documents\\MediaHarvester']
+1783 INFO: Appending 'datas' from .spec
+1813 INFO: checking Analysis
+1915 INFO: Building because C:\Users\seki9\Documents\MediaHarvester\mediaharvester\worker.py changed
+1915 INFO: Looking for Python shared library...
+1915 INFO: Using Python shared library: C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\python313.dll
+1915 INFO: Running Analysis Analysis-00.toc
+1915 INFO: Target bytecode optimization level: 0
+1915 INFO: Initializing module dependency graph...
+1916 INFO: Initializing module graph hook caches...
+1931 INFO: Analyzing modules for base_library.zip ...
+3339 INFO: Processing standard module hook 'hook-math.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+3365 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+3598 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+7003 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+9797 INFO: Caching module dependency graph...
+9873 INFO: Analyzing C:\Users\seki9\Documents\MediaHarvester\main.py
+10986 INFO: Processing standard module hook 'hook-certifi.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+11375 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+11553 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+12070 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+12078 INFO: Processing standard module hook 'hook-_ctypes.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+12988 INFO: Processing standard module hook 'hook-anyio.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+13530 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+13532 INFO: SetuptoolsInfo: initializing cached setuptools info...
+15395 INFO: Processing standard module hook 'hook-pygments.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+17355 INFO: Processing standard module hook 'hook-yt_dlp.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\yt_dlp\\__pyinstaller'
+17729 WARNING: collect_data_files - skipping data collection for module 'yt_dlp_ejs' as it is not a package.
+18160 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+18888 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+18928 INFO: Processing standard module hook 'hook-sqlite3.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+34612 INFO: Processing standard module hook 'hook-PySide6.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+34836 INFO: Processing standard module hook 'hook-shiboken6.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+35100 INFO: Processing standard module hook 'hook-PySide6.QtNetwork.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+40323 INFO: Processing standard module hook 'hook-PySide6.QtCore.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+45195 INFO: Processing standard module hook 'hook-PySide6.QtWidgets.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+50605 INFO: Processing standard module hook 'hook-PySide6.QtGui.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+88230 INFO: Processing standard module hook 'hook-PIL.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+88444 INFO: Processing standard module hook 'hook-PIL.Image.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+89176 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+90401 INFO: Processing standard module hook 'hook-lxml.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+90774 INFO: Processing standard module hook 'hook-lxml.etree.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+90787 INFO: Analyzing hidden import 'yt_dlp.__main__'
+90789 INFO: Analyzing hidden import 'yt_dlp.__pyinstaller'
+90790 INFO: Analyzing hidden import 'yt_dlp.__pyinstaller.hook-yt_dlp'
+91186 INFO: Processing standard module hook 'hook-webbrowser.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+91668 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+91668 INFO: Setuptools: 'importlib_metadata' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.importlib_metadata'!
+91680 INFO: Processing standard module hook 'hook-setuptools.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+91707 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+91763 INFO: Processing pre-safe-import-module hook 'hook-jaraco.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+91763 INFO: Setuptools: 'jaraco' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco'!
+91786 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+91787 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.more_itertools'!
+92062 INFO: Processing standard module hook 'hook-_osx_support.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+92093 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+92625 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+92627 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+92645 INFO: Processing pre-safe-import-module hook 'hook-backports.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+92645 INFO: Setuptools: 'backports' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.backports'!
+93721 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+93721 INFO: Setuptools: 'tomli' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.tomli'!
+94679 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+94680 INFO: Setuptools: 'wheel' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.wheel'!
+94787 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_metadata.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+94829 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+94830 INFO: Setuptools: 'zipp' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.zipp'!
+94885 INFO: Processing standard module hook 'hook-win32ctypes.core.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+96024 INFO: Processing standard module hook 'hook-pycparser.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+97472 INFO: Analyzing hidden import 'yt_dlp.compat._deprecated'
+97475 INFO: Analyzing hidden import 'yt_dlp.compat._legacy'
+97489 INFO: Analyzing hidden import 'yt_dlp.utils._deprecated'
+97495 INFO: Analyzing hidden import 'yt_dlp.utils._legacy'
+97514 INFO: Processing module hooks (post-graph stage)...
+98148 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+98918 INFO: Processing standard module hook 'hook-lxml.isoschematron.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+99031 WARNING: Hidden import "pycparser.lextab" not found!
+99031 WARNING: Hidden import "pycparser.yacctab" not found!
+99603 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+103877 INFO: Processing standard module hook 'hook-lxml.objectify.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+103911 INFO: Performing binary vs. data reclassification (1221 entries)
+104168 INFO: Looking for ctypes DLLs
+104433 INFO: Analyzing run-time hooks ...
+104443 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+104448 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+104452 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+104457 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+104459 INFO: Including run-time hook 'pyi_rth_pyside6.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+104463 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+104466 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PyInstaller\\hooks'
+104545 INFO: Creating base_library.zip...
+104601 INFO: Looking for dynamic libraries
+105362 INFO: Extra DLL search directories (AddDllDirectory): ['C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\shiboken6', 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\curl_cffi.libs']
+105362 INFO: Extra DLL search directories (PATH): ['C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\PySide6']
+106786 INFO: Warnings written to C:\Users\seki9\Documents\MediaHarvester\build\mediaharvester\warn-mediaharvester.txt
+106913 INFO: Graph cross-reference written to C:\Users\seki9\Documents\MediaHarvester\build\mediaharvester\xref-mediaharvester.html
+106992 INFO: checking PYZ
+107064 INFO: Building because C:\Users\seki9\Documents\MediaHarvester\mediaharvester\worker.py changed
+107064 INFO: Building PYZ (ZlibArchive) C:\Users\seki9\Documents\MediaHarvester\build\mediaharvester\PYZ-00.pyz
+108247 INFO: Building PYZ (ZlibArchive) C:\Users\seki9\Documents\MediaHarvester\build\mediaharvester\PYZ-00.pyz completed successfully.
+108292 INFO: checking PKG
+108294 INFO: Building because toc changed
+108294 INFO: Building PKG (CArchive) MediaHarvester.pkg
+122568 INFO: Building PKG (CArchive) MediaHarvester.pkg completed successfully.
+122590 INFO: Bootloader C:\Users\seki9\Documents\MediaHarvester\.venv\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+122590 INFO: checking EXE
+122618 INFO: Rebuilding EXE-00.toc because MediaHarvester.exe missing
+122618 INFO: Building EXE from EXE-00.toc
+122618 INFO: Copying bootloader EXE to C:\Users\seki9\Documents\MediaHarvester\dist\validation-onefile\MediaHarvester.exe
+122730 INFO: Copying icon to EXE
+122825 INFO: Copying 0 resources to EXE
+122825 INFO: Embedding manifest in EXE
+122922 INFO: Appending PKG archive to EXE
+123309 INFO: Fixing EXE headers
+124132 INFO: Building EXE from EXE-00.toc completed successfully.
+124150 INFO: Build complete! The results are available in: C:\Users\seki9\Documents\MediaHarvester\dist\validation-onefile
+Adding imports: ['yt_dlp.compat._legacy', 'yt_dlp.compat._deprecated', 'yt_dlp.utils._legacy', 'yt_dlp.utils._deprecated', 'Cryptodome', 'mutagen', 'brotli', 'certifi', 'secretstorage', 'curl_cffi']

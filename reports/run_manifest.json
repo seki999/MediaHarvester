@@ -1,0 +1,133 @@
+{
+  "mode": "full",
+  "environment": {
+    "date": "2026-10-12T11:54:40.098488+09:00",
+    "timezone": "Asia/Tokyo",
+    "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "os": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "PySide6": "6.8.3",
+      "yt-dlp": "2026.8.19",
+      "httpx": "0.28.1",
+      "curl-cffi": "0.16.3",
+      "playwright": "1.63.0",
+      "pytest": "9.1.1",
+      "pyinstaller": "6.22.3",
+      "ruff": "0.17.0"
+    },
+    "tools": {
+      "ffmpeg": {
+        "path": "C:\\Users\\seki9\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-full_build\\bin\\ffmpeg.EXE",
+        "version": "ffmpeg version 9.0.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "ffprobe": {
+        "path": "C:\\Users\\seki9\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-full_build\\bin\\ffprobe.EXE",
+        "version": "ffprobe version 9.0.1-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "aria2c": {
+        "path": null
+      }
+    },
+    "commit": "5b6703841441e8815c1454bc21eae3662c99fc1d",
+    "branch": "codex/automation-validation"
+  },
+  "commands": [
+    {
+      "id": "offline",
+      "status": "FAIL",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m pytest -q --junitxml=reports/offline.xml",
+      "seconds": 311.324,
+      "log": "reports\\offline.txt"
+    },
+    {
+      "id": "static",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m ruff check --select E9,F63,F7,F82 mediaharvester scripts test_server tests",
+      "seconds": 0.185,
+      "log": "reports\\static.txt"
+    },
+    {
+      "id": "online",
+      "status": "FAIL",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/run_online_tests.py --sites",
+      "seconds": 85.923,
+      "log": "reports\\online.txt"
+    },
+    {
+      "id": "gui",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/gui_workflow.py",
+      "seconds": 10.216,
+      "log": "reports\\gui.txt"
+    },
+    {
+      "id": "build-onedir",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onedir mediaharvester.spec",
+      "seconds": 125.619,
+      "log": "reports\\build-onedir.txt"
+    },
+    {
+      "id": "exe-onedir",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/exe_smoke.py dist/validation-onedir/MediaHarvester/MediaHarvester.exe",
+      "seconds": 62.396,
+      "log": "reports\\exe-onedir.txt"
+    },
+    {
+      "id": "build-onefile",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onefile mediaharvester.spec",
+      "seconds": 124.51,
+      "log": "reports\\build-onefile.txt"
+    },
+    {
+      "id": "exe-onefile",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/exe_smoke.py dist/validation-onefile/MediaHarvester.exe",
+      "seconds": 26.268,
+      "log": "reports\\exe-onefile.txt"
+    },
+    {
+      "id": "offline-final",
+      "status": "PASS",
+      "command": ".venv/Scripts/python.exe -m pytest -q --junitxml=reports/offline-final.xml",
+      "seconds": 244.42,
+      "log": "reports/offline-final.xml"
+    },
+    {
+      "id": "gui-final",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/gui_workflow.py",
+      "seconds": 8.907,
+      "log": "reports\\gui-final.txt"
+    },
+    {
+      "id": "exe-onedir-final",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/exe_smoke.py dist/validation-onedir/MediaHarvester/MediaHarvester.exe --output reports/exe-onedir",
+      "seconds": 10.88,
+      "log": "reports\\exe-onedir-final.txt"
+    },
+    {
+      "id": "build-onedir-final",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onedir mediaharvester.spec",
+      "seconds": 7.697,
+      "log": "reports\\build-onedir-final.txt"
+    },
+    {
+      "id": "stress",
+      "status": "PASS",
+      "command": ".venv/Scripts/python.exe -m pytest tests/integration/test_resume.py --stress -q --junitxml=reports/stress.xml",
+      "seconds": 12.4,
+      "log": "reports/stress.xml"
+    },
+    {
+      "id": "source-audit",
+      "status": "PASS",
+      "command": "python scripts/verify_build.py EXE --output report.json",
+      "log": "reports/exe-onedir/source-audit.json; reports/exe-onefile/source-audit.json"
+    }
+  ]
+}

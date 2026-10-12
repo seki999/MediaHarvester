@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="2.510" timestamp="2026-10-12T10:41:37.810381+09:00" hostname="GT12_Pro"><testcase classname="tests.integration.test_content_detection" name="test_octet_stream_mp4_detected" time="2.285"><failure message="RuntimeError: 禁止访问本机、内网、链路本地或元数据地址">fixture_server = &lt;test_server.main.TestServer object at 0x0000022082442E40&gt;
+local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000002208257C4A0&gt;
+
+    def test_octet_stream_mp4_detected(fixture_server,local_network):
+&gt;       media=ExtractorRegistry(Settings.defaults).analyze(fixture_server.url+'/video/unknown-content-type')[0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_content_detection.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:187: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\worker.py:37: in run_job
+    return _run_job(job,cancel,progress,timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+job = {'action': 'extract', 'url': 'http://127.0.0.1:53237/video/unknown-content-type', 'cookie_file': '', 'auto_browser_cookies': True, ...}
+cancel = &lt;threading.Event at 0x2208256d2b0: unset&gt;, progress = None
+timeout = 180
+
+    def _run_job(job, cancel, progress=None, timeout=180):
+        with tempfile.TemporaryDirectory(prefix='mh-job-') as temp:
+            request, result, events = [Path(temp)/n for n in ('request.json','result.json','events.jsonl')]
+            request.write_text(json.dumps(job), 'utf-8')
+            args = [sys.executable, '--worker'] if getattr(sys,'frozen',False) else [sys.executable,'-m','mediaharvester.worker']
+            flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+            proc = subprocess.Popen(args + [str(request),str(result),str(events)], stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, creationflags=flags)
+            attach_job(proc)
+            start, offset = time.monotonic(), 0
+            try:
+                while proc.poll() is None:
+                    if cancel.wait(.15):
+                        raise InterruptedError('任务已暂停')
+                    if timeout and time.monotonic()-start&gt;timeout:
+                        raise TimeoutError('解析超时')
+                    if events.exists() and progress:
+                        with events.open('r',encoding='utf-8') as stream:
+                            stream.seek(offset)
+                            for line in stream:
+                                try: progress(json.loads(line))
+                                except ValueError: pass
+                            offset=stream.tell()
+                if not result.exists():
+                    raise RuntimeError('媒体引擎异常退出')
+                payload=json.loads(result.read_text('utf-8'))
+                if 'error' in payload:
+&gt;                   raise RuntimeError(payload['error'])
+E                   RuntimeError: 禁止访问本机、内网、链路本地或元数据地址
+
+mediaharvester\worker.py:84: RuntimeError</failure></testcase><testcase classname="tests.integration.test_content_detection" name="test_application_ogg_audio_detected" time="0.082"><failure message="AssertionError: Direct Ogg must not invoke website engine">local_network = &lt;function local_network.&lt;locals&gt;.client at 0x000002208268C220&gt;
+fixture_server = &lt;test_server.main.TestServer object at 0x0000022082442E40&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000220821A1350&gt;
+
+    def test_application_ogg_audio_detected(local_network,fixture_server,monkeypatch):
+        import httpx
+        content=b'OggS'+b'\0'*24+b'\x01vorbis'+b'\0'*100
+        monkeypatch.setattr('mediaharvester.extractors.client',lambda:httpx.Client(transport=httpx.MockTransport(
+            lambda request:httpx.Response(200,headers={'Content-Type':'application/ogg'},content=content))))
+        def no_engine(*args,**kwargs): raise AssertionError('Direct Ogg must not invoke website engine')
+        monkeypatch.setattr('mediaharvester.extractors.run_job',no_engine)
+&gt;       media=ExtractorRegistry(Settings.defaults).analyze('https://example.com/audio')[0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_content_detection.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mediaharvester\extractors.py:187: in analyze
+    videos = self.plugins[1].extract(url,cancel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mediaharvester\extractors.py:90: in extract
+    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+args = ({'action': 'extract', 'url': 'https://example.com/audio', 'cookie_file': '', 'auto_browser_cookies': True, ...}, &lt;threading.Event at 0x2208256d250: unset&gt;)
+kwargs = {}
+
+&gt;   def no_engine(*args,**kwargs): raise AssertionError('Direct Ogg must not invoke website engine')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Direct Ogg must not invoke website engine
+
+tests\integration\test_content_detection.py:16: AssertionError</failure></testcase></testsuite></testsuites>

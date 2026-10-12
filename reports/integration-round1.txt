@@ -1,0 +1,160 @@
+........FFF...F........................................ss                [100%]
+================================== FAILURES ===================================
+______________ test_dash_separate_audio_video[manifest.mpd-720] _______________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video0')
+fixture_server = <test_server.main.TestServer object at 0x00000216635378C0>
+local_engine = <function local_engine.<locals>.run at 0x000002166371A520>
+path = 'manifest.mpd', height = 720
+
+    @pytest.mark.parametrize('path,height', [('manifest.mpd',720), ('list/manifest.mpd',360), ('template/manifest.mpd',360)])
+    def test_dash_separate_audio_video(tmp_path, fixture_server, local_engine, path, height):
+        media = YtDlpExtractor().extract(fixture_server.url + '/dash/' + path, threading.Event())[0]
+        assert any(f.get('vcodec')=='none' and f.get('acodec')!='none' for f in media.formats)
+        selector = next(s for label, s in format_options(media.formats) if '+' in s)
+>       result = download(tmp_path, media, selector)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_dash_download.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video0')
+media = Media(url='http://127.0.0.1:51370/dash/manifest.mpd', page='http://127.0.0.1:51370/dash/manifest.mpd', title='manifest...0.5', 'Sec-Fetch-Mode': 'navigate'}, 'format': '0 - 1280x720 (DASH video)'}], identity='manifest', headers={}, auth={})
+selector = '0+1', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+>           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: ERROR: 
+[download] Got error: HTTP Error 404: Not Found
+
+tests\integration\helpers.py:34: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task 90d7f60a1a884f9c8e713c9c988f6669: ERROR: 
+[download] Got error: HTTP Error 404: Not Found
+____________ test_dash_separate_audio_video[list/manifest.mpd-360] ____________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video1')
+fixture_server = <test_server.main.TestServer object at 0x00000216635378C0>
+local_engine = <function local_engine.<locals>.run at 0x00000216637D0900>
+path = 'list/manifest.mpd', height = 360
+
+    @pytest.mark.parametrize('path,height', [('manifest.mpd',720), ('list/manifest.mpd',360), ('template/manifest.mpd',360)])
+    def test_dash_separate_audio_video(tmp_path, fixture_server, local_engine, path, height):
+        media = YtDlpExtractor().extract(fixture_server.url + '/dash/' + path, threading.Event())[0]
+        assert any(f.get('vcodec')=='none' and f.get('acodec')!='none' for f in media.formats)
+        selector = next(s for label, s in format_options(media.formats) if '+' in s)
+>       result = download(tmp_path, media, selector)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_dash_download.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video1')
+media = Media(url='http://127.0.0.1:51370/dash/list/manifest.mpd', page='http://127.0.0.1:51370/dash/list/manifest.mpd', title...=0.5', 'Sec-Fetch-Mode': 'navigate'}, 'format': '0 - 640x360 (DASH video)'}], identity='manifest', headers={}, auth={})
+selector = '0+1', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+>           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: ERROR: 
+[download] Got error: HTTP Error 404: Not Found
+
+tests\integration\helpers.py:34: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task 4dc87f7d7f0343f4a1db49372bc7efe1: ERROR: 
+[download] Got error: HTTP Error 404: Not Found
+__________ test_dash_separate_audio_video[template/manifest.mpd-360] __________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video2')
+fixture_server = <test_server.main.TestServer object at 0x00000216635378C0>
+local_engine = <function local_engine.<locals>.run at 0x00000216637D1580>
+path = 'template/manifest.mpd', height = 360
+
+    @pytest.mark.parametrize('path,height', [('manifest.mpd',720), ('list/manifest.mpd',360), ('template/manifest.mpd',360)])
+    def test_dash_separate_audio_video(tmp_path, fixture_server, local_engine, path, height):
+        media = YtDlpExtractor().extract(fixture_server.url + '/dash/' + path, threading.Event())[0]
+        assert any(f.get('vcodec')=='none' and f.get('acodec')!='none' for f in media.formats)
+        selector = next(s for label, s in format_options(media.formats) if '+' in s)
+>       result = download(tmp_path, media, selector)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_dash_download.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_dash_separate_audio_video2')
+media = Media(url='http://127.0.0.1:51370/dash/template/manifest.mpd', page='http://127.0.0.1:51370/dash/template/manifest.mpd...=0.5', 'Sec-Fetch-Mode': 'navigate'}, 'format': '0 - 640x360 (DASH video)'}], identity='manifest', headers={}, auth={})
+selector = '0+1', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+>           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: ERROR: 
+[download] Got error: HTTP Error 404: Not Found
+
+tests\integration\helpers.py:34: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task 0ed8b7a5b52548acb0bedc52b7b1716a: ERROR: 
+[download] Got error: HTTP Error 404: Not Found
+__________________________ test_hls_fmp4_real_merge ___________________________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_hls_fmp4_real_merge0')
+fixture_server = <test_server.main.TestServer object at 0x00000216635378C0>
+local_engine = <function local_engine.<locals>.run at 0x00000216637D07C0>
+
+    def test_hls_fmp4_real_merge(tmp_path, fixture_server, local_engine):
+        media = YtDlpExtractor().extract(fixture_server.url + '/hls/fmp4/index.m3u8?token=fixture', threading.Event())[0]
+>       result = download(tmp_path, media, format_options(media.formats)[0][1])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_hls_download.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-117/test_hls_fmp4_real_merge0')
+media = Media(url='http://127.0.0.1:51370/hls/fmp4/index.m3u8?token=fixture', page='http://127.0.0.1:51370/hls/fmp4/index.m3u8...ge': 'en-us,en;q=0.5', 'Sec-Fetch-Mode': 'navigate'}, 'format': '0 - unknown'}], identity='index', headers={}, auth={})
+selector = '0', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+>           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: FFprobe \u5a92\u4f53\u9a8c\u8bc1\u5931\u8d25\uff0c\u6587\u4ef6\u4e0d\u662f\u6709\u6548\u5a92\u4f53
+
+tests\integration\helpers.py:34: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:232 Task 1f28361055694800a35fcbf965c34823: FFprobe \u5a92\u4f53\u9a8c\u8bc1\u5931\u8d25\uff0c\u6587\u4ef6\u4e0d\u662f\u6709\u6548\u5a92\u4f53
+============================== warnings summary ===============================
+tests\integration\test_resume.py:21
+  C:\Users\seki9\Documents\MediaHarvester\tests\integration\test_resume.py:21: PytestUnknownMarkWarning: Unknown pytest.mark.stress - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.stress
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_dash_download.py::test_dash_separate_audio_video[manifest.mpd-720]
+FAILED tests/integration/test_dash_download.py::test_dash_separate_audio_video[list/manifest.mpd-360]
+FAILED tests/integration/test_dash_download.py::test_dash_separate_audio_video[template/manifest.mpd-360]
+FAILED tests/integration/test_hls_download.py::test_hls_fmp4_real_merge - Ass...
+4 failed, 51 passed, 2 skipped, 1 warning in 82.26s (0:01:22)

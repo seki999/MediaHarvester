@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "exe": "C:\\Users\\seki9\\Documents\\MediaHarvester\\dist\\validation-onefile\\MediaHarvester.exe",
+  "bytes": 4372373,
+  "sha256": "b670602fa00934ca27c4351bb0efe7ea7a07fae57284e44226025eeed7c51254",
+  "python_removed_from_path": true,
+  "gui": "PASS",
+  "extraction": "PASS",
+  "download": "PASS",
+  "streams": [
+    "video",
+    "audio"
+  ],
+  "duration": 52.208333
+}

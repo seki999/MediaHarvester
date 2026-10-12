@@ -1,0 +1,15 @@
+{
+  "id": "tests.integration.test_web_extraction::test_dynamic_video_deep_download[javascript-video]",
+  "status": "PASS",
+  "seconds": 35.59,
+  "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-134/test_dynamic_video_deep_downlo0')\nfixture_server = <test_server.main.TestServer object at 0x000002A6655D06E0>\nlocal_engine = <function local_engine.<locals>.run at 0x000002A6659CA0C0>\npage = 'javascript-video'\n\n    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])\n    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):\n>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_web_extraction.py:19: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nmediaharvester\\extractors.py:199: in analyze\n    for item in self.analyze(candidate,cancel,_context=context,_depth=_depth+1):\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <mediaharvester.extractors.ExtractorRegistry object at 0x000002A665897170>\nurl = 'http://127.0.0.1:64720/video/direct.mp4'\ncancel = <threading.Event at 0x2a6659d3590: unset>, deep = False\n_context = {'seen': {'http://127.0.0.1:64720/pages/javascript-video'}, 'started': 1829219.5583403}\n_depth = 1\n\n    def analyze(self, url, cancel=None, deep=False, _context=None, _depth=0):\n        cancel = cancel or threading.Event()\n        validate_url(url)\n        context=_context if _context is not None else {'seen':set(),'started':time.monotonic()}\n        if cancel.is_set(): raise InterruptedError('解析已取消')\n        if _depth>3 or url in context['seen'] or len(context['seen'])>=20:\n            return []\n>       if time.monotonic()-context['started']>30: raise TimeoutError('网页解析超过 30 秒')\n                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       TimeoutError: 网页解析超过 30 秒\n\nmediaharvester\\extractors.py:139: TimeoutError",
+  "evidence": "reports\\offline.xml",
+  "fix_status": "resolved",
+  "retest": {
+    "id": "tests.integration.test_web_extraction::test_dynamic_video_deep_download[javascript-video]",
+    "status": "PASS",
+    "seconds": 10.562,
+    "reason": "",
+    "evidence": "reports\\offline.xml"
+  }
+}

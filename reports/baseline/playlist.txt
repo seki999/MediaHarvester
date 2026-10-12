@@ -1,0 +1,38 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________ test_selected_playlist_entry_reextracted_and_downloaded ___________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-131/test_selected_playlist_entry_r0')
+fixture_server = <test_server.main.TestServer object at 0x000001B9D2767230>
+local_engine = <function local_engine.<locals>.run at 0x000001B9D28C37E0>
+
+    def test_selected_playlist_entry_reextracted_and_downloaded(tmp_path,fixture_server,local_engine):
+        media=YtDlpExtractor().extract(fixture_server.url+'/pages/multiple-videos',threading.Event())
+        assert len(media)==2
+>       result=download(tmp_path,media[0],format_options(media[0].formats)[0][1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_playlist_download.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-131/test_selected_playlist_entry_r0')
+media = Media(url='http://127.0.0.1:58972/pages/multiple-videos', page='http://127.0.0.1:58972/pages/multiple-videos', title='...filesize_approx': None, 'format_id': '0', 'format': '0 - unknown'}], identity='multiple-videos-1', headers={}, auth={})
+selector = '0', audio = '', options = {}
+
+    def download(tmp_path, media, selector='', audio='', **options):
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)
+        repo = Repository(tmp_path / 'tasks.db')
+        manager = DownloadManager(repo, settings)
+        try:
+            task = manager.add(asdict(media), selector, audio)
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)
+>           assert task.state == State.COMPLETED, task.error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: \u5a92\u4f53\u5185\u5bb9\u6807\u8bc6\u6539\u53d8\uff0c\u5df2\u505c\u6b62\u7eed\u4f20
+
+tests\integration\helpers.py:34: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  mediaharvester.download:download.py:258 Task 4d7ef17c09534b48bcd63646fb345813: \u5a92\u4f53\u5185\u5bb9\u6807\u8bc6\u6539\u53d8\uff0c\u5df2\u505c\u6b62\u7eed\u4f20
+=========================== short test summary info ===========================
+FAILED tests/integration/test_playlist_download.py::test_selected_playlist_entry_reextracted_and_downloaded
+1 failed in 5.94s

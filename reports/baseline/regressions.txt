@@ -1,0 +1,139 @@
+FF.FFFFF                                                                 [100%]
+================================== FAILURES ===================================
+_____________________ test_invalid_range_bounds[bad-end] ______________________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_invalid_range_bounds_bad_0')
+fixture_server = <test_server.main.TestServer object at 0x000001A741613380>
+local_network = <function local_network.<locals>.client at 0x000001A7417B39C0>
+endpoint = 'bad-end'
+
+    @pytest.mark.parametrize('endpoint', ['bad-end', 'bad-total'])
+    def test_invalid_range_bounds(tmp_path, fixture_server, local_network, endpoint):
+        task = Task(asdict(Media(fixture_server.url + '/binary/' + endpoint, '', 'file', 'audio', 'bin')), str(tmp_path), etag='"fixture-v1"')
+        (tmp_path / 'payload.part').write_bytes(b'x' * 32)
+>       with pytest.raises(OSError, match='Content-Range'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Content-Range'
+E         Actual message: '\u4e0b\u8f7d\u6570\u636e\u957f\u5ea6\u4e0d\u5b8c\u6574'
+
+tests\integration\test_regressions.py:20: AssertionError
+____________________ test_invalid_range_bounds[bad-total] _____________________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_invalid_range_bounds_bad_1')
+fixture_server = <test_server.main.TestServer object at 0x000001A741613380>
+local_network = <function local_network.<locals>.client at 0x000001A741800900>
+endpoint = 'bad-total'
+
+    @pytest.mark.parametrize('endpoint', ['bad-end', 'bad-total'])
+    def test_invalid_range_bounds(tmp_path, fixture_server, local_network, endpoint):
+        task = Task(asdict(Media(fixture_server.url + '/binary/' + endpoint, '', 'file', 'audio', 'bin')), str(tmp_path), etag='"fixture-v1"')
+        (tmp_path / 'payload.part').write_bytes(b'x' * 32)
+>       with pytest.raises(OSError, match='Content-Range'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Content-Range'
+E         Actual message: '\u4e0b\u8f7d\u6570\u636e\u957f\u5ea6\u4e0d\u5b8c\u6574'
+
+tests\integration\test_regressions.py:20: AssertionError
+______________________ test_drm_audio_never_auto_paired _______________________
+
+    def test_drm_audio_never_auto_paired():
+        formats = [dict(format_id='v', vcodec='avc1', acodec='none', ext='mp4'),
+                   dict(format_id='a', vcodec='none', acodec='aac', ext='m4a', has_drm=True)]
+>       assert format_options(formats) == []
+E       AssertionError: assert [('\u672a\u77e5p | mp4 ...\u5408\u5e76\u97f3\u8f68', 'v+a')] == []
+E         
+E         Left contains one more item: ('\u672a\u77e5p | mp4 | avc1 / none | \u672a\u77e5 fps | \u5408\u5e76\u97f3\u8f68', 'v+a')
+E         Use -v to get more diff
+
+tests\integration\test_regressions.py:36: AssertionError
+____________________ test_direct_wrong_extension_corrected ____________________
+
+fixture_server = <test_server.main.TestServer object at 0x000001A741613380>
+local_network = <function local_network.<locals>.client at 0x000001A741801800>
+
+    def test_direct_wrong_extension_corrected(fixture_server, local_network):
+        media = ExtractorRegistry(Settings.defaults).analyze(fixture_server.url + '/video/wrong-extension.jpg')[0]
+        assert media.kind == 'video' and media.ext == 'mp4'
+>       assert media.title.endswith('.mp4')
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x000001A7417D6170>('.mp4')
+E        +    where <built-in method endswith of str object at 0x000001A7417D6170> = 'wrong-extension.jpg'.endswith
+E        +      where 'wrong-extension.jpg' = Media(url='http://127.0.0.1:60210/video/wrong-extension.jpg', page='http://127.0.0.1:60210/video/wrong-extension.jpg',...e=36774, width=0, height=0, thumbnail='', source='127.0.0.1', duration=0, formats=[], identity='', headers={}, auth={}).title
+
+tests\integration\test_regressions.py:42: AssertionError
+______________________ test_content_disposition_unicode _______________________
+
+fixture_server = <test_server.main.TestServer object at 0x000001A741613380>
+local_network = <function local_network.<locals>.client at 0x000001A7418011C0>
+
+    def test_content_disposition_unicode(fixture_server, local_network):
+        media = ExtractorRegistry(Settings.defaults).analyze(fixture_server.url + '/video/disposition')[0]
+>       assert media.title == '\u6d4b\u8bd5_\u65e5\u672c.mp4'
+E       AssertionError: assert 'disposition' == '\u6d4b\u8bd5_\u65e5\u672c.mp4'
+E         
+E         - \u6d4b\u8bd5_\u65e5\u672c.mp4
+E         + disposition
+
+tests\integration\test_regressions.py:47: AssertionError
+_____________ test_video_with_expected_audio_rejects_silent_file ______________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_video_with_expected_audio0')
+media_root = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/controlled-media0')
+local_network = <function local_network.<locals>.client at 0x000001A741801D00>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001A741818150>
+
+    def test_video_with_expected_audio_rejects_silent_file(tmp_path, media_root, local_network, monkeypatch):
+        def engine(job, *args, **kwargs):
+            target = Path(job['temp']) / 'media.mp4'
+            target.write_bytes((media_root / 'silent.mp4').read_bytes())
+            return {'files': [str(target)]}
+        monkeypatch.setattr('mediaharvester.download.run_job', engine)
+        repo = Repository(tmp_path / 'db')
+        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0)
+        manager = DownloadManager(repo, settings)
+        try:
+            media = asdict(Media('https://example.com/video', '', 'v', 'video', 'mp4', identity='v',
+                                 formats=[dict(format_id='av', vcodec='avc1', acodec='aac', ext='mp4')]))
+            task = manager.add(media, 'av')
+            wait(lambda: task.state in (State.COMPLETED, State.FAILED))
+>           assert task.state == State.FAILED
+E           AssertionError: assert <State.COMPLETED: 'COMPLETED'> == <State.FAILED: 'FAILED'>
+E             
+E             - FAILED
+E             + COMPLETED
+
+tests\integration\test_regressions.py:64: AssertionError
+___________________ test_commit_recovery_restores_file_size ___________________
+
+tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_commit_recovery_restores_0')
+
+    def test_commit_recovery_restores_file_size(tmp_path):
+        repo = Repository(tmp_path / 'db')
+        task = Task(asdict(Media('https://example.com/file', '', 'v', 'audio', 'bin')), str(tmp_path), state=State.VERIFYING, total=9999)
+        final = tmp_path / 'done.bin'
+        final.write_bytes(b'complete')
+        temp = tmp_path / '.mediaharvester' / task.id
+        temp.mkdir(parents=True)
+        (temp / 'commit.json').write_text(json.dumps({'path': str(final), 'digest': sha256(final)}), encoding='utf-8')
+        repo.save(task)
+        manager = DownloadManager(repo, dict(Settings.defaults, auto_resume=True))
+        try:
+            wait(lambda: manager.tasks[task.id].state == State.COMPLETED)
+            restored = repo.all()[0]
+>           assert restored.total == restored.downloaded == len(b'complete')
+E           AssertionError: assert 9999 == 0
+E            +  where 9999 = Task(media={'url': 'https://example.com/file', 'page': '', 'title': 'v', 'kind': 'audio', 'ext': 'bin', 'size': 0, 'wi...f9b97390f790ba443d60cfa44b607da7e5c40aa1cc1d', engine='', phase='', cancel_requested=False, updated=1791768800.3149786).total
+E            +  and   0 = Task(media={'url': 'https://example.com/file', 'page': '', 'title': 'v', 'kind': 'audio', 'ext': 'bin', 'size': 0, 'wi...f9b97390f790ba443d60cfa44b607da7e5c40aa1cc1d', engine='', phase='', cancel_requested=False, updated=1791768800.3149786).downloaded
+
+tests\integration\test_regressions.py:83: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/integration/test_regressions.py::test_invalid_range_bounds[bad-end]
+FAILED tests/integration/test_regressions.py::test_invalid_range_bounds[bad-total]
+FAILED tests/integration/test_regressions.py::test_drm_audio_never_auto_paired
+FAILED tests/integration/test_regressions.py::test_direct_wrong_extension_corrected
+FAILED tests/integration/test_regressions.py::test_content_disposition_unicode
+FAILED tests/integration/test_regressions.py::test_video_with_expected_audio_rejects_silent_file
+FAILED tests/integration/test_regressions.py::test_commit_recovery_restores_file_size
+7 failed, 1 passed in 3.84s

@@ -1,0 +1,17 @@
+{
+  "id": "InstagramIE-1",
+  "site": "Instagram Reels",
+  "url": "https://www.instagram.com/reel/Chunk8-jurw/",
+  "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+  "license": "",
+  "kind": "video",
+  "date": "2026-10-12T10:59:37.025090+09:00",
+  "stage": "download",
+  "extraction": "PASS",
+  "title": "Video by instagram",
+  "duration": 0,
+  "formats": 9,
+  "status": "BLOCKED",
+  "reason": "仅完成提取；未确认下载授权，未下载",
+  "seconds": 4.856
+}

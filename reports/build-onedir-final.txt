@@ -1,0 +1,40 @@
+135 INFO: PyInstaller: 6.22.3, contrib hooks: 2026.8
+136 INFO: Python: 3.13.14
+172 INFO: Platform: Windows-11-10.0.26200-SP0
+172 INFO: Python environment: C:\Users\seki9\Documents\MediaHarvester\.venv
+990 INFO: Module search paths (PYTHONPATH):
+['C:\\Users\\seki9\\Documents\\MediaHarvester',
+ 'C:\\Program '
+ 'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python313.zip',
+ 'C:\\Program '
+ 'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\DLLs',
+ 'C:\\Program '
+ 'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib',
+ 'C:\\Program '
+ 'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0',
+ 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv',
+ 'C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages',
+ 'C:\\Users\\seki9\\Documents\\MediaHarvester']
+1409 INFO: Appending 'datas' from .spec
+1436 INFO: checking Analysis
+1577 INFO: checking PYZ
+1686 INFO: checking PKG
+1724 INFO: Building because toc changed
+1724 INFO: Building PKG (CArchive) MediaHarvester.pkg
+1751 INFO: Building PKG (CArchive) MediaHarvester.pkg completed successfully.
+1752 INFO: Bootloader C:\Users\seki9\Documents\MediaHarvester\.venv\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+1752 INFO: checking EXE
+1794 INFO: Building because name changed
+1794 INFO: Building EXE from EXE-00.toc
+1796 INFO: Copying bootloader EXE to C:\Users\seki9\Documents\MediaHarvester\build\mediaharvester\MediaHarvester.exe
+1903 INFO: Copying icon to EXE
+2003 INFO: Copying 0 resources to EXE
+2003 INFO: Embedding manifest in EXE
+2126 INFO: Appending PKG archive to EXE
+2663 INFO: Fixing EXE headers
+3706 INFO: Building EXE from EXE-00.toc completed successfully.
+3724 INFO: checking COLLECT
+3784 INFO: Removing dir C:\Users\seki9\Documents\MediaHarvester\dist\validation-onedir\MediaHarvester
+4337 INFO: Building COLLECT COLLECT-00.toc
+7376 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+7425 INFO: Build complete! The results are available in: C:\Users\seki9\Documents\MediaHarvester\dist\validation-onedir

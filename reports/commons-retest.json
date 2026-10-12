@@ -1,0 +1,14 @@
+{
+  "id": "commons-audio",
+  "site": "Wikimedia Commons",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg",
+  "source": "https://commons.wikimedia.org/wiki/File:Example.ogg",
+  "license": "GFDL / CC BY-SA 3.0; JesseW",
+  "kind": "audio",
+  "date": "2026-10-12T10:41:58.670648+09:00",
+  "stage": "extraction",
+  "status": "FAIL",
+  "reason": "Expected audio, got video",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 104, in execute\n    result.update(direct_case(sample));result['status']='PASS'\n                  ~~~~~~~~~~~^^^^^^^^\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 70, in direct_case\n    assert media.kind==sample['kind'],f'Expected {sample[\"kind\"]}, got {media.kind}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Expected audio, got video\n",
+  "seconds": 2.441
+}

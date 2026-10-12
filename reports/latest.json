@@ -1,0 +1,2961 @@
+{
+  "date": "2026-10-12T11:56:59.186054+09:00",
+  "environment": {
+    "date": "2026-10-12T11:54:40.098488+09:00",
+    "timezone": "Asia/Tokyo",
+    "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "os": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "PySide6": "6.8.3",
+      "yt-dlp": "2026.8.19",
+      "httpx": "0.28.1",
+      "curl-cffi": "0.16.3",
+      "playwright": "1.63.0",
+      "pytest": "9.1.1",
+      "pyinstaller": "6.22.3",
+      "ruff": "0.17.0"
+    },
+    "tools": {
+      "ffmpeg": {
+        "path": "C:\\Users\\seki9\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-full_build\\bin\\ffmpeg.EXE",
+        "version": "ffmpeg version 9.0.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "ffprobe": {
+        "path": "C:\\Users\\seki9\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-full_build\\bin\\ffprobe.EXE",
+        "version": "ffprobe version 9.0.1-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "aria2c": {
+        "path": null
+      }
+    },
+    "commit": "5b6703841441e8815c1454bc21eae3662c99fc1d",
+    "branch": "codex/automation-validation"
+  },
+  "base_commit": "43d66e354027b9f617cc846fbb6234a3d99a0051",
+  "report_commit": "5b6703841441e8815c1454bc21eae3662c99fc1d",
+  "baseline": {
+    "existing_suite_pass": 70,
+    "existing_suite_fail": 0,
+    "new_reproduced_failures": 24
+  },
+  "summary": {
+    "local_total": 210,
+    "local_counts": {
+      "PASS": 208,
+      "SKIPPED": 2
+    },
+    "local_executed_rate": 100.0,
+    "online_counts": {
+      "PASS": 2,
+      "BLOCKED": 13,
+      "SKIPPED": 5,
+      "FAIL": 1,
+      "UNAVAILABLE": 1
+    },
+    "verified_online_downloads": 2,
+    "online_download_attempts": 4,
+    "online_all_attempt_rate": 50.0,
+    "platform_extraction_pass": 11,
+    "fixed_bugs": 13
+  },
+  "protocols": [
+    {
+      "protocol": "Cookie/认证",
+      "PASS": 23,
+      "rate": 100.0
+    },
+    {
+      "protocol": "DASH",
+      "PASS": 3,
+      "rate": 100.0
+    },
+    {
+      "protocol": "GUI",
+      "PASS": 1,
+      "rate": 100.0
+    },
+    {
+      "protocol": "HLS",
+      "PASS": 9,
+      "rate": 100.0
+    },
+    {
+      "protocol": "HTML/动态页面",
+      "PASS": 10,
+      "rate": 100.0
+    },
+    {
+      "protocol": "HTTP",
+      "PASS": 40,
+      "rate": 100.0
+    },
+    {
+      "protocol": "aria2",
+      "PASS": 1,
+      "rate": 100.0
+    },
+    {
+      "protocol": "其他单元/回归",
+      "PASS": 27,
+      "rate": 100.0
+    },
+    {
+      "protocol": "图片",
+      "PASS": 10,
+      "rate": 100.0
+    },
+    {
+      "protocol": "媒体验证",
+      "PASS": 2,
+      "rate": 100.0
+    },
+    {
+      "protocol": "安全",
+      "PASS": 22,
+      "rate": 100.0
+    },
+    {
+      "protocol": "续传/恢复",
+      "PASS": 23,
+      "SKIPPED": 2,
+      "rate": 100.0
+    },
+    {
+      "protocol": "网站解析",
+      "PASS": 9,
+      "rate": 100.0
+    },
+    {
+      "protocol": "网络异常",
+      "PASS": 14,
+      "rate": 100.0
+    },
+    {
+      "protocol": "音频",
+      "PASS": 14,
+      "rate": 100.0
+    }
+  ],
+  "commands": [
+    {
+      "id": "offline",
+      "status": "FAIL",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m pytest -q --junitxml=reports/offline.xml",
+      "seconds": 311.324,
+      "log": "reports\\offline.txt"
+    },
+    {
+      "id": "static",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m ruff check --select E9,F63,F7,F82 mediaharvester scripts test_server tests",
+      "seconds": 0.185,
+      "log": "reports\\static.txt"
+    },
+    {
+      "id": "online",
+      "status": "FAIL",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/run_online_tests.py --sites",
+      "seconds": 85.923,
+      "log": "reports\\online.txt"
+    },
+    {
+      "id": "gui",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/gui_workflow.py",
+      "seconds": 10.216,
+      "log": "reports\\gui.txt"
+    },
+    {
+      "id": "build-onedir",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onedir mediaharvester.spec",
+      "seconds": 125.619,
+      "log": "reports\\build-onedir.txt"
+    },
+    {
+      "id": "exe-onedir",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/exe_smoke.py dist/validation-onedir/MediaHarvester/MediaHarvester.exe",
+      "seconds": 62.396,
+      "log": "reports\\exe-onedir.txt"
+    },
+    {
+      "id": "build-onefile",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onefile mediaharvester.spec",
+      "seconds": 124.51,
+      "log": "reports\\build-onefile.txt"
+    },
+    {
+      "id": "exe-onefile",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/exe_smoke.py dist/validation-onefile/MediaHarvester.exe",
+      "seconds": 26.268,
+      "log": "reports\\exe-onefile.txt"
+    },
+    {
+      "id": "offline-final",
+      "status": "PASS",
+      "command": ".venv/Scripts/python.exe -m pytest -q --junitxml=reports/offline-final.xml",
+      "seconds": 244.42,
+      "log": "reports/offline-final.xml"
+    },
+    {
+      "id": "gui-final",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/gui_workflow.py",
+      "seconds": 8.907,
+      "log": "reports\\gui-final.txt"
+    },
+    {
+      "id": "exe-onedir-final",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe scripts/exe_smoke.py dist/validation-onedir/MediaHarvester/MediaHarvester.exe --output reports/exe-onedir",
+      "seconds": 10.88,
+      "log": "reports\\exe-onedir-final.txt"
+    },
+    {
+      "id": "build-onedir-final",
+      "status": "PASS",
+      "command": "C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Scripts\\python.exe -m PyInstaller --noconfirm --distpath dist/validation-onedir mediaharvester.spec",
+      "seconds": 7.697,
+      "log": "reports\\build-onedir-final.txt"
+    },
+    {
+      "id": "stress",
+      "status": "PASS",
+      "command": ".venv/Scripts/python.exe -m pytest tests/integration/test_resume.py --stress -q --junitxml=reports/stress.xml",
+      "seconds": 12.4,
+      "log": "reports/stress.xml"
+    },
+    {
+      "id": "source-audit",
+      "status": "PASS",
+      "command": "python scripts/verify_build.py EXE --output report.json",
+      "log": "reports/exe-onedir/source-audit.json; reports/exe-onefile/source-audit.json"
+    }
+  ],
+  "fixes": [
+    {
+      "id": "MH-001",
+      "problem": "206 未验证 Content-Range 结束位置和分段长度；异常响应先追加文件才失败",
+      "files": [
+        "mediaharvester/download.py"
+      ],
+      "tests": [
+        "test_invalid_range_bounds"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 2
+    },
+    {
+      "id": "MH-002",
+      "problem": "DRM 音轨参与自动视频配对",
+      "files": [
+        "mediaharvester/extractors.py"
+      ],
+      "tests": [
+        "test_drm_audio_never_auto_paired"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 1
+    },
+    {
+      "id": "MH-003",
+      "problem": "错误或缺失扩展名未根据媒体类型规范化",
+      "files": [
+        "mediaharvester/extractors.py"
+      ],
+      "tests": [
+        "test_direct_wrong_extension_corrected",
+        "test_http_complete_hash_and_tracks"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 9
+    },
+    {
+      "id": "MH-004",
+      "problem": "忽略 Content-Disposition 的 UTF-8 文件名",
+      "files": [
+        "mediaharvester/extractors.py"
+      ],
+      "tests": [
+        "test_content_disposition_unicode"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 1
+    },
+    {
+      "id": "MH-005",
+      "problem": "选择包含音轨的视频下载后无音轨仍标为完成",
+      "files": [
+        "mediaharvester/download.py",
+        "mediaharvester/media.py"
+      ],
+      "tests": [
+        "test_video_with_expected_audio_rejects_silent_file"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 1
+    },
+    {
+      "id": "MH-006",
+      "problem": "提交日志恢复只更新状态，保留了旧下载字节数和总大小",
+      "files": [
+        "mediaharvester/download.py"
+      ],
+      "tests": [
+        "test_commit_recovery_restores_file_size"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 1
+    },
+    {
+      "id": "MH-007",
+      "problem": "权限拒绝、永久错误和限速仍自动重复请求；缺少 Retry-After 处理",
+      "files": [
+        "mediaharvester/download.py"
+      ],
+      "tests": [
+        "test_permanent_or_limited_status_stops_automatic_retry",
+        "test_retry_after_seconds",
+        "test_retry_after_date_and_exponential_floor"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 9
+    },
+    {
+      "id": "MH-008",
+      "problem": "HTML5/iframe/动态视频源解析缺口，以及 generic 多媒体页面下载失败",
+      "files": [
+        "mediaharvester/extractors.py"
+      ],
+      "tests": [
+        "test_html_video_actual_download",
+        "test_dynamic_video_deep_download"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 10
+    },
+    {
+      "id": "MH-009",
+      "problem": "未知 MIME 的 MP4 和 application/ogg 未识别为直链；video/ogg 声音文件被误分类",
+      "files": [
+        "mediaharvester/extractors.py"
+      ],
+      "tests": [
+        "test_octet_stream_mp4_detected",
+        "test_application_ogg_audio_detected"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 2,
+      "regression_cases": 4
+    },
+    {
+      "id": "MH-010",
+      "problem": "Windows 短命子进程已退出时 Job Object 绑定失败导致误报",
+      "files": [
+        "mediaharvester/processes.py"
+      ],
+      "tests": [
+        "test_already_exited_child_does_not_fail_verification"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 1
+    },
+    {
+      "id": "MH-011",
+      "problem": "Instagram 原始视频格式未由 yt-dlp 生成 format_id，导致 Reels/视频被丢弃",
+      "files": [
+        "mediaharvester/worker.py"
+      ],
+      "tests": [
+        "test_instagram_raw_video_gets_format_ids"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 2
+    },
+    {
+      "id": "MH-012",
+      "problem": "重新解析多视频页面时比较播放列表父 ID，无法下载已选子项",
+      "files": [
+        "mediaharvester/worker.py"
+      ],
+      "tests": [
+        "test_selected_playlist_entry_reextracted_and_downloaded",
+        "test_playlist_identity_missing_or_ambiguous_rejected"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 3
+    },
+    {
+      "id": "MH-013",
+      "problem": "Playwright 隐式浏览器上下文在视频页面清理时阻塞；显式关闭上下文后解除超时",
+      "files": [
+        "mediaharvester/worker.py"
+      ],
+      "tests": [
+        "test_dynamic_video_deep_download"
+      ],
+      "before": "FAIL",
+      "after": "PASS",
+      "rounds": 1,
+      "regression_cases": 2
+    }
+  ],
+  "online": [
+    {
+      "id": "mdn-mp4",
+      "site": "MDN",
+      "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video",
+      "license": "CC0",
+      "kind": "video",
+      "date": "2026-10-12T10:58:53.190471+09:00",
+      "stage": "integrity",
+      "bytes": 1128375,
+      "sha256": "0cd83d944a6ca7822b4a8306cecc60a36e859b041f6702c6a1ad9ead78924451",
+      "engine": "httpx",
+      "database_state": "COMPLETED",
+      "network_bytes": 1128375,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "height": 540,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac",
+          "height": null,
+          "channels": 2
+        }
+      ],
+      "duration": 5.055,
+      "status": "PASS",
+      "seconds": 9.636
+    },
+    {
+      "id": "mdn-webm",
+      "site": "MDN",
+      "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video",
+      "license": "CC0",
+      "kind": "video",
+      "date": "2026-10-12T10:59:03.223017+09:00",
+      "stage": "integrity",
+      "bytes": 554058,
+      "sha256": "c6f8a348953395598a9a73b9bab1676436410797bce9f398f4be1531d6e76dda",
+      "engine": "httpx",
+      "database_state": "COMPLETED",
+      "network_bytes": 554058,
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "vp8",
+          "height": 540,
+          "channels": null
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "vorbis",
+          "height": null,
+          "channels": 2
+        }
+      ],
+      "duration": 5.059,
+      "status": "PASS",
+      "seconds": 5.126
+    },
+    {
+      "id": "commons-audio",
+      "site": "Wikimedia Commons",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg",
+      "source": "https://commons.wikimedia.org/wiki/File:Example.ogg",
+      "license": "GFDL / CC BY-SA 3.0; JesseW",
+      "kind": "audio",
+      "date": "2026-10-12T10:59:08.704360+09:00",
+      "stage": "extraction",
+      "status": "BLOCKED",
+      "reason": "Client error '403 Forbidden' for url '[URL]\nFor more information check: [URL]",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 108, in execute\n    result.update(direct_case(sample));result['status']='PASS'\n                  ~~~~~~~~~~~^^^^^^^^\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 72, in direct_case\n    response.raise_for_status()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\httpx\\_models.py\", line 829, in raise_for_status\n    raise HTTPStatusError(message, request=request, response=self)\nhttpx.HTTPStatusError: Client error '403 Forbidden' for url '[URL]\nFor more information check: [URL]\n",
+      "seconds": 1.153
+    },
+    {
+      "id": "commons-image",
+      "site": "Wikimedia Commons",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Example.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Example.jpg",
+      "license": "Public domain example image",
+      "kind": "image",
+      "date": "2026-10-12T10:59:10.174653+09:00",
+      "stage": "extraction",
+      "status": "BLOCKED",
+      "reason": "Client error '403 Forbidden' for url '[URL]\nFor more information check: [URL]",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 108, in execute\n    result.update(direct_case(sample));result['status']='PASS'\n                  ~~~~~~~~~~~^^^^^^^^\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 72, in direct_case\n    response.raise_for_status()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\.venv\\Lib\\site-packages\\httpx\\_models.py\", line 829, in raise_for_status\n    raise HTTPStatusError(message, request=request, response=self)\nhttpx.HTTPStatusError: Client error '403 Forbidden' for url '[URL]\nFor more information check: [URL]\n",
+      "seconds": 0.913
+    },
+    {
+      "id": "YoutubeIE-0",
+      "site": "YouTube",
+      "url": "https://www.youtube.com/watch?[REDACTED]",
+      "source": "https://www.youtube.com/watch?[REDACTED]",
+      "license": "CC BY; Blender Foundation",
+      "kind": "video",
+      "date": "2026-10-12T10:59:11.445395+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "Big Buck Bunny",
+      "duration": 597,
+      "formats": 43,
+      "status": "SKIPPED",
+      "reason": "仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证",
+      "seconds": 5.37
+    },
+    {
+      "id": "VimeoIE-0",
+      "site": "Vimeo",
+      "url": "https://vimeo.com/17466681",
+      "source": "https://vimeo.com/17466681",
+      "license": "CC BY; Blender Foundation",
+      "kind": "video",
+      "date": "2026-10-12T10:59:17.163468+09:00",
+      "stage": "extraction",
+      "status": "BLOCKED",
+      "reason": "ERROR: [vimeo] 17466681: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  [URL]  for how to manually pass cookies",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 112, in execute\n    media=YtDlpExtractor({'auto_browser_cookies':False}).extract(sample['url'],threading.Event())\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\", line 104, in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 99, in _run_job\n    raise RuntimeError(payload['error'])\nRuntimeError: ERROR: [vimeo] 17466681: The web client only works when logged-in. Use --cookies, --cookies-from-browser, --username and --password, --netrc-cmd, or --netrc (vimeo) to provide account credentials. See  [URL]  for how to manually pass cookies\n",
+      "seconds": 2.358
+    },
+    {
+      "id": "DailymotionIE-0",
+      "site": "Dailymotion",
+      "url": "https://www.dailymotion.com/video/x3rtcmg",
+      "source": "https://www.dailymotion.com/video/x3rtcmg",
+      "license": "CC BY; Blender Foundation film; metadata only",
+      "kind": "video",
+      "date": "2026-10-12T10:59:19.915130+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "Dessin animé avec un gros lapin (HUMOUR) (HQ) Big Buck Bunny",
+      "duration": 596,
+      "formats": 2,
+      "status": "SKIPPED",
+      "reason": "仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证",
+      "seconds": 5.405
+    },
+    {
+      "id": "TwitchVodIE-0",
+      "site": "Twitch VOD",
+      "url": "http://www.twitch.tv/riotgames/v/6528877?[REDACTED]",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T10:59:25.681779+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "LCK Summer Split - Week 6 Day 1",
+      "duration": 17208,
+      "formats": 8,
+      "status": "BLOCKED",
+      "reason": "仅完成提取；未确认下载授权，未下载",
+      "seconds": 4.95
+    },
+    {
+      "id": "TwitchClipsIE-0",
+      "site": "Twitch Clips",
+      "url": "https://clips.twitch.tv/FaintLightGullWholeWheat",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T10:59:30.986420+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "EA Play 2016 Live from the Novo Theatre",
+      "duration": 32,
+      "formats": 1,
+      "status": "BLOCKED",
+      "reason": "仅完成提取；未确认下载授权，未下载",
+      "seconds": 2.891
+    },
+    {
+      "id": "TikTokIE-0",
+      "site": "TikTok",
+      "url": "https://www.tiktok.com/@leenabhushan/video/6748451240264420610",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T10:59:34.263301+09:00",
+      "stage": "extraction",
+      "status": "BLOCKED",
+      "reason": "ERROR: [TikTok] 6748451240264420610: Your IP address is blocked from accessing this post",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 112, in execute\n    media=YtDlpExtractor({'auto_browser_cookies':False}).extract(sample['url'],threading.Event())\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\", line 104, in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 99, in _run_job\n    raise RuntimeError(payload['error'])\nRuntimeError: ERROR: [TikTok] 6748451240264420610: Your IP address is blocked from accessing this post\n",
+      "seconds": 2.392
+    },
+    {
+      "id": "InstagramIE-1",
+      "site": "Instagram Reels",
+      "url": "https://www.instagram.com/reel/Chunk8-jurw/",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T10:59:37.025090+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "Video by instagram",
+      "duration": 0,
+      "formats": 9,
+      "status": "BLOCKED",
+      "reason": "仅完成提取；未确认下载授权，未下载",
+      "seconds": 4.856
+    },
+    {
+      "id": "InstagramIE-0",
+      "site": "Instagram video",
+      "url": "https://instagram.com/p/aye83DjauH/?[REDACTED]",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T10:59:42.246029+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "Video by naomipq",
+      "duration": 0,
+      "formats": 4,
+      "status": "BLOCKED",
+      "reason": "仅完成提取；未确认下载授权，未下载",
+      "seconds": 4.298
+    },
+    {
+      "id": "FacebookIE-0",
+      "site": "Facebook Video",
+      "url": "https://www.facebook.com/radiokicksfm/videos/3676516585958356/",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T10:59:46.894908+09:00",
+      "stage": "extraction",
+      "status": "FAIL",
+      "reason": "ERROR: [facebook] 3676516585958356: Cannot parse data; please report this issue on  [URL] , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 112, in execute\n    media=YtDlpExtractor({'auto_browser_cookies':False}).extract(sample['url'],threading.Event())\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\", line 104, in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 99, in _run_job\n    raise RuntimeError(payload['error'])\nRuntimeError: ERROR: [facebook] 3676516585958356: Cannot parse data; please report this issue on  [URL] , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U\n",
+      "failure_owner": "upstream yt-dlp / sample; see upstream-diagnostics.json",
+      "seconds": 2.685
+    },
+    {
+      "id": "TwitterIE-0",
+      "site": "X / Twitter",
+      "url": "https://twitter.com/freethenipple/status/643211948184596480",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T10:59:49.914857+09:00",
+      "stage": "extraction",
+      "status": "UNAVAILABLE",
+      "reason": "ERROR: [twitter] 643211948184596480: No video could be found in this tweet",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\scripts\\run_online_tests.py\", line 112, in execute\n    media=YtDlpExtractor({'auto_browser_cookies':False}).extract(sample['url'],threading.Event())\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\extractors.py\", line 104, in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 52, in run_job\n    return _run_job(job,cancel,progress,timeout)\n  File \"C:\\Users\\seki9\\Documents\\MediaHarvester\\mediaharvester\\worker.py\", line 99, in _run_job\n    raise RuntimeError(payload['error'])\nRuntimeError: ERROR: [twitter] 643211948184596480: No video could be found in this tweet\n",
+      "failure_owner": "upstream yt-dlp / sample; see upstream-diagnostics.json",
+      "seconds": 2.968
+    },
+    {
+      "id": "BiliBiliIE-0",
+      "site": "Bilibili",
+      "url": "https://www.bilibili.com/video/BV15z4y1U7HS",
+      "source": "https://www.bilibili.com/video/BV15z4y1U7HS",
+      "license": "CC BY; Blender Foundation film; metadata only",
+      "kind": "video",
+      "date": "2026-10-12T10:59:53.235475+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "【动画短片】大雄兔 / Big Buck Bunny【4K 60fps】",
+      "duration": 634.566,
+      "formats": 7,
+      "status": "SKIPPED",
+      "reason": "仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证",
+      "seconds": 6.464
+    },
+    {
+      "id": "NiconicoIE-0",
+      "site": "Niconico",
+      "url": "https://www.nicovideo.jp/watch/1173108780",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T11:00:00.049000+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "新・豪血寺一族 -煩悩解放 - レッツゴー！陰陽師",
+      "duration": 320,
+      "formats": 6,
+      "status": "BLOCKED",
+      "reason": "仅完成提取；未确认下载授权，未下载",
+      "seconds": 3.64
+    },
+    {
+      "id": "ArchiveOrgIE-1",
+      "site": "Internet Archive",
+      "url": "https://archive.org/details/BigBuckBunny",
+      "source": "https://peach.blender.org/2008/05/big-buck-bunny-movie-files-released/",
+      "license": "CC BY; Blender Foundation",
+      "kind": "video",
+      "date": "2026-10-12T11:00:04.062541+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "Big Buck Bunny",
+      "duration": 596.46,
+      "formats": 1,
+      "status": "SKIPPED",
+      "reason": "仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证",
+      "seconds": 3.651
+    },
+    {
+      "id": "RedditIE-0",
+      "site": "Reddit",
+      "url": "https://www.reddit.com/r/videos/comments/6rrwyj/that_small_heart_attack/",
+      "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T11:00:08.073683+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "That small heart attack.",
+      "duration": 12,
+      "formats": 11,
+      "status": "BLOCKED",
+      "reason": "仅完成提取；未确认下载授权，未下载",
+      "seconds": 6.659
+    },
+    {
+      "id": "YouTube-Shorts",
+      "site": "YouTube Shorts",
+      "url": "",
+      "source": "No verified authorized URL found in this run",
+      "license": "",
+      "kind": "video",
+      "date": "2026-10-12T11:00:15.099925+09:00",
+      "stage": "extraction",
+      "status": "BLOCKED",
+      "reason": "尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求",
+      "seconds": 0.0
+    },
+    {
+      "id": "Instagram-single-image",
+      "site": "Instagram single image",
+      "url": "",
+      "source": "No verified authorized URL found in this run",
+      "license": "",
+      "kind": "image",
+      "date": "2026-10-12T11:00:15.393649+09:00",
+      "stage": "extraction",
+      "status": "BLOCKED",
+      "reason": "尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求",
+      "seconds": 0.0
+    },
+    {
+      "id": "Instagram-carousel",
+      "site": "Instagram carousel",
+      "url": "",
+      "source": "No verified authorized URL found in this run",
+      "license": "",
+      "kind": "image",
+      "date": "2026-10-12T11:00:15.706955+09:00",
+      "stage": "extraction",
+      "status": "BLOCKED",
+      "reason": "尚未取得此 URL 类型的可验证公开授权样例；没有执行网络请求",
+      "seconds": 0.0
+    },
+    {
+      "id": "Wikimedia-page",
+      "site": "Wikimedia Commons",
+      "url": "https://commons.wikimedia.org/wiki/File:Example.ogg",
+      "source": "https://commons.wikimedia.org/wiki/File:Example.ogg",
+      "license": "GFDL / CC BY-SA 3.0; JesseW",
+      "kind": "audio",
+      "date": "2026-10-12T11:00:16.046339+09:00",
+      "stage": "download",
+      "extraction": "PASS",
+      "title": "Example",
+      "duration": 6.104036281179138,
+      "formats": 3,
+      "status": "SKIPPED",
+      "reason": "仅完成提取；本轮平台候选未执行下载，公开小素材另有直链验证",
+      "seconds": 2.41
+    }
+  ],
+  "local": [
+    {
+      "id": "tests.integration.test_audio::test_direct_audio_tracks_and_integrity[mp3]",
+      "status": "PASS",
+      "seconds": 2.472,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_audio::test_direct_audio_tracks_and_integrity[m4a]",
+      "status": "PASS",
+      "seconds": 1.592,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_audio::test_direct_audio_tracks_and_integrity[aac]",
+      "status": "PASS",
+      "seconds": 1.579,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_audio::test_direct_audio_tracks_and_integrity[opus]",
+      "status": "PASS",
+      "seconds": 1.577,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_audio::test_direct_audio_tracks_and_integrity[webm]",
+      "status": "PASS",
+      "seconds": 1.602,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_audio::test_video_audio_conversion[mp3]",
+      "status": "PASS",
+      "seconds": 1.753,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_audio::test_video_audio_conversion[m4a]",
+      "status": "PASS",
+      "seconds": 1.784,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_audio::test_video_audio_conversion[opus]",
+      "status": "PASS",
+      "seconds": 1.742,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_concurrency::test_concurrent_tasks_and_duplicate_resume",
+      "status": "PASS",
+      "seconds": 1.437,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_content_detection::test_octet_stream_mp4_detected",
+      "status": "PASS",
+      "seconds": 0.214,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_content_detection::test_application_ogg_audio_detected[application/ogg]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_content_detection::test_application_ogg_audio_detected[video/ogg]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_content_detection::test_application_ogg_audio_detected[audio/ogg]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_synthetic_auth_actual_engine_download[cookie-required]",
+      "status": "PASS",
+      "seconds": 3.82,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_synthetic_auth_actual_engine_download[redirect-after-login]",
+      "status": "PASS",
+      "seconds": 4.09,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_no_or_expired_auth_is_rejected[cookie-required]",
+      "status": "PASS",
+      "seconds": 0.475,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_no_or_expired_auth_is_rejected[session-expired]",
+      "status": "PASS",
+      "seconds": 0.491,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_no_or_expired_auth_is_rejected[token-expired]",
+      "status": "PASS",
+      "seconds": 0.478,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_no_or_expired_auth_is_rejected[invalid-cookie]",
+      "status": "PASS",
+      "seconds": 0.502,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_cookie_path_and_secure_enforced[/-False-200]",
+      "status": "PASS",
+      "seconds": 0.481,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_cookie_path_and_secure_enforced[/other-False-401]",
+      "status": "PASS",
+      "seconds": 0.476,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_cookie_path_and_secure_enforced[/-True-401]",
+      "status": "PASS",
+      "seconds": 0.463,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_cookie_auth::test_cross_host_cookie_not_leaked",
+      "status": "PASS",
+      "seconds": 2.466,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_dash_download::test_dash_separate_audio_video[manifest.mpd-720]",
+      "status": "PASS",
+      "seconds": 5.672,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_dash_download::test_dash_separate_audio_video[list/manifest.mpd-360]",
+      "status": "PASS",
+      "seconds": 5.352,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_dash_download::test_dash_separate_audio_video[template/manifest.mpd-360]",
+      "status": "PASS",
+      "seconds": 5.155,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_selected_resolution_and_audio[360]",
+      "status": "PASS",
+      "seconds": 4.946,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_selected_resolution_and_audio[720]",
+      "status": "PASS",
+      "seconds": 4.984,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_selected_resolution_and_audio[1080]",
+      "status": "PASS",
+      "seconds": 4.88,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_fmp4_real_merge",
+      "status": "PASS",
+      "seconds": 5.515,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_invalid_or_missing_never_succeeds[broken]",
+      "status": "PASS",
+      "seconds": 1.619,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_invalid_or_missing_never_succeeds[missing]",
+      "status": "PASS",
+      "seconds": 4.671,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_separate_language_audio_and_subtitles[en]",
+      "status": "PASS",
+      "seconds": 7.204,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_separate_language_audio_and_subtitles[ja]",
+      "status": "PASS",
+      "seconds": 7.584,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_hls_download::test_hls_transient_segment_manual_retry_recovers",
+      "status": "PASS",
+      "seconds": 7.821,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_http_complete_hash_and_tracks[direct.mp4-video360.mp4]",
+      "status": "PASS",
+      "seconds": 1.605,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_http_complete_hash_and_tracks[direct.webm-direct.webm]",
+      "status": "PASS",
+      "seconds": 1.608,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_http_complete_hash_and_tracks[direct.mov-direct.mov]",
+      "status": "PASS",
+      "seconds": 1.602,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_http_complete_hash_and_tracks[no-extension?id=123-video360.mp4]",
+      "status": "PASS",
+      "seconds": 1.63,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_http_complete_hash_and_tracks[wrong-extension.jpg-video360.mp4]",
+      "status": "PASS",
+      "seconds": 1.613,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_http_complete_hash_and_tracks[chunked-video360.mp4]",
+      "status": "PASS",
+      "seconds": 1.618,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_http_complete_hash_and_tracks[no-content-length-video360.mp4]",
+      "status": "PASS",
+      "seconds": 1.585,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_http_complete_hash_and_tracks[disposition-video360.mp4]",
+      "status": "PASS",
+      "seconds": 1.599,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_redirect_download[301]",
+      "status": "PASS",
+      "seconds": 1.532,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_redirect_download[302]",
+      "status": "PASS",
+      "seconds": 1.534,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_redirect_download[303]",
+      "status": "PASS",
+      "seconds": 1.525,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_redirect_download[307]",
+      "status": "PASS",
+      "seconds": 1.515,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_redirect_download[308]",
+      "status": "PASS",
+      "seconds": 1.517,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_unknown_content_type_bytes_still_verified",
+      "status": "PASS",
+      "seconds": 0.567,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_http_download::test_filename_collision_never_overwrites",
+      "status": "PASS",
+      "seconds": 2.056,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_images::test_image_download_decode_and_hash[jpg]",
+      "status": "PASS",
+      "seconds": 1.299,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_images::test_image_download_decode_and_hash[png]",
+      "status": "PASS",
+      "seconds": 1.312,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_images::test_image_download_decode_and_hash[webp]",
+      "status": "PASS",
+      "seconds": 1.302,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_images::test_image_download_decode_and_hash[gif]",
+      "status": "PASS",
+      "seconds": 1.312,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_images::test_image_download_decode_and_hash[avif]",
+      "status": "PASS",
+      "seconds": 1.303,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_images::test_image_candidates_largest_deduplicated",
+      "status": "PASS",
+      "seconds": 0.505,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[400]",
+      "status": "PASS",
+      "seconds": 0.47,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[401]",
+      "status": "PASS",
+      "seconds": 0.482,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[403]",
+      "status": "PASS",
+      "seconds": 0.463,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[404]",
+      "status": "PASS",
+      "seconds": 0.477,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[408]",
+      "status": "PASS",
+      "seconds": 0.477,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[410]",
+      "status": "PASS",
+      "seconds": 0.476,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[429]",
+      "status": "PASS",
+      "seconds": 0.243,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[500]",
+      "status": "PASS",
+      "seconds": 0.232,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[502]",
+      "status": "PASS",
+      "seconds": 0.23,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[503]",
+      "status": "PASS",
+      "seconds": 0.234,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_http_errors_never_publish[504]",
+      "status": "PASS",
+      "seconds": 0.222,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_dropped_tcp_never_reports_complete",
+      "status": "PASS",
+      "seconds": 0.22,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_redirect_loop_bounded",
+      "status": "PASS",
+      "seconds": 0.22,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[401]",
+      "status": "PASS",
+      "seconds": 0.631,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[403]",
+      "status": "PASS",
+      "seconds": 0.43,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[404]",
+      "status": "PASS",
+      "seconds": 0.631,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[410]",
+      "status": "PASS",
+      "seconds": 0.632,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[429]",
+      "status": "PASS",
+      "seconds": 0.63,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_retry_after_honored_and_retry_count_bounded",
+      "status": "PASS",
+      "seconds": 1.836,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_playlist_download::test_selected_playlist_entry_reextracted_and_downloaded",
+      "status": "PASS",
+      "seconds": 4.556,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_playlist_identity::test_playlist_identity_exact_leaf",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_playlist_identity::test_playlist_identity_missing_or_ambiguous_rejected[entries0]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_playlist_identity::test_playlist_identity_missing_or_ambiguous_rejected[entries1]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_playlist_identity::test_last_of_100_playlist_entries_remains_selectable",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_process_lifecycle::test_already_exited_child_does_not_fail_verification",
+      "status": "PASS",
+      "seconds": 0.088,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_invalid_range_bounds[bad-end]",
+      "status": "PASS",
+      "seconds": 0.211,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_invalid_range_bounds[bad-total]",
+      "status": "PASS",
+      "seconds": 0.194,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_weak_etag_with_last_modified_can_resume",
+      "status": "PASS",
+      "seconds": 0.234,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_drm_audio_never_auto_paired",
+      "status": "PASS",
+      "seconds": 0.0,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_direct_wrong_extension_corrected",
+      "status": "PASS",
+      "seconds": 0.229,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_content_disposition_unicode",
+      "status": "PASS",
+      "seconds": 0.239,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_video_with_expected_audio_rejects_silent_file",
+      "status": "PASS",
+      "seconds": 0.635,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_commit_recovery_restores_file_size",
+      "status": "PASS",
+      "seconds": 0.242,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_reports::test_report_credentials_and_query_tokens_removed",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_reports::test_online_access_and_sample_failure_categories",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[normal-0.1]",
+      "status": "PASS",
+      "seconds": 0.322,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[normal-0.5]",
+      "status": "PASS",
+      "seconds": 0.266,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[normal-0.9]",
+      "status": "PASS",
+      "seconds": 0.25,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[ignore-0.1]",
+      "status": "PASS",
+      "seconds": 0.273,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[ignore-0.5]",
+      "status": "PASS",
+      "seconds": 0.305,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[ignore-0.9]",
+      "status": "PASS",
+      "seconds": 0.292,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[changed-0.1]",
+      "status": "PASS",
+      "seconds": 0.28,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[changed-0.5]",
+      "status": "PASS",
+      "seconds": 0.313,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[changed-0.9]",
+      "status": "PASS",
+      "seconds": 0.289,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_large_local_resume_streaming_hash[100]",
+      "status": "SKIPPED",
+      "seconds": 0.0,
+      "reason": "Explicit --stress required",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_large_local_resume_streaming_hash[1024]",
+      "status": "SKIPPED",
+      "seconds": 0.0,
+      "reason": "Explicit --stress required",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_retry_policy::test_retry_after_seconds[7-True-7]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_retry_policy::test_retry_after_seconds[bad-True-2]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_retry_policy::test_retry_after_seconds[3600-False-2]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_retry_policy::test_retry_after_date_and_exponential_floor",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_private_encoded_or_dns_target_blocked[127.1]",
+      "status": "PASS",
+      "seconds": 0.214,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_private_encoded_or_dns_target_blocked[2130706433]",
+      "status": "PASS",
+      "seconds": 0.201,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_private_encoded_or_dns_target_blocked[0x7f000001]",
+      "status": "PASS",
+      "seconds": 0.215,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_private_encoded_or_dns_target_blocked[127.0.0.1.nip.io]",
+      "status": "PASS",
+      "seconds": 0.199,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_private_encoded_or_dns_target_blocked[10.0.0.1]",
+      "status": "PASS",
+      "seconds": 0.2,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_private_encoded_or_dns_target_blocked[[::ffff:127.0.0.1]]",
+      "status": "PASS",
+      "seconds": 0.189,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_dns_mixed_public_private_denied",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_windows_filename_cannot_escape[../../evil.mp4]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_windows_filename_cannot_escape[C:\\\\Windows\\\\secret]",
+      "status": "PASS",
+      "seconds": 0.0,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_windows_filename_cannot_escape[CON.mp4]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_windows_filename_cannot_escape[\\u65e5\\u672c_\\u4e2d\\u6587.mp4]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_windows_filename_cannot_escape[bad\\x00name]",
+      "status": "PASS",
+      "seconds": 0.0,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_windows_filename_cannot_escape[..\\\\..\\\\a.jpg]",
+      "status": "PASS",
+      "seconds": 0.0,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_credentials_not_forwarded_direct_http",
+      "status": "PASS",
+      "seconds": 0.007,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_security::test_production_guard_unchanged_after_test_injection",
+      "status": "PASS",
+      "seconds": 0.184,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_site_extractors::test_instagram_raw_video_gets_format_ids[False]",
+      "status": "PASS",
+      "seconds": 0.54,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_site_extractors::test_instagram_raw_video_gets_format_ids[True]",
+      "status": "PASS",
+      "seconds": 0.528,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_tls::test_real_self_signed_tls_rejected",
+      "status": "PASS",
+      "seconds": 0.873,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_transport_faults::test_transport_fault_retries_are_bounded_and_no_output[dns]",
+      "status": "PASS",
+      "seconds": 1.438,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_transport_faults::test_transport_fault_retries_are_bounded_and_no_output[connect-timeout]",
+      "status": "PASS",
+      "seconds": 1.436,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_transport_faults::test_transport_fault_retries_are_bounded_and_no_output[read-timeout]",
+      "status": "PASS",
+      "seconds": 1.443,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_transport_faults::test_transport_fault_retries_are_bounded_and_no_output[reset]",
+      "status": "PASS",
+      "seconds": 1.44,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_transport_faults::test_transport_fault_retries_are_bounded_and_no_output[encoding]",
+      "status": "PASS",
+      "seconds": 1.44,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[html5-video]",
+      "status": "PASS",
+      "seconds": 1.073,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[multiple-source]",
+      "status": "PASS",
+      "seconds": 1.32,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[iframe-video]",
+      "status": "PASS",
+      "seconds": 4.502,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[nested-iframe]",
+      "status": "PASS",
+      "seconds": 6.279,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[video-poster]",
+      "status": "PASS",
+      "seconds": 1.348,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[multiple-videos]",
+      "status": "PASS",
+      "seconds": 1.551,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[relative-url]",
+      "status": "PASS",
+      "seconds": 1.095,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[redirected-media]",
+      "status": "PASS",
+      "seconds": 1.318,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_dynamic_video_deep_download[javascript-video]",
+      "status": "PASS",
+      "seconds": 10.562,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_dynamic_video_deep_download[lazy-loaded-video]",
+      "status": "PASS",
+      "seconds": 6.075,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_large_html_rejected",
+      "status": "PASS",
+      "seconds": 0.476,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_aria2::test_aria2_download",
+      "status": "PASS",
+      "seconds": 9.73,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_aria2::test_aria2_pause_resume",
+      "status": "PASS",
+      "seconds": 17.311,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_browser_cookies::test_discover_profiles_without_searching_other_files",
+      "status": "PASS",
+      "seconds": 0.017,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_browser_cookies::test_real_firefox_database_is_read_only_and_site_scoped",
+      "status": "PASS",
+      "seconds": 0.042,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_browser_cookies::test_authentication_retry_and_remember_browser",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_browser_cookies::test_missing_manual_export_does_not_block_auto",
+      "status": "PASS",
+      "seconds": 0.006,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_browser_cookies::test_no_browser_read_without_login_failure[False-login required]",
+      "status": "PASS",
+      "seconds": 0.003,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_browser_cookies::test_no_browser_read_without_login_failure[True-HTTP Error 410]",
+      "status": "PASS",
+      "seconds": 0.003,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_cancellation::test_cancel_survives_late_backend_progress",
+      "status": "PASS",
+      "seconds": 0.45,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_cookies::test_cookie_scope_and_original_unchanged",
+      "status": "PASS",
+      "seconds": 0.014,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_cookies::test_invalid_cookie_file_does_not_echo_contents",
+      "status": "PASS",
+      "seconds": 0.012,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_cookies::test_nested_credentials_removed",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[file:///C:/secret]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[ftp://example.com]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[http://localhost]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[http://127.0.0.1]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[http://[::1]]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[http://10.0.0.1]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[http://169.254.169.254]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[http://192.168.1.1]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[https://u:p@example.com]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[not a url]",
+      "status": "PASS",
+      "seconds": 0.003,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[http://example.com:bad]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_invalid_url[https://example.com/\\n  dir=C:/bad]",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_valid_url[https://example.com]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_valid_url[https://example.com/a.jpg]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_valid_url[http://example.com/video.mp4]",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_dns_private",
+      "status": "PASS",
+      "seconds": 0.004,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_redirect_private",
+      "status": "PASS",
+      "seconds": 0.004,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_real_transport_blocks_local",
+      "status": "PASS",
+      "seconds": 0.46,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_images",
+      "status": "PASS",
+      "seconds": 0.004,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_image_cap",
+      "status": "PASS",
+      "seconds": 0.004,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_formats",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_video_extract",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_video_failure",
+      "status": "PASS",
+      "seconds": 0.002,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_database_reopen",
+      "status": "PASS",
+      "seconds": 0.051,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_resume_http[/normal]",
+      "status": "PASS",
+      "seconds": 0.949,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_resume_http[/ignore]",
+      "status": "PASS",
+      "seconds": 0.981,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_resume_http[/changed]",
+      "status": "PASS",
+      "seconds": 0.914,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_no_validator_restarts",
+      "status": "PASS",
+      "seconds": 0.966,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_416_valid",
+      "status": "PASS",
+      "seconds": 0.978,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_416_invalid",
+      "status": "PASS",
+      "seconds": 0.963,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_pause_continue",
+      "status": "PASS",
+      "seconds": 1.853,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_disconnect_preserves_bytes",
+      "status": "PASS",
+      "seconds": 0.966,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_manager_download",
+      "status": "PASS",
+      "seconds": 1.206,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_crash_recovery[True]",
+      "status": "PASS",
+      "seconds": 0.262,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_crash_recovery[False]",
+      "status": "PASS",
+      "seconds": 0.252,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_atomic_commit_recovery",
+      "status": "PASS",
+      "seconds": 0.267,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_names",
+      "status": "PASS",
+      "seconds": 0.008,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_core::test_settings_atomic",
+      "status": "PASS",
+      "seconds": 0.021,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_instagram::test_photo_uses_largest_actual_candidate",
+      "status": "PASS",
+      "seconds": 0.054,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_instagram::test_no_photo_does_not_hide_errors",
+      "status": "PASS",
+      "seconds": 0.106,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_instagram::test_carousel_photos_are_downloadable_images",
+      "status": "PASS",
+      "seconds": 0.001,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_media::test_real_audio_conversion_and_verification",
+      "status": "PASS",
+      "seconds": 0.378,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_media::test_invalid_media_rejected",
+      "status": "PASS",
+      "seconds": 0.146,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_pasted_cookies::test_header_roundtrip_and_instagram_api_scope",
+      "status": "PASS",
+      "seconds": 0.021,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_pasted_cookies::test_replace_current_site_preserves_other_site",
+      "status": "PASS",
+      "seconds": 0.029,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_pasted_cookies::test_invalid_input_not_saved_or_echoed[secret-without-name]",
+      "status": "PASS",
+      "seconds": 0.01,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_pasted_cookies::test_invalid_input_not_saved_or_echoed[Cookie: [REDACTED]",
+      "status": "PASS",
+      "seconds": 0.008,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_pasted_cookies::test_invalid_input_not_saved_or_echoed[]",
+      "status": "PASS",
+      "seconds": 0.009,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_pasted_cookies::test_plain_http_cannot_receive_pasted_login",
+      "status": "PASS",
+      "seconds": 0.007,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_proxy::test_proxy_authentication",
+      "status": "PASS",
+      "seconds": 1.471,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_proxy::test_proxy_denies_private_targets",
+      "status": "PASS",
+      "seconds": 1.519,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_recovery_extra::test_future_schema_is_not_overwritten",
+      "status": "PASS",
+      "seconds": 0.034,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_recovery_extra::test_completed_file_missing",
+      "status": "PASS",
+      "seconds": 0.255,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_recovery_extra::test_shutdown_resume_keeps_progress",
+      "status": "PASS",
+      "seconds": 3.518,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_recovery_extra::test_ytdlp_reextract_identity_error_keeps_part",
+      "status": "PASS",
+      "seconds": 0.249,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_scheduler::test_simultaneous_image_content_dedup",
+      "status": "PASS",
+      "seconds": 0.444,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_scheduler::test_retry_is_bounded_and_progress_saved",
+      "status": "PASS",
+      "seconds": 1.445,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    },
+    {
+      "id": "tests.test_ui::test_gui_workflow",
+      "status": "PASS",
+      "seconds": 5.647,
+      "reason": "",
+      "evidence": "reports\\offline.xml"
+    }
+  ],
+  "stress": [
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[normal-0.1]",
+      "status": "PASS",
+      "seconds": 1.527,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[normal-0.5]",
+      "status": "PASS",
+      "seconds": 0.253,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[normal-0.9]",
+      "status": "PASS",
+      "seconds": 0.234,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[ignore-0.1]",
+      "status": "PASS",
+      "seconds": 0.291,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[ignore-0.5]",
+      "status": "PASS",
+      "seconds": 0.429,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[ignore-0.9]",
+      "status": "PASS",
+      "seconds": 0.578,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[changed-0.1]",
+      "status": "PASS",
+      "seconds": 0.566,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[changed-0.5]",
+      "status": "PASS",
+      "seconds": 0.545,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_10mb_resume_full_hash[changed-0.9]",
+      "status": "PASS",
+      "seconds": 0.573,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_large_local_resume_streaming_hash[100]",
+      "status": "PASS",
+      "seconds": 1.159,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    },
+    {
+      "id": "tests.integration.test_resume::test_large_local_resume_streaming_hash[1024]",
+      "status": "PASS",
+      "seconds": 5.973,
+      "reason": "",
+      "evidence": "reports\\stress.xml"
+    }
+  ],
+  "before_failures": [
+    {
+      "id": "tests.integration.test_content_detection::test_octet_stream_mp4_detected",
+      "status": "FAIL",
+      "seconds": 2.285,
+      "reason": "fixture_server = <test_server.main.TestServer object at 0x0000022082442E40>\nlocal_network = <function local_network.<locals>.client at 0x000002208257C4A0>\n\n    def test_octet_stream_mp4_detected(fixture_server,local_network):\n>       media=ExtractorRegistry(Settings.defaults).analyze(fixture_server.url+'/video/unknown-content-type')[0]\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_content_detection.py:7: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nmediaharvester\\extractors.py:187: in analyze\n    videos = self.plugins[1].extract(url,cancel)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nmediaharvester\\extractors.py:90: in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nmediaharvester\\worker.py:37: in run_job\n    return _run_job(job,cancel,progress,timeout)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\njob = {'action': 'extract', 'url': 'http://127.0.0.1:53237/video/unknown-content-type', 'cookie_file': '', 'auto_browser_cookies': True, ...}\ncancel = <threading.Event at 0x2208256d2b0: unset>, progress = None\ntimeout = 180\n\n    def _run_job(job, cancel, progress=None, timeout=180):\n        with tempfile.TemporaryDirectory(prefix='mh-job-') as temp:\n            request, result, events = [Path(temp)/n for n in ('request.json','result.json','events.jsonl')]\n            request.write_text(json.dumps(job), 'utf-8')\n            args = [sys.executable, '--worker'] if getattr(sys,'frozen',False) else [sys.executable,'-m','mediaharvester.worker']\n            flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0\n            proc = subprocess.Popen(args + [str(request),str(result),str(events)], stdout=subprocess.DEVNULL,\n                                    stderr=subprocess.DEVNULL, creationflags=flags)\n            attach_job(proc)\n            start, offset = time.monotonic(), 0\n            try:\n                while proc.poll() is None:\n                    if cancel.wait(.15):\n                        raise InterruptedError('任务已暂停')\n                    if timeout and time.monotonic()-start>timeout:\n                        raise TimeoutError('解析超时')\n                    if events.exists() and progress:\n                        with events.open('r',encoding='utf-8') as stream:\n                            stream.seek(offset)\n                            for line in stream:\n                                try: progress(json.loads(line))\n                                except ValueError: pass\n                            offset=stream.tell()\n                if not result.exists():\n                    raise RuntimeError('媒体引擎异常退出')\n                payload=json.loads(result.read_text('utf-8'))\n                if 'error' in payload:\n>                   raise RuntimeError(payload['error'])\nE                   RuntimeError: 禁止访问本机、内网、链路本地或元数据地址\n\nmediaharvester\\worker.py:84: RuntimeError",
+      "evidence": "reports\\baseline\\content-detection.xml"
+    },
+    {
+      "id": "tests.integration.test_content_detection::test_application_ogg_audio_detected",
+      "status": "FAIL",
+      "seconds": 0.082,
+      "reason": "local_network = <function local_network.<locals>.client at 0x000002208268C220>\nfixture_server = <test_server.main.TestServer object at 0x0000022082442E40>\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000220821A1350>\n\n    def test_application_ogg_audio_detected(local_network,fixture_server,monkeypatch):\n        import httpx\n        content=b'OggS'+b'\\0'*24+b'\\x01vorbis'+b'\\0'*100\n        monkeypatch.setattr('mediaharvester.extractors.client',lambda:httpx.Client(transport=httpx.MockTransport(\n            lambda request:httpx.Response(200,headers={'Content-Type':'application/ogg'},content=content))))\n        def no_engine(*args,**kwargs): raise AssertionError('Direct Ogg must not invoke website engine')\n        monkeypatch.setattr('mediaharvester.extractors.run_job',no_engine)\n>       media=ExtractorRegistry(Settings.defaults).analyze('https://example.com/audio')[0]\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_content_detection.py:18: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nmediaharvester\\extractors.py:187: in analyze\n    videos = self.plugins[1].extract(url,cancel)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nmediaharvester\\extractors.py:90: in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nargs = ({'action': 'extract', 'url': 'https://example.com/audio', 'cookie_file': '', 'auto_browser_cookies': True, ...}, <threading.Event at 0x2208256d250: unset>)\nkwargs = {}\n\n>   def no_engine(*args,**kwargs): raise AssertionError('Direct Ogg must not invoke website engine')\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   AssertionError: Direct Ogg must not invoke website engine\n\ntests\\integration\\test_content_detection.py:16: AssertionError",
+      "evidence": "reports\\baseline\\content-detection.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_dynamic_video_deep_download[javascript-video]",
+      "status": "FAIL",
+      "seconds": 13.624,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_dynamic_video_deep_downlo0')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_engine = <function local_engine.<locals>.run at 0x00000245A1C0B560>\npage = 'javascript-video'\n\n    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])\n    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):\n>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_web_extraction.py:19: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nmediaharvester\\extractors.py:167: in analyze\n    videos = self.plugins[1].extract(url,cancel)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nmediaharvester\\extractors.py:90: in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\njob = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/javascript-video', 'cookie_file': '', 'auto_browser_cookies': False, ...}\ncancel = <threading.Event at 0x245a1c03e30: unset>, progress = None\ntimeout = 60\n\n    def run(job, cancel, progress=None, timeout=60):\n        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.\n        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:\n            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]\n            request.write_text(json.dumps(job), encoding='utf-8')\n            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,\n                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n            start = time.monotonic()\n            try:\n                while proc.poll() is None:\n                    if cancel.wait(.05): raise InterruptedError('test cancelled')\n                    if time.monotonic() - start > (timeout or 60): raise TimeoutError('test worker timed out')\n                assert result.exists(), f'Worker exit {proc.returncode}'\n                payload = json.loads(result.read_text('utf-8'))\n>               if 'error' in payload: raise RuntimeError(payload['error'])\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE               RuntimeError: ERROR: Unsupported URL: [URL]\n\ntests\\integration\\conftest.py:73: RuntimeError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_dynamic_video_deep_download[lazy-loaded-video]",
+      "status": "FAIL",
+      "seconds": 45.987,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-134/test_dynamic_video_deep_downlo1')\nfixture_server = <test_server.main.TestServer object at 0x000002A6655D06E0>\nlocal_engine = <function local_engine.<locals>.run at 0x000002A665E5E340>\npage = 'lazy-loaded-video'\n\n    @pytest.mark.parametrize('page',['javascript-video','lazy-loaded-video'])\n    def test_dynamic_video_deep_download(tmp_path,fixture_server,local_engine,page):\n>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page,deep=True)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_web_extraction.py:19: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nmediaharvester\\extractors.py:188: in analyze\n    rendered = run_job({'action':'dynamic','url':url}, cancel, timeout=45)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\njob = {'action': 'dynamic', 'url': 'http://127.0.0.1:64720/pages/lazy-loaded-video'}\ncancel = <threading.Event at 0x2a665e998b0: unset>, progress = None\ntimeout = 45\n\n    def run(job, cancel, progress=None, timeout=60):\n        if job['action']=='dynamic':\n            try:\n                from playwright.sync_api import sync_playwright\n            except ImportError:\n                pytest.skip('Optional Playwright is not installed')\n            with sync_playwright() as playwright:\n                if not Path(playwright.chromium.executable_path).exists():\n                    pytest.skip('Optional Chromium is not installed')\n        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.\n        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:\n            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]\n            request.write_text(json.dumps(job), encoding='utf-8')\n            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,\n                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n            start = time.monotonic()\n            try:\n                while proc.poll() is None:\n                    if cancel.wait(.05): raise InterruptedError('test cancelled')\n>                   if time.monotonic() - start > (timeout or 60): raise TimeoutError('test worker timed out')\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE                   TimeoutError: test worker timed out\n\ntests\\integration\\conftest.py:78: TimeoutError",
+      "evidence": "reports\\baseline\\dynamic-close.xml"
+    },
+    {
+      "id": "tests.integration.test_site_extractors::test_instagram_raw_video_gets_format_ids[False]",
+      "status": "FAIL",
+      "seconds": 0.627,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-129/test_instagram_raw_video_gets_0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002187E735350>\ncarousel = False\n\n    @pytest.mark.parametrize('carousel',[False,True])\n    def test_instagram_raw_video_gets_format_ids(tmp_path,monkeypatch,carousel):\n        video={'id':'fixture-video','title':'Self-owned fixture','formats':[{\n            'url':'https://example.com/fixture.mp4','ext':'mp4','vcodec':'avc1','acodec':'aac','height':360}]}\n        image={'id':'fixture-photo','mh_image':{'url':'https://example.com/photo.jpg','width':64,'height':48}}\n        raw={'_type':'playlist','id':'mixed','entries':[image,video]} if carousel else video\n        monkeypatch.setattr('mediaharvester.instagram.InstagramMediaIE.extract',lambda *args:raw)\n        request,result,events=[tmp_path/n for n in ('request.json','result.json','events.jsonl')]\n        request.write_text(json.dumps({'action':'extract','url':'https://www.instagram.com/p/fixture/'}),encoding='utf-8')\n        monkeypatch.setattr(sys,'argv',['worker',str(request),str(result),str(events)])\n        worker_main()\n        info=json.loads(result.read_text('utf-8'))\n        assert 'error' not in info,info\n        entries=info.get('entries',[info])\n        actual=next(e for e in entries if e.get('id')=='fixture-video')\n>       assert format_options(actual['formats'])\nE       AssertionError: assert []\nE        +  where [] = format_options([{'url': 'https://example.com/fixture.mp4', 'ext': 'mp4', 'vcodec': 'avc1', 'acodec': 'aac', ...}])\n\ntests\\integration\\test_site_extractors.py:23: AssertionError",
+      "evidence": "reports\\baseline\\instagram-raw.xml"
+    },
+    {
+      "id": "tests.integration.test_site_extractors::test_instagram_raw_video_gets_format_ids[True]",
+      "status": "FAIL",
+      "seconds": 0.523,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-129/test_instagram_raw_video_gets_1')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002187E5D1350>\ncarousel = True\n\n    @pytest.mark.parametrize('carousel',[False,True])\n    def test_instagram_raw_video_gets_format_ids(tmp_path,monkeypatch,carousel):\n        video={'id':'fixture-video','title':'Self-owned fixture','formats':[{\n            'url':'https://example.com/fixture.mp4','ext':'mp4','vcodec':'avc1','acodec':'aac','height':360}]}\n        image={'id':'fixture-photo','mh_image':{'url':'https://example.com/photo.jpg','width':64,'height':48}}\n        raw={'_type':'playlist','id':'mixed','entries':[image,video]} if carousel else video\n        monkeypatch.setattr('mediaharvester.instagram.InstagramMediaIE.extract',lambda *args:raw)\n        request,result,events=[tmp_path/n for n in ('request.json','result.json','events.jsonl')]\n        request.write_text(json.dumps({'action':'extract','url':'https://www.instagram.com/p/fixture/'}),encoding='utf-8')\n        monkeypatch.setattr(sys,'argv',['worker',str(request),str(result),str(events)])\n        worker_main()\n        info=json.loads(result.read_text('utf-8'))\n        assert 'error' not in info,info\n        entries=info.get('entries',[info])\n        actual=next(e for e in entries if e.get('id')=='fixture-video')\n>       assert format_options(actual['formats'])\nE       AssertionError: assert []\nE        +  where [] = format_options([{'url': 'https://example.com/fixture.mp4', 'ext': 'mp4', 'vcodec': 'avc1', 'acodec': 'aac', ...}])\n\ntests\\integration\\test_site_extractors.py:23: AssertionError",
+      "evidence": "reports\\baseline\\instagram-raw.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[401]",
+      "status": "FAIL",
+      "seconds": 4.476,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat0')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_network = <function local_network.<locals>.client at 0x00000245A1B1CF40>\ncode = 401\n\n    @pytest.mark.parametrize('code',[401,403,404,410,429])\n    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):\n        path=f'/status/{code}'\n        start=fixture_server.counts[path]\n        repo=Repository(tmp_path/'db')\n        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))\n        try:\n            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))\n            wait(lambda:task.state==State.FAILED and task.id not in manager.running)\n>           assert fixture_server.counts[path]-start==1\nE           assert (4 - 1) == 1\n\ntests\\integration\\test_network_failure.py:46: AssertionError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[403]",
+      "status": "FAIL",
+      "seconds": 4.465,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat1')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_network = <function local_network.<locals>.client at 0x00000245A1BA4220>\ncode = 403\n\n    @pytest.mark.parametrize('code',[401,403,404,410,429])\n    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):\n        path=f'/status/{code}'\n        start=fixture_server.counts[path]\n        repo=Repository(tmp_path/'db')\n        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))\n        try:\n            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))\n            wait(lambda:task.state==State.FAILED and task.id not in manager.running)\n>           assert fixture_server.counts[path]-start==1\nE           assert (4 - 1) == 1\n\ntests\\integration\\test_network_failure.py:46: AssertionError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[404]",
+      "status": "FAIL",
+      "seconds": 5.07,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat2')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_network = <function local_network.<locals>.client at 0x00000245A1B1D800>\ncode = 404\n\n    @pytest.mark.parametrize('code',[401,403,404,410,429])\n    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):\n        path=f'/status/{code}'\n        start=fixture_server.counts[path]\n        repo=Repository(tmp_path/'db')\n        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))\n        try:\n            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))\n            wait(lambda:task.state==State.FAILED and task.id not in manager.running)\n>           assert fixture_server.counts[path]-start==1\nE           assert (4 - 1) == 1\n\ntests\\integration\\test_network_failure.py:46: AssertionError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[410]",
+      "status": "FAIL",
+      "seconds": 4.041,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat3')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_network = <function local_network.<locals>.client at 0x00000245A1BCA700>\ncode = 410\n\n    @pytest.mark.parametrize('code',[401,403,404,410,429])\n    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):\n        path=f'/status/{code}'\n        start=fixture_server.counts[path]\n        repo=Repository(tmp_path/'db')\n        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))\n        try:\n            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))\n            wait(lambda:task.state==State.FAILED and task.id not in manager.running)\n>           assert fixture_server.counts[path]-start==1\nE           assert (4 - 1) == 1\n\ntests\\integration\\test_network_failure.py:46: AssertionError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_network_failure::test_permanent_or_limited_status_stops_automatic_retry[429]",
+      "status": "FAIL",
+      "seconds": 4.033,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_permanent_or_limited_stat4')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_network = <function local_network.<locals>.client at 0x00000245A1B1D4E0>\ncode = 429\n\n    @pytest.mark.parametrize('code',[401,403,404,410,429])\n    def test_permanent_or_limited_status_stops_automatic_retry(tmp_path,fixture_server,local_network,code):\n        path=f'/status/{code}'\n        start=fixture_server.counts[path]\n        repo=Repository(tmp_path/'db')\n        manager=DownloadManager(repo,dict(Settings.defaults,directory=str(tmp_path),retries=2,retry_delay=1))\n        try:\n            task=manager.add(asdict(Media(fixture_server.url+path,'','error','audio','bin')))\n            wait(lambda:task.state==State.FAILED and task.id not in manager.running)\n>           assert fixture_server.counts[path]-start==1\nE           assert (4 - 1) == 1\n\ntests\\integration\\test_network_failure.py:46: AssertionError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[iframe-video]",
+      "status": "FAIL",
+      "seconds": 2.359,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa2')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_engine = <function local_engine.<locals>.run at 0x00000245A1BCA7A0>\npage = 'iframe-video'\n\n    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])\n    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):\n>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_web_extraction.py:10: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nmediaharvester\\extractors.py:167: in analyze\n    videos = self.plugins[1].extract(url,cancel)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nmediaharvester\\extractors.py:90: in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\njob = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/iframe-video', 'cookie_file': '', 'auto_browser_cookies': False, ...}\ncancel = <threading.Event at 0x245a1b4e390: unset>, progress = None\ntimeout = 60\n\n    def run(job, cancel, progress=None, timeout=60):\n        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.\n        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:\n            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]\n            request.write_text(json.dumps(job), encoding='utf-8')\n            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,\n                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n            start = time.monotonic()\n            try:\n                while proc.poll() is None:\n                    if cancel.wait(.05): raise InterruptedError('test cancelled')\n                    if time.monotonic() - start > (timeout or 60): raise TimeoutError('test worker timed out')\n                assert result.exists(), f'Worker exit {proc.returncode}'\n                payload = json.loads(result.read_text('utf-8'))\n>               if 'error' in payload: raise RuntimeError(payload['error'])\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE               RuntimeError: ERROR: Unsupported URL: [URL]\n\ntests\\integration\\conftest.py:73: RuntimeError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[nested-iframe]",
+      "status": "FAIL",
+      "seconds": 2.346,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa3')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_engine = <function local_engine.<locals>.run at 0x00000245A1C08B80>\npage = 'nested-iframe'\n\n    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])\n    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):\n>       results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_web_extraction.py:10: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nmediaharvester\\extractors.py:167: in analyze\n    videos = self.plugins[1].extract(url,cancel)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nmediaharvester\\extractors.py:90: in extract\n    info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\njob = {'action': 'extract', 'url': 'http://127.0.0.1:64904/pages/nested-iframe', 'cookie_file': '', 'auto_browser_cookies': False, ...}\ncancel = <threading.Event at 0x245a1b4d670: unset>, progress = None\ntimeout = 60\n\n    def run(job, cancel, progress=None, timeout=60):\n        # Real yt-dlp worker, real authenticated proxy, real FFmpeg in an isolated process.\n        with tempfile.TemporaryDirectory(prefix='mh-test-engine-') as directory:\n            request, result, events = [Path(directory) / n for n in ('request.json', 'result.json', 'events.jsonl')]\n            request.write_text(json.dumps(job), encoding='utf-8')\n            proc = subprocess.Popen([sys.executable, '-m', 'test_server.engine_runner', fixture_server.url,\n                                     str(request), str(result), str(events)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n            start = time.monotonic()\n            try:\n                while proc.poll() is None:\n                    if cancel.wait(.05): raise InterruptedError('test cancelled')\n                    if time.monotonic() - start > (timeout or 60): raise TimeoutError('test worker timed out')\n                assert result.exists(), f'Worker exit {proc.returncode}'\n                payload = json.loads(result.read_text('utf-8'))\n>               if 'error' in payload: raise RuntimeError(payload['error'])\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE               RuntimeError: ERROR: Unsupported URL: [URL]\n\ntests\\integration\\conftest.py:73: RuntimeError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[multiple-videos]",
+      "status": "FAIL",
+      "seconds": 4.629,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa5')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_engine = <function local_engine.<locals>.run at 0x00000245A1C09F80>\npage = 'multiple-videos'\n\n    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])\n    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):\n        results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)\n        videos=[m for m in results if m.kind=='video']\n        assert videos\n>       result=download(tmp_path,videos[0],format_options(videos[0].formats)[0][1])\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_web_extraction.py:13: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ntmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa5')\nmedia = Media(url='http://127.0.0.1:64904/pages/multiple-videos', page='http://127.0.0.1:64904/pages/multiple-videos', title='...filesize_approx': None, 'format_id': '0', 'format': '0 - unknown'}], identity='multiple-videos-1', headers={}, auth={})\nselector = '0', audio = '', options = {}\n\n    def download(tmp_path, media, selector='', audio='', **options):\n        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)\n        repo = Repository(tmp_path / 'tasks.db')\n        manager = DownloadManager(repo, settings)\n        try:\n            task = manager.add(asdict(media), selector, audio)\n            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)\n>           assert task.state == State.COMPLETED, task.error\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           AssertionError: 媒体内容标识改变，已停止续传\n\ntests\\integration\\helpers.py:34: AssertionError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_web_extraction::test_html_video_actual_download[redirected-media]",
+      "status": "FAIL",
+      "seconds": 5.131,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa7')\nfixture_server = <test_server.main.TestServer object at 0x00000245A194F4D0>\nlocal_engine = <function local_engine.<locals>.run at 0x00000245A1C0B1A0>\npage = 'redirected-media'\n\n    @pytest.mark.parametrize('page',['html5-video','multiple-source','iframe-video','nested-iframe','video-poster','multiple-videos','relative-url','redirected-media'])\n    def test_html_video_actual_download(tmp_path,fixture_server,local_engine,page):\n        results=ExtractorRegistry(dict(Settings.defaults,auto_browser_cookies=False)).analyze(fixture_server.url+'/pages/'+page)\n        videos=[m for m in results if m.kind=='video']\n        assert videos\n>       result=download(tmp_path,videos[0],format_options(videos[0].formats)[0][1])\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_web_extraction.py:13: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ntmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-121/test_html_video_actual_downloa7')\nmedia = Media(url='http://127.0.0.1:64904/pages/redirected-media', page='http://127.0.0.1:64904/pages/redirected-media', title...ilesize_approx': None, 'format_id': '0', 'format': '0 - unknown'}], identity='redirected-media-1', headers={}, auth={})\nselector = '0', audio = '', options = {}\n\n    def download(tmp_path, media, selector='', audio='', **options):\n        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)\n        repo = Repository(tmp_path / 'tasks.db')\n        manager = DownloadManager(repo, settings)\n        try:\n            task = manager.add(asdict(media), selector, audio)\n            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)\n>           assert task.state == State.COMPLETED, task.error\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           AssertionError: 媒体引擎没有产生唯一完整文件\n\ntests\\integration\\helpers.py:34: AssertionError",
+      "evidence": "reports\\baseline\\network-web.xml"
+    },
+    {
+      "id": "tests.integration.test_playlist_download::test_selected_playlist_entry_reextracted_and_downloaded",
+      "status": "FAIL",
+      "seconds": 5.63,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-131/test_selected_playlist_entry_r0')\nfixture_server = <test_server.main.TestServer object at 0x000001B9D2767230>\nlocal_engine = <function local_engine.<locals>.run at 0x000001B9D28C37E0>\n\n    def test_selected_playlist_entry_reextracted_and_downloaded(tmp_path,fixture_server,local_engine):\n        media=YtDlpExtractor().extract(fixture_server.url+'/pages/multiple-videos',threading.Event())\n        assert len(media)==2\n>       result=download(tmp_path,media[0],format_options(media[0].formats)[0][1])\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests\\integration\\test_playlist_download.py:9: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\ntmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-131/test_selected_playlist_entry_r0')\nmedia = Media(url='http://127.0.0.1:58972/pages/multiple-videos', page='http://127.0.0.1:58972/pages/multiple-videos', title='...filesize_approx': None, 'format_id': '0', 'format': '0 - unknown'}], identity='multiple-videos-1', headers={}, auth={})\nselector = '0', audio = '', options = {}\n\n    def download(tmp_path, media, selector='', audio='', **options):\n        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0, auto_browser_cookies=False, **options)\n        repo = Repository(tmp_path / 'tasks.db')\n        manager = DownloadManager(repo, settings)\n        try:\n            task = manager.add(asdict(media), selector, audio)\n            wait(lambda: task.state in (State.COMPLETED, State.FAILED) and task.id not in manager.running)\n>           assert task.state == State.COMPLETED, task.error\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           AssertionError: 媒体内容标识改变，已停止续传\n\ntests\\integration\\helpers.py:34: AssertionError",
+      "evidence": "reports\\baseline\\playlist.xml"
+    },
+    {
+      "id": "tests.integration.test_process_lifecycle::test_already_exited_child_does_not_fail_verification",
+      "status": "FAIL",
+      "seconds": 0.074,
+      "reason": "@pytest.mark.skipif(os.name!='nt',reason='Windows Job Object lifecycle')\n    def test_already_exited_child_does_not_fail_verification():\n        proc=subprocess.Popen([sys.executable,'-c','pass'])\n        proc.wait(timeout=5)\n>       attach_job(proc)\n\ntests\\integration\\test_process_lifecycle.py:12: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nprocess = <Popen: returncode: 0 args: ['C:\\\\Users\\\\seki9\\\\Documents\\\\MediaHarvester\\\\....>\n\n    def attach_job(process):\n        if os.name!='nt': return\n        class Basic(ctypes.Structure):\n            _fields_=[('PerProcessUserTimeLimit',ctypes.c_int64),('PerJobUserTimeLimit',ctypes.c_int64),\n                      ('LimitFlags',wintypes.DWORD),('MinimumWorkingSetSize',ctypes.c_size_t),\n                      ('MaximumWorkingSetSize',ctypes.c_size_t),('ActiveProcessLimit',wintypes.DWORD),\n                      ('Affinity',ctypes.c_size_t),('PriorityClass',wintypes.DWORD),('SchedulingClass',wintypes.DWORD)]\n        class IO(ctypes.Structure):\n            _fields_=[(n,ctypes.c_uint64) for n in ('ReadOperationCount','WriteOperationCount','OtherOperationCount','ReadTransferCount','WriteTransferCount','OtherTransferCount')]\n        class Extended(ctypes.Structure):\n            _fields_=[('BasicLimitInformation',Basic),('IoInfo',IO),('ProcessMemoryLimit',ctypes.c_size_t),\n                      ('JobMemoryLimit',ctypes.c_size_t),('PeakProcessMemoryUsed',ctypes.c_size_t),('PeakJobMemoryUsed',ctypes.c_size_t)]\n        kernel=ctypes.WinDLL('kernel32',use_last_error=True)\n        kernel.CreateJobObjectW.argtypes=[ctypes.c_void_p,wintypes.LPCWSTR]; kernel.CreateJobObjectW.restype=wintypes.HANDLE\n        kernel.SetInformationJobObject.argtypes=[wintypes.HANDLE,ctypes.c_int,ctypes.c_void_p,wintypes.DWORD]\n        kernel.AssignProcessToJobObject.argtypes=[wintypes.HANDLE,wintypes.HANDLE]\n        kernel.CloseHandle.argtypes=[wintypes.HANDLE]\n        handle=kernel.CreateJobObjectW(None,None)\n        limits=Extended(); limits.BasicLimitInformation.LimitFlags=0x2000\n        if not handle or not kernel.SetInformationJobObject(handle,9,ctypes.byref(limits),ctypes.sizeof(limits)) or not kernel.AssignProcessToJobObject(handle,wintypes.HANDLE(int(process._handle))):\n            error=ctypes.get_last_error()\n            if handle: kernel.CloseHandle(handle)\n            process.kill(); process.wait()\n>           raise OSError(error,'无法创建下载进程生命周期保护')\nE           OSError: [Errno 5] 无法创建下载进程生命周期保护\n\nmediaharvester\\processes.py:29: OSError",
+      "evidence": "reports\\baseline\\process-lifecycle.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_invalid_range_bounds[bad-end]",
+      "status": "FAIL",
+      "seconds": 1.596,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_invalid_range_bounds_bad_0')\nfixture_server = <test_server.main.TestServer object at 0x000001A741613380>\nlocal_network = <function local_network.<locals>.client at 0x000001A7417B39C0>\nendpoint = 'bad-end'\n\n    @pytest.mark.parametrize('endpoint', ['bad-end', 'bad-total'])\n    def test_invalid_range_bounds(tmp_path, fixture_server, local_network, endpoint):\n        task = Task(asdict(Media(fixture_server.url + '/binary/' + endpoint, '', 'file', 'audio', 'bin')), str(tmp_path), etag='\"fixture-v1\"')\n        (tmp_path / 'payload.part').write_bytes(b'x' * 32)\n>       with pytest.raises(OSError, match='Content-Range'):\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: Regex pattern did not match.\nE         Expected regex: 'Content-Range'\nE         Actual message: '下载数据长度不完整'\n\ntests\\integration\\test_regressions.py:20: AssertionError",
+      "evidence": "reports\\baseline\\regressions.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_invalid_range_bounds[bad-total]",
+      "status": "FAIL",
+      "seconds": 0.235,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_invalid_range_bounds_bad_1')\nfixture_server = <test_server.main.TestServer object at 0x000001A741613380>\nlocal_network = <function local_network.<locals>.client at 0x000001A741800900>\nendpoint = 'bad-total'\n\n    @pytest.mark.parametrize('endpoint', ['bad-end', 'bad-total'])\n    def test_invalid_range_bounds(tmp_path, fixture_server, local_network, endpoint):\n        task = Task(asdict(Media(fixture_server.url + '/binary/' + endpoint, '', 'file', 'audio', 'bin')), str(tmp_path), etag='\"fixture-v1\"')\n        (tmp_path / 'payload.part').write_bytes(b'x' * 32)\n>       with pytest.raises(OSError, match='Content-Range'):\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: Regex pattern did not match.\nE         Expected regex: 'Content-Range'\nE         Actual message: '下载数据长度不完整'\n\ntests\\integration\\test_regressions.py:20: AssertionError",
+      "evidence": "reports\\baseline\\regressions.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_drm_audio_never_auto_paired",
+      "status": "FAIL",
+      "seconds": 0.001,
+      "reason": "def test_drm_audio_never_auto_paired():\n        formats = [dict(format_id='v', vcodec='avc1', acodec='none', ext='mp4'),\n                   dict(format_id='a', vcodec='none', acodec='aac', ext='m4a', has_drm=True)]\n>       assert format_options(formats) == []\nE       AssertionError: assert [('未知p | mp4 ...合并音轨', 'v+a')] == []\nE         \nE         Left contains one more item: ('未知p | mp4 | avc1 / none | 未知 fps | 合并音轨', 'v+a')\nE         Use -v to get more diff\n\ntests\\integration\\test_regressions.py:36: AssertionError",
+      "evidence": "reports\\baseline\\regressions.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_direct_wrong_extension_corrected",
+      "status": "FAIL",
+      "seconds": 0.222,
+      "reason": "fixture_server = <test_server.main.TestServer object at 0x000001A741613380>\nlocal_network = <function local_network.<locals>.client at 0x000001A741801800>\n\n    def test_direct_wrong_extension_corrected(fixture_server, local_network):\n        media = ExtractorRegistry(Settings.defaults).analyze(fixture_server.url + '/video/wrong-extension.jpg')[0]\n        assert media.kind == 'video' and media.ext == 'mp4'\n>       assert media.title.endswith('.mp4')\nE       AssertionError: assert False\nE        +  where False = <built-in method endswith of str object at 0x000001A7417D6170>('.mp4')\nE        +    where <built-in method endswith of str object at 0x000001A7417D6170> = 'wrong-extension.jpg'.endswith\nE        +      where 'wrong-extension.jpg' = Media(url='http://127.0.0.1:60210/video/wrong-extension.jpg', page='http://127.0.0.1:60210/video/wrong-extension.jpg',...e=36774, width=0, height=0, thumbnail='', source='127.0.0.1', duration=0, formats=[], identity='', headers={}, auth={}).title\n\ntests\\integration\\test_regressions.py:42: AssertionError",
+      "evidence": "reports\\baseline\\regressions.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_content_disposition_unicode",
+      "status": "FAIL",
+      "seconds": 0.186,
+      "reason": "fixture_server = <test_server.main.TestServer object at 0x000001A741613380>\nlocal_network = <function local_network.<locals>.client at 0x000001A7418011C0>\n\n    def test_content_disposition_unicode(fixture_server, local_network):\n        media = ExtractorRegistry(Settings.defaults).analyze(fixture_server.url + '/video/disposition')[0]\n>       assert media.title == '测试_日本.mp4'\nE       AssertionError: assert 'disposition' == '测试_日本.mp4'\nE         \nE         - 测试_日本.mp4\nE         + disposition\n\ntests\\integration\\test_regressions.py:47: AssertionError",
+      "evidence": "reports\\baseline\\regressions.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_video_with_expected_audio_rejects_silent_file",
+      "status": "FAIL",
+      "seconds": 0.439,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_video_with_expected_audio0')\nmedia_root = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/controlled-media0')\nlocal_network = <function local_network.<locals>.client at 0x000001A741801D00>\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001A741818150>\n\n    def test_video_with_expected_audio_rejects_silent_file(tmp_path, media_root, local_network, monkeypatch):\n        def engine(job, *args, **kwargs):\n            target = Path(job['temp']) / 'media.mp4'\n            target.write_bytes((media_root / 'silent.mp4').read_bytes())\n            return {'files': [str(target)]}\n        monkeypatch.setattr('mediaharvester.download.run_job', engine)\n        repo = Repository(tmp_path / 'db')\n        settings = dict(Settings.defaults, directory=str(tmp_path), retries=0)\n        manager = DownloadManager(repo, settings)\n        try:\n            media = asdict(Media('https://example.com/video', '', 'v', 'video', 'mp4', identity='v',\n                                 formats=[dict(format_id='av', vcodec='avc1', acodec='aac', ext='mp4')]))\n            task = manager.add(media, 'av')\n            wait(lambda: task.state in (State.COMPLETED, State.FAILED))\n>           assert task.state == State.FAILED\nE           AssertionError: assert <State.COMPLETED: 'COMPLETED'> == <State.FAILED: 'FAILED'>\nE             \nE             - FAILED\nE             + COMPLETED\n\ntests\\integration\\test_regressions.py:64: AssertionError",
+      "evidence": "reports\\baseline\\regressions.xml"
+    },
+    {
+      "id": "tests.integration.test_regressions::test_commit_recovery_restores_file_size",
+      "status": "FAIL",
+      "seconds": 0.55,
+      "reason": "tmp_path = WindowsPath('C:/Users/seki9/AppData/Local/Temp/pytest-of-seki9/pytest-115/test_commit_recovery_restores_0')\n\n    def test_commit_recovery_restores_file_size(tmp_path):\n        repo = Repository(tmp_path / 'db')\n        task = Task(asdict(Media('https://example.com/file', '', 'v', 'audio', 'bin')), str(tmp_path), state=State.VERIFYING, total=9999)\n        final = tmp_path / 'done.bin'\n        final.write_bytes(b'complete')\n        temp = tmp_path / '.mediaharvester' / task.id\n        temp.mkdir(parents=True)\n        (temp / 'commit.json').write_text(json.dumps({'path': str(final), 'digest': sha256(final)}), encoding='utf-8')\n        repo.save(task)\n        manager = DownloadManager(repo, dict(Settings.defaults, auto_resume=True))\n        try:\n            wait(lambda: manager.tasks[task.id].state == State.COMPLETED)\n            restored = repo.all()[0]\n>           assert restored.total == restored.downloaded == len(b'complete')\nE           AssertionError: assert 9999 == 0\nE            +  where 9999 = Task(media={'url': 'https://example.com/file', 'page': '', 'title': 'v', 'kind': 'audio', 'ext': 'bin', 'size': 0, 'wi...f9b97390f790ba443d60cfa44b607da7e5c40aa1cc1d', engine='', phase='', cancel_requested=False, updated=1791768800.3149786).total\nE            +  and   0 = Task(media={'url': 'https://example.com/file', 'page': '', 'title': 'v', 'kind': 'audio', 'ext': 'bin', 'size': 0, 'wi...f9b97390f790ba443d60cfa44b607da7e5c40aa1cc1d', engine='', phase='', cancel_requested=False, updated=1791768800.3149786).downloaded\n\ntests\\integration\\test_regressions.py:83: AssertionError",
+      "evidence": "reports\\baseline\\regressions.xml"
+    }
+  ],
+  "unexecuted_or_unresolved": [
+    {
+      "id": "real-login",
+      "status": "BLOCKED",
+      "reason": "未使用个人浏览器登录态；本地 Cookie 认证与合成 Firefox 数据库已覆盖，真实账号授权仍需用户合法登录态"
+    },
+    {
+      "id": "shorts-images",
+      "status": "BLOCKED",
+      "reason": "YouTube Shorts、Instagram 单图/轮播未取得可验证授权的真实下载样例；照片最大候选和轮播处理有现有单元回归"
+    },
+    {
+      "id": "source-limits",
+      "status": "BLOCKED",
+      "reason": "Wikimedia 直链返回 403；Vimeo/Reddit 要求认证，TikTok 拒绝当前 IP；未绕过限制"
+    },
+    {
+      "id": "upstream-sites",
+      "status": "FAIL",
+      "reason": "Facebook 页面数据解析失败、X 样例未找到视频；上游 yt-dlp 同样复现，尚未证明样例或上游可修复"
+    },
+    {
+      "id": "5gb-powerloss",
+      "status": "SKIPPED",
+      "reason": "未执行可选 5GB/长期压力、物理断电、磁盘缓存损坏；已执行 100MB/1GB 确定性续传与提交恢复"
+    },
+    {
+      "id": "clean-vm",
+      "status": "SKIPPED",
+      "reason": "未在干净 Windows VM 验收，宿主仍安装 Python；EXE smoke 会移除 PATH 的 Python 和外部工具"
+    },
+    {
+      "id": "python-311",
+      "status": "SKIPPED",
+      "reason": "本机仅实际运行 Python 3.13.14；CI 定义 3.11/3.13，云端工作流尚未执行"
+    },
+    {
+      "id": "wide-matrix",
+      "status": "SKIPPED",
+      "reason": "尚未逐项完成全部 MIME/音频编码/DRM 制式、DASH 字幕、多 Representation、多天签名更新、TLS/DNS 故障组合与符号链接磁盘异常矩阵"
+    },
+    {
+      "id": "stream-resume",
+      "status": "UNSUPPORTED",
+      "reason": "不能证明跨会话一致的 HLS/DASH 分片安全重新下载；不承诺复用旧分片或破解 DRM"
+    },
+    {
+      "id": "silent-ytdlp",
+      "status": "UNSUPPORTED",
+      "reason": "仅视频格式且没有可配对音轨时，现有格式选择不提供选项；静音直链允许按预期验证"
+    },
+    {
+      "id": "translation",
+      "status": "UNSUPPORTED",
+      "reason": "日文仅预留翻译结构；英文动态错误信息仍不完全本地化"
+    }
+  ],
+  "notes": [
+    "PASS 只代表该用例实际断言已通过；协议成功率只按执行用例计算，不能等同于所有场景覆盖率。",
+    "平台只有提取通过不等同下载通过；未确认授权或超预算的电影未下载。",
+    "本地 HTTP fixture 经测试依赖注入访问精确 loopback origin；正式安全策略没有私网豁免。",
+    "保留并测试了原有 extractors.py/ui.py/docs/artifacts.sha256 三处未提交修改，不将它们混入本次代码提交。",
+    "基线日志保留不覆盖。中途生成器路径错误和 GUI 视图断言错误属于测试工具问题，修正后独立重跑，未计为产品 Bug。"
+  ],
+  "next_steps": [
+    "补充各平台短小授权样例与合法登录态，逐项复测 BLOCKED/UNAVAILABLE。",
+    "在干净 Windows VM 和 Python 3.11 执行同一套本地测试及 EXE smoke。",
+    "继续扩展完整故障组合、DASH 字幕与多清晰度、HLS 自动受限碎片重试。"
+  ],
+  "gui": {
+    "status": "PASS",
+    "platform": "windows",
+    "checks": [
+      "多行输入、后台真实解析、视频/图片分类",
+      "界面选中下载、实际下载、轨道/图片验证、数据库完成状态",
+      "任务历史、全部导航、主题、英文控件、设置持久化",
+      "真实慢速下载进度、界面暂停/继续、取消持久化",
+      "真实窗口正常关闭、任务保存、托盘关闭"
+    ]
+  },
+  "exe": {
+    "onedir": {
+      "status": "PASS",
+      "exe": "C:\\Users\\seki9\\Documents\\MediaHarvester\\dist\\validation-onedir\\MediaHarvester\\MediaHarvester.exe",
+      "bytes": 4372373,
+      "sha256": "b670602fa00934ca27c4351bb0efe7ea7a07fae57284e44226025eeed7c51254",
+      "python_removed_from_path": true,
+      "gui": "PASS",
+      "extraction": "PASS",
+      "download": "PASS",
+      "streams": [
+        "video",
+        "audio"
+      ],
+      "duration": 52.208333
+    },
+    "onefile": {
+      "status": "PASS",
+      "exe": "C:\\Users\\seki9\\Documents\\MediaHarvester\\dist\\validation-onefile\\MediaHarvester.exe",
+      "bytes": 4372373,
+      "sha256": "b670602fa00934ca27c4351bb0efe7ea7a07fae57284e44226025eeed7c51254",
+      "python_removed_from_path": true,
+      "gui": "PASS",
+      "extraction": "PASS",
+      "download": "PASS",
+      "streams": [
+        "video",
+        "audio"
+      ],
+      "duration": 52.208333
+    }
+  },
+  "stress_evidence_scope": "reports/stress.xml 是独立执行的有界压力测试记录；不计入默认本地用例数。",
+  "source_sha256": {
+    "mediaharvester/app.py": "19b718f683cd6534ea4843904cefe9f4231716f05b57a7124f045a4f3171971a",
+    "mediaharvester/aria2.py": "0c3c564524a8ac198777ff9abc057e660f1310074b54152a012a26cda23a74d8",
+    "mediaharvester/browser_cookies.py": "803d3fe5da6d975440a9d09dfe674f7a80d88a5e7aced16f1ae414ecbac23494",
+    "mediaharvester/config.py": "6946b9f67a1c5b624be7fef678595cbc5294aee33004833f2db9a30fead2a291",
+    "mediaharvester/cookies.py": "af663ae14a23a456a25ff7459bd8360bab754b0eaa4fdbabab7635903b47f42a",
+    "mediaharvester/database.py": "30a82409f317e1162211a245d7cb8509aa911533ab555a3d6b3b5abac18b274c",
+    "mediaharvester/download.py": "efb643920d4ed42ebd430307717d96352e256e15ffe0f004cba30282be4fdaa9",
+    "mediaharvester/extractors.py": "cb6e073b516312e95f4fcdc0f66efa9989f5e3b702e54e088c1a77460e09422a",
+    "mediaharvester/files.py": "8ed901d02feff0f64fe61f08e6ee276d51226cf43cfbc2f465ea63544672519a",
+    "mediaharvester/i18n.py": "4199af3e640dbad0a5348a83f42cdcc13a75304706edddcad5d863cbec6a0565",
+    "mediaharvester/instagram.py": "95ae6c86496d7d0523a83043cb718cea1a8f495cd408fefc74faf1bace0f8eb9",
+    "mediaharvester/media.py": "10e02cbe1f9b6603b99cd19473c19992ec389826b720887a170f438cb56b6a9c",
+    "mediaharvester/models.py": "d59386e26be8428dcc1f5170f7da045c468de4c79b604504df69cbbb44cf21cb",
+    "mediaharvester/processes.py": "3781e89708338cb0dc0577669c59927f846ab67bd7206932ca1f1aa1a144ee6d",
+    "mediaharvester/proxy.py": "567597053a16fdcfd5bbdb875db59fc6873f1dbfb077342a7ff3938975e154eb",
+    "mediaharvester/security.py": "d982890ff00bbda70d316415cd677a6f975ff12cd32e5d8db390785cf6cf4b8e",
+    "mediaharvester/ui.py": "f8b25f01b9eeedf6cbbec5c8e13450a466ae639668362798237dbb329bb5d2fb",
+    "mediaharvester/worker.py": "4edb534a906afaa6aab3cf0bc4e3aeb5a8ca2171f70334cfb560c33ca4338699",
+    "mediaharvester/__init__.py": "20c8e430ededc2143396e553a3c67aac4ec483ef54efdfcb18a31cb162ca0646"
+  },
+  "modified_files": [
+    ".github/workflows/validation.yml",
+    ".gitignore",
+    "README.md",
+    "docs/automated-testing.md",
+    "docs/validation.md",
+    "mediaharvester/download.py",
+    "mediaharvester/extractors.py",
+    "mediaharvester/media.py",
+    "mediaharvester/processes.py",
+    "mediaharvester/worker.py",
+    "pyproject.toml",
+    "requirements-dev.txt",
+    "requirements-lock.txt",
+    "scripts/diagnose_sites.py",
+    "scripts/exe_smoke.py",
+    "scripts/generate_test_report.py",
+    "scripts/gui_workflow.py",
+    "scripts/run_full_tests.py",
+    "scripts/run_online_tests.py",
+    "scripts/verify_build.py",
+    "test_server/__init__.py",
+    "test_server/engine_runner.py",
+    "test_server/main.py",
+    "test_server/media_generator.py",
+    "test_server/network_faults.py",
+    "tests/conftest.py",
+    "tests/fixtures/public_image_urls.yaml",
+    "tests/fixtures/public_video_urls.yaml",
+    "tests/fixtures/site_samples.yaml",
+    "tests/integration/__init__.py",
+    "tests/integration/conftest.py",
+    "tests/integration/helpers.py",
+    "tests/integration/test_audio.py",
+    "tests/integration/test_concurrency.py",
+    "tests/integration/test_content_detection.py",
+    "tests/integration/test_cookie_auth.py",
+    "tests/integration/test_dash_download.py",
+    "tests/integration/test_hls_download.py",
+    "tests/integration/test_http_download.py",
+    "tests/integration/test_images.py",
+    "tests/integration/test_network_failure.py",
+    "tests/integration/test_playlist_download.py",
+    "tests/integration/test_playlist_identity.py",
+    "tests/integration/test_process_lifecycle.py",
+    "tests/integration/test_regressions.py",
+    "tests/integration/test_reports.py",
+    "tests/integration/test_resume.py",
+    "tests/integration/test_retry_policy.py",
+    "tests/integration/test_security.py",
+    "tests/integration/test_site_extractors.py",
+    "tests/integration/test_tls.py",
+    "tests/integration/test_transport_faults.py",
+    "tests/integration/test_web_extraction.py"
+  ],
+  "build_source_audits": {
+    "onedir": {
+      "status": "PASS",
+      "exe": "C:\\Users\\seki9\\Documents\\MediaHarvester\\dist\\validation-onedir\\MediaHarvester\\MediaHarvester.exe",
+      "exe_sha256": "0184c2022b32b65e50a1e320f7d99315674584f6ae1201be3870d089569a16fc",
+      "modules": [
+        {
+          "module": "mediaharvester",
+          "source_sha256": "20c8e430ededc2143396e553a3c67aac4ec483ef54efdfcb18a31cb162ca0646",
+          "bytecode_sha256": "61af3c42bd3136c9d2851afb265dde6d15f981db75f1c116191ecf50593f654c",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.app",
+          "source_sha256": "19b718f683cd6534ea4843904cefe9f4231716f05b57a7124f045a4f3171971a",
+          "bytecode_sha256": "92d60683cf801f5e415b8739701d6c8b5aba03b52d56f4c9985a6be0b2f25f77",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.aria2",
+          "source_sha256": "0c3c564524a8ac198777ff9abc057e660f1310074b54152a012a26cda23a74d8",
+          "bytecode_sha256": "17da58324404d14cd4241a3054b7f9572a72c4b92f3ac3542aae418c5b38caa1",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.browser_cookies",
+          "source_sha256": "803d3fe5da6d975440a9d09dfe674f7a80d88a5e7aced16f1ae414ecbac23494",
+          "bytecode_sha256": "26f2917ee9fd9f879b404f2f1c92fadda31964c6c972fb27c205ced0755ec47a",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.config",
+          "source_sha256": "6946b9f67a1c5b624be7fef678595cbc5294aee33004833f2db9a30fead2a291",
+          "bytecode_sha256": "b1c538797ad88c76a5742342ffe8ea986f48b1d4e6d860b637717846e5907ebb",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.cookies",
+          "source_sha256": "af663ae14a23a456a25ff7459bd8360bab754b0eaa4fdbabab7635903b47f42a",
+          "bytecode_sha256": "836536816c49b21fff509c9aad72693102fac2622fc0549f3bcdb21c75c19d78",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.database",
+          "source_sha256": "30a82409f317e1162211a245d7cb8509aa911533ab555a3d6b3b5abac18b274c",
+          "bytecode_sha256": "753936d4210f1bbb6f8598dcb3514e77f1956c844ec44875f067557ac04b1278",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.download",
+          "source_sha256": "efb643920d4ed42ebd430307717d96352e256e15ffe0f004cba30282be4fdaa9",
+          "bytecode_sha256": "9a887e80a3e8779d14685403bba829957f4a8e00486d8c9cad89ea4d1ea0172b",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.extractors",
+          "source_sha256": "cb6e073b516312e95f4fcdc0f66efa9989f5e3b702e54e088c1a77460e09422a",
+          "bytecode_sha256": "ea0835da720681018d2eb790c478f118db45e14d43e1b2aa08ee4e0d0d3c1eec",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.files",
+          "source_sha256": "8ed901d02feff0f64fe61f08e6ee276d51226cf43cfbc2f465ea63544672519a",
+          "bytecode_sha256": "ae52ed3e4d4890d9fe506912cc024b337357c76db0c612eea79703ed882e6243",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.i18n",
+          "source_sha256": "4199af3e640dbad0a5348a83f42cdcc13a75304706edddcad5d863cbec6a0565",
+          "bytecode_sha256": "eb89f7a4b34c21aa3fb6023a5e5e98a9b41a0a29dc431a38404c398726465a8c",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.instagram",
+          "source_sha256": "95ae6c86496d7d0523a83043cb718cea1a8f495cd408fefc74faf1bace0f8eb9",
+          "bytecode_sha256": "ee7bc170ef4cc4795a9a466a053f682f3c14623a31adab46dd1485f73c0b69bc",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.media",
+          "source_sha256": "10e02cbe1f9b6603b99cd19473c19992ec389826b720887a170f438cb56b6a9c",
+          "bytecode_sha256": "da8fc92115f21b551acde97b200a631af06ba46fa8ac83ed94b9b5ed3327dc44",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.models",
+          "source_sha256": "d59386e26be8428dcc1f5170f7da045c468de4c79b604504df69cbbb44cf21cb",
+          "bytecode_sha256": "3022f126daa62944a3276cdc06c016270fa7c684e0373ed987d36ce34663a0f5",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.processes",
+          "source_sha256": "3781e89708338cb0dc0577669c59927f846ab67bd7206932ca1f1aa1a144ee6d",
+          "bytecode_sha256": "a2788ba1361fcc5cec3878d4c31b9c78274e5014988cc26bc5eff685a3dfd8e0",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.proxy",
+          "source_sha256": "567597053a16fdcfd5bbdb875db59fc6873f1dbfb077342a7ff3938975e154eb",
+          "bytecode_sha256": "1cee219f8f375017d0a67cfdf7611de3b37740cef79ae9e410a6a4ebc18f9045",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.security",
+          "source_sha256": "d982890ff00bbda70d316415cd677a6f975ff12cd32e5d8db390785cf6cf4b8e",
+          "bytecode_sha256": "f84735717a947c5a670e6faaad4e73d8da17bc527b2de253e695f67fed244897",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.ui",
+          "source_sha256": "f8b25f01b9eeedf6cbbec5c8e13450a466ae639668362798237dbb329bb5d2fb",
+          "bytecode_sha256": "8d248b1f0eb763f1488170e8c181819e4871693c1c4cab3122b6d3d67f24fe99",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.worker",
+          "source_sha256": "4edb534a906afaa6aab3cf0bc4e3aeb5a8ca2171f70334cfb560c33ca4338699",
+          "bytecode_sha256": "537b35280669bc161d83ea4aad6744b4f2a5450c63b20f1bfefbaa9bd0ae33b0",
+          "status": "PASS"
+        }
+      ]
+    },
+    "onefile": {
+      "status": "PASS",
+      "exe": "C:\\Users\\seki9\\Documents\\MediaHarvester\\dist\\validation-onefile\\MediaHarvester.exe",
+      "exe_sha256": "e718b741fdb8d3352b9e833ad72888ddb1657672266b986b455ef79b8be39bbc",
+      "modules": [
+        {
+          "module": "mediaharvester",
+          "source_sha256": "20c8e430ededc2143396e553a3c67aac4ec483ef54efdfcb18a31cb162ca0646",
+          "bytecode_sha256": "61af3c42bd3136c9d2851afb265dde6d15f981db75f1c116191ecf50593f654c",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.app",
+          "source_sha256": "19b718f683cd6534ea4843904cefe9f4231716f05b57a7124f045a4f3171971a",
+          "bytecode_sha256": "92d60683cf801f5e415b8739701d6c8b5aba03b52d56f4c9985a6be0b2f25f77",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.aria2",
+          "source_sha256": "0c3c564524a8ac198777ff9abc057e660f1310074b54152a012a26cda23a74d8",
+          "bytecode_sha256": "17da58324404d14cd4241a3054b7f9572a72c4b92f3ac3542aae418c5b38caa1",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.browser_cookies",
+          "source_sha256": "803d3fe5da6d975440a9d09dfe674f7a80d88a5e7aced16f1ae414ecbac23494",
+          "bytecode_sha256": "26f2917ee9fd9f879b404f2f1c92fadda31964c6c972fb27c205ced0755ec47a",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.config",
+          "source_sha256": "6946b9f67a1c5b624be7fef678595cbc5294aee33004833f2db9a30fead2a291",
+          "bytecode_sha256": "b1c538797ad88c76a5742342ffe8ea986f48b1d4e6d860b637717846e5907ebb",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.cookies",
+          "source_sha256": "af663ae14a23a456a25ff7459bd8360bab754b0eaa4fdbabab7635903b47f42a",
+          "bytecode_sha256": "836536816c49b21fff509c9aad72693102fac2622fc0549f3bcdb21c75c19d78",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.database",
+          "source_sha256": "30a82409f317e1162211a245d7cb8509aa911533ab555a3d6b3b5abac18b274c",
+          "bytecode_sha256": "753936d4210f1bbb6f8598dcb3514e77f1956c844ec44875f067557ac04b1278",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.download",
+          "source_sha256": "efb643920d4ed42ebd430307717d96352e256e15ffe0f004cba30282be4fdaa9",
+          "bytecode_sha256": "9a887e80a3e8779d14685403bba829957f4a8e00486d8c9cad89ea4d1ea0172b",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.extractors",
+          "source_sha256": "cb6e073b516312e95f4fcdc0f66efa9989f5e3b702e54e088c1a77460e09422a",
+          "bytecode_sha256": "ea0835da720681018d2eb790c478f118db45e14d43e1b2aa08ee4e0d0d3c1eec",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.files",
+          "source_sha256": "8ed901d02feff0f64fe61f08e6ee276d51226cf43cfbc2f465ea63544672519a",
+          "bytecode_sha256": "ae52ed3e4d4890d9fe506912cc024b337357c76db0c612eea79703ed882e6243",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.i18n",
+          "source_sha256": "4199af3e640dbad0a5348a83f42cdcc13a75304706edddcad5d863cbec6a0565",
+          "bytecode_sha256": "eb89f7a4b34c21aa3fb6023a5e5e98a9b41a0a29dc431a38404c398726465a8c",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.instagram",
+          "source_sha256": "95ae6c86496d7d0523a83043cb718cea1a8f495cd408fefc74faf1bace0f8eb9",
+          "bytecode_sha256": "ee7bc170ef4cc4795a9a466a053f682f3c14623a31adab46dd1485f73c0b69bc",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.media",
+          "source_sha256": "10e02cbe1f9b6603b99cd19473c19992ec389826b720887a170f438cb56b6a9c",
+          "bytecode_sha256": "da8fc92115f21b551acde97b200a631af06ba46fa8ac83ed94b9b5ed3327dc44",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.models",
+          "source_sha256": "d59386e26be8428dcc1f5170f7da045c468de4c79b604504df69cbbb44cf21cb",
+          "bytecode_sha256": "3022f126daa62944a3276cdc06c016270fa7c684e0373ed987d36ce34663a0f5",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.processes",
+          "source_sha256": "3781e89708338cb0dc0577669c59927f846ab67bd7206932ca1f1aa1a144ee6d",
+          "bytecode_sha256": "a2788ba1361fcc5cec3878d4c31b9c78274e5014988cc26bc5eff685a3dfd8e0",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.proxy",
+          "source_sha256": "567597053a16fdcfd5bbdb875db59fc6873f1dbfb077342a7ff3938975e154eb",
+          "bytecode_sha256": "1cee219f8f375017d0a67cfdf7611de3b37740cef79ae9e410a6a4ebc18f9045",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.security",
+          "source_sha256": "d982890ff00bbda70d316415cd677a6f975ff12cd32e5d8db390785cf6cf4b8e",
+          "bytecode_sha256": "f84735717a947c5a670e6faaad4e73d8da17bc527b2de253e695f67fed244897",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.ui",
+          "source_sha256": "f8b25f01b9eeedf6cbbec5c8e13450a466ae639668362798237dbb329bb5d2fb",
+          "bytecode_sha256": "8d248b1f0eb763f1488170e8c181819e4871693c1c4cab3122b6d3d67f24fe99",
+          "status": "PASS"
+        },
+        {
+          "module": "mediaharvester.worker",
+          "source_sha256": "4edb534a906afaa6aab3cf0bc4e3aeb5a8ca2171f70334cfb560c33ca4338699",
+          "bytecode_sha256": "537b35280669bc161d83ea4aad6744b4f2a5450c63b20f1bfefbaa9bd0ae33b0",
+          "status": "PASS"
+        }
+      ]
+    }
+  }
+}

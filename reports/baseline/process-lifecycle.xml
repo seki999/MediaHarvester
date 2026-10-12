@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.136" timestamp="2026-10-12T10:43:39.929003+09:00" hostname="GT12_Pro"><testcase classname="tests.integration.test_process_lifecycle" name="test_already_exited_child_does_not_fail_verification" time="0.074"><failure message="OSError: [Errno 5] 无法创建下载进程生命周期保护">@pytest.mark.skipif(os.name!='nt',reason='Windows Job Object lifecycle')
+    def test_already_exited_child_does_not_fail_verification():
+        proc=subprocess.Popen([sys.executable,'-c','pass'])
+        proc.wait(timeout=5)
+&gt;       attach_job(proc)
+
+tests\integration\test_process_lifecycle.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+process = &lt;Popen: returncode: 0 args: ['C:\\Users\\seki9\\Documents\\MediaHarvester\\....&gt;
+
+    def attach_job(process):
+        if os.name!='nt': return
+        class Basic(ctypes.Structure):
+            _fields_=[('PerProcessUserTimeLimit',ctypes.c_int64),('PerJobUserTimeLimit',ctypes.c_int64),
+                      ('LimitFlags',wintypes.DWORD),('MinimumWorkingSetSize',ctypes.c_size_t),
+                      ('MaximumWorkingSetSize',ctypes.c_size_t),('ActiveProcessLimit',wintypes.DWORD),
+                      ('Affinity',ctypes.c_size_t),('PriorityClass',wintypes.DWORD),('SchedulingClass',wintypes.DWORD)]
+        class IO(ctypes.Structure):
+            _fields_=[(n,ctypes.c_uint64) for n in ('ReadOperationCount','WriteOperationCount','OtherOperationCount','ReadTransferCount','WriteTransferCount','OtherTransferCount')]
+        class Extended(ctypes.Structure):
+            _fields_=[('BasicLimitInformation',Basic),('IoInfo',IO),('ProcessMemoryLimit',ctypes.c_size_t),
+                      ('JobMemoryLimit',ctypes.c_size_t),('PeakProcessMemoryUsed',ctypes.c_size_t),('PeakJobMemoryUsed',ctypes.c_size_t)]
+        kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+        kernel.CreateJobObjectW.argtypes=[ctypes.c_void_p,wintypes.LPCWSTR]; kernel.CreateJobObjectW.restype=wintypes.HANDLE
+        kernel.SetInformationJobObject.argtypes=[wintypes.HANDLE,ctypes.c_int,ctypes.c_void_p,wintypes.DWORD]
+        kernel.AssignProcessToJobObject.argtypes=[wintypes.HANDLE,wintypes.HANDLE]
+        kernel.CloseHandle.argtypes=[wintypes.HANDLE]
+        handle=kernel.CreateJobObjectW(None,None)
+        limits=Extended(); limits.BasicLimitInformation.LimitFlags=0x2000
+        if not handle or not kernel.SetInformationJobObject(handle,9,ctypes.byref(limits),ctypes.sizeof(limits)) or not kernel.AssignProcessToJobObject(handle,wintypes.HANDLE(int(process._handle))):
+            error=ctypes.get_last_error()
+            if handle: kernel.CloseHandle(handle)
+            process.kill(); process.wait()
+&gt;           raise OSError(error,'无法创建下载进程生命周期保护')
+E           OSError: [Errno 5] 无法创建下载进程生命周期保护
+
+mediaharvester\processes.py:29: OSError</failure></testcase></testsuite></testsuites>

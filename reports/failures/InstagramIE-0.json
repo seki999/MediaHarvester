@@ -1,0 +1,17 @@
+{
+  "id": "InstagramIE-0",
+  "site": "Instagram video",
+  "url": "https://instagram.com/p/aye83DjauH/?[REDACTED]",
+  "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+  "license": "",
+  "kind": "video",
+  "date": "2026-10-12T10:59:42.246029+09:00",
+  "stage": "download",
+  "extraction": "PASS",
+  "title": "Video by naomipq",
+  "duration": 0,
+  "formats": 4,
+  "status": "BLOCKED",
+  "reason": "仅完成提取；未确认下载授权，未下载",
+  "seconds": 4.298
+}
