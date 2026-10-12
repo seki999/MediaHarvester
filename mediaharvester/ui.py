@@ -181,7 +181,10 @@ class Window(QMainWindow):
         self.busy=False
         self.media=media; self.generation+=1
         self.populate_results()
-        self.analysis_status.setText(f'找到 {len(media)} 项媒体。'+ ('\n'+error if error else ''))
+        message=f'找到 {len(media)} 项媒体。' if media else '未找到可下载视频、音频或图片。'
+        if media and not any(item.kind=='video' for item in media):
+            message+=' 未找到可下载视频。'
+        self.analysis_status.setText(message+ ('\n'+error if error else ''))
         generation=self.generation
         for i,item in enumerate(media):
             if item.kind=='image' or item.thumbnail:
@@ -214,6 +217,10 @@ class Window(QMainWindow):
         self.thumbnail_cache[item.url]=(data,width,height,length)
         if item.kind=='image':
             item.width,item.height,item.size=width,height,length
+            if width==1 and height==1:
+                self.results.item(i,0).setCheckState(Qt.CheckState.Unchecked)
+                self.results.setRowHidden(i,True)
+                return
             self.results.item(i,3).setText(f'{width} × {height}')
             self.results.item(i,4).setText(f'{item.ext} / {size(length)}')
             gallery_item=QListWidgetItem(icon,item.title[:20]); gallery_item.setToolTip(item.url)
@@ -264,7 +271,7 @@ class Window(QMainWindow):
         for i,m in enumerate(self.media):
             hidden=(self.kind.currentIndex()>0 and self.kind.currentText()!=m.kind) or (self.extension.text().strip() and self.extension.text().strip().lower()!=m.ext.lower())
             if m.kind=='image':
-                hidden=hidden or m.width<self.min_width.value() or m.height<self.min_height.value() or m.size<self.min_size.value()*1024
+                hidden=hidden or (m.width==1 and m.height==1) or m.width<self.min_width.value() or m.height<self.min_height.value() or m.size<self.min_size.value()*1024
             hidden=hidden or (self.hide_duplicates.isChecked() and m.url in seen)
             seen.add(m.url); self.results.setRowHidden(i,bool(hidden))
     def select_results(self,selected):

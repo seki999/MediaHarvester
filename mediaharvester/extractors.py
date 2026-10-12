@@ -30,6 +30,8 @@ class HtmlImageExtractor:
         soup = BeautifulSoup(html, 'lxml')
         urls = []
         for tag in soup.select('img, picture source'):
+            if str(tag.get('width','')).strip() == '1' and str(tag.get('height','')).strip() == '1':
+                continue
             candidates = []
             for attr in ('srcset', 'data-srcset'):
                 for candidate in (tag.get(attr) or '').split(','):
