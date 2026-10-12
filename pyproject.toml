@@ -6,3 +6,4 @@ description = "Persistent Windows media downloader"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+markers = ["stress: bounded local large-file tests enabled explicitly with --stress"]

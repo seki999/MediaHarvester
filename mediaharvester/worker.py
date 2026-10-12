@@ -16,6 +16,21 @@ class QuietLogger:
     def warning(self, message, **kwargs): pass
     def error(self, message, **kwargs): pass
 
+def selected_entry(info, identity):
+    """Resolve exactly one previously selected leaf without downloading a playlist."""
+    pending=[info]; matches=[]; scanned=0
+    while pending and scanned<201:
+        entry=pending.pop(); scanned+=1
+        if not entry: continue
+        if entry.get('entries') is not None:
+            from itertools import islice
+            pending.extend(islice(entry['entries'],max(0,201-scanned)))
+        elif str(entry.get('id') or '')==identity:
+            matches.append(entry)
+    if pending or len(matches)!=1:
+        raise ValueError('媒体内容标识改变或不唯一，已停止续传')
+    return matches[0]
+
 def kill_tree(process):
     if os.name == 'nt':
         subprocess.run(['taskkill','/PID',str(process.pid),'/T','/F'], stdout=subprocess.DEVNULL,
@@ -100,7 +115,8 @@ def worker_main():
             with sync_playwright() as p:
                 browser=p.chromium.launch(headless=True,proxy=proxy.browser,
                                           args=['--disable-quic','--force-webrtc-ip-handling-policy=disable_non_proxied_udp'])
-                page=browser.new_page()
+                context=browser.new_context()
+                page=context.new_page()
                 requests=[0]
                 def route_request(route):
                     try:
@@ -116,6 +132,7 @@ def worker_main():
                     page.evaluate('window.scrollBy(0, window.innerHeight)')
                     page.wait_for_timeout(500)
                 payload={'html':page.content()}
+                context.close()
                 browser.close()
         else:
             import yt_dlp
@@ -166,8 +183,17 @@ def worker_main():
                     # Process raw photo metadata before yt-dlp's video-only
                     # format validation discards carousel photo entries.
                     info=InstagramMediaIE(ydl).extract(job['url'])
+                    # Raw Instagram photo metadata bypasses video-only validation,
+                    # but video entries still need yt-dlp's format ID normalization.
+                    if info.get('_type')=='playlist':
+                        info['entries']=[entry if not entry or entry.get('mh_image') else ydl.process_ie_result(entry,download=False)
+                                         for entry in info.get('entries',[])]
+                    elif not info.get('mh_image'):
+                        info=ydl.process_ie_result(info,download=False)
                 else:
                     info=ydl.extract_info(job['url'],download=False)
+                if job['action']=='download':
+                    info=selected_entry(info,job.get('identity',''))
                 if info.get('has_drm'):
                     raise ValueError('该媒体受 DRM 保护，不支持下载')
                 if job['action']=='download':

@@ -1,0 +1,5 @@
+[
+  {"id":"mdn-mp4","site":"MDN","url":"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4","kind":"video","download":true,"license":"CC0","source":"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video","max_bytes":20000000,"expected_audio":false},
+  {"id":"mdn-webm","site":"MDN","url":"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm","kind":"video","download":true,"license":"CC0","source":"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video","max_bytes":20000000,"expected_audio":false},
+  {"id":"commons-audio","site":"Wikimedia Commons","url":"https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg","kind":"audio","download":true,"license":"GFDL / CC BY-SA 3.0; JesseW","source":"https://commons.wikimedia.org/wiki/File:Example.ogg","max_bytes":1000000,"expected_audio":true}
+]

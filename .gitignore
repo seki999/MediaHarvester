@@ -5,3 +5,4 @@ build/
 dist/
 .dev-tools/
 *.log
+reports/baseline/preexisting.patch

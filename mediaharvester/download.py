@@ -3,6 +3,9 @@ import os
 import re
 import threading
 import time
+import httpx
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from PIL import Image
@@ -15,6 +18,29 @@ from .config import executable
 log=logging.getLogger(__name__)
 TERMINAL={State.COMPLETED,State.CANCELLED}
 
+def retry_policy(exc, delay):
+    """Stop on access limits/permanent errors; respect bounded server backoff."""
+    if not isinstance(exc,httpx.HTTPStatusError):
+        return not isinstance(exc,(ValueError,RuntimeError)),delay
+    code=exc.response.status_code
+    if code not in (408,425,500,502,503,504):
+        return False,delay
+    value=exc.response.headers.get('retry-after','')
+    if value:
+        try:
+            seconds=float(value)
+        except ValueError:
+            try:
+                date=parsedate_to_datetime(value)
+                if date.tzinfo is None: date=date.replace(tzinfo=timezone.utc)
+                seconds=(date-datetime.now(timezone.utc)).total_seconds()
+            except (ValueError,TypeError,OverflowError):
+                seconds=0
+        # Long backoff is left for manual retry instead of blocking a worker indefinitely.
+        if seconds>60: return False,delay
+        delay=max(delay,max(0,seconds))
+    return True,delay
+
 class HttpBackend:
     def download(self, task, temp, cancel, update, settings):
         part=temp/'payload.part'
@@ -22,6 +48,7 @@ class HttpBackend:
         headers={k:v for k,v in task.media.get('headers',{}).items()
                  if k.lower() in ('referer','user-agent')}
         validator=task.etag if task.etag and not task.etag.startswith('W/') else task.modified
+        strong_etag=bool(task.etag and not task.etag.startswith('W/'))
         if offset and validator:
             headers.update({'Range':f'bytes={offset}-','If-Range':validator})
         elif offset:
@@ -31,7 +58,7 @@ class HttpBackend:
             modified=r.headers.get('last-modified','')
             if r.status_code==416:
                 match=re.fullmatch(r'bytes \*/(\d+)',r.headers.get('content-range',''))
-                same=etag==task.etag if task.etag else modified==task.modified and bool(modified)
+                same=etag==task.etag if strong_etag else modified==task.modified and bool(modified)
                 if match and offset==int(match[1]) and same:
                     task.downloaded=task.total=offset
                     update()
@@ -42,9 +69,13 @@ class HttpBackend:
             r.raise_for_status()
             if r.status_code==206:
                 match=re.fullmatch(r'bytes (\d+)-(\d+)/(\d+)',r.headers.get('content-range',''))
-                if not match or int(match[1])!=offset or 'Range' not in headers:
+                if (not match or int(match[1])!=offset or 'Range' not in headers
+                        or not offset<=int(match[2])<int(match[3])):
                     raise OSError('服务器返回无效 Content-Range')
-                same=etag==task.etag if task.etag else modified==task.modified and bool(modified)
+                expected_length=int(match[2])-offset+1
+                if r.headers.get('content-length') and int(r.headers['content-length'])!=expected_length:
+                    raise OSError('服务器返回无效 Content-Range 长度')
+                same=etag==task.etag if strong_etag else modified==task.modified and bool(modified)
                 if not same:
                     task.etag=task.modified=''
                     part.unlink(missing_ok=True)
@@ -145,6 +176,7 @@ class DownloadManager:
                         final=Path(commit['path'])
                         if final.exists() and sha256(final)==commit['digest']:
                             task.final=str(final); task.digest=commit['digest']; task.state=State.COMPLETED
+                            task.downloaded=task.total=final.stat().st_size; task.speed=0
                             self.save(task); return
                     if task.selector and task.media.get('formats'):
                         task.engine='yt-dlp'
@@ -193,7 +225,11 @@ class DownloadManager:
                             name=str(Path(name).with_suffix('.'+extension))
                     elif task.media.get('ext')!='bin':
                         from .media import FFmpegManager
-                        FFmpegManager().verify(source,cancel,'audio' if task.audio else task.media['kind'])
+                        verifier=FFmpegManager()
+                        verifier.verify(source,cancel,'audio' if task.audio else task.media['kind'])
+                        selected=[f for f in task.media.get('formats',[]) if str(f.get('format_id')) in task.selector.split('+')]
+                        if not task.audio and task.media['kind']=='video' and any(f.get('acodec') not in (None,'none') for f in selected):
+                            verifier.verify(source,cancel,'audio')
                     if source.stat().st_size==0: raise ValueError('空文件')
                     task.digest=sha256(source,cancel)
                     # Deduplication and commit form one critical section: simultaneous
@@ -221,10 +257,11 @@ class DownloadManager:
                     task.error=re.sub(r'https?://\S+','[URL]',str(exc))[:800]
                     log.warning('Task %s: %s',task.id,task.error)
                     task.attempts+=1
-                    if isinstance(exc,(ValueError,RuntimeError)) or task.attempts>self.settings['retries']:
+                    retry,delay=retry_policy(exc,min(60,self.settings['retry_delay']*2**(task.attempts-1)))
+                    if not retry or task.attempts>self.settings['retries']:
                         task.state=State.FAILED; self.save(task); break
                     task.state=State.WAITING_RETRY; self.save(task)
-                    if cancel.wait(min(60,self.settings['retry_delay']*2**(task.attempts-1))):
+                    if cancel.wait(delay):
                         if task.state!=State.CANCELLED: task.state=State.PAUSED
                         self.save(task); break
         finally:

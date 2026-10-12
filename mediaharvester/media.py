@@ -47,7 +47,7 @@ class FFmpegManager:
             if proc.returncode: raise ValueError('FFprobe 媒体验证失败，文件不是有效媒体')
             streams=json.loads(stdout).get('streams',[])
             if not any(s.get('codec_type')==kind for s in streams):
-                raise ValueError('下载文件没有预期媒体轨道')
+                raise ValueError('下载文件没有预期'+('音频' if kind=='audio' else '视频')+'轨道')
         finally:
             if proc.poll() is None: kill_tree(proc)
             release_job(proc)

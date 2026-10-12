@@ -95,6 +95,9 @@ python -m pip install --upgrade yt-dlp
 ```
 
 测试结果与实际验证范围见 [验证记录](docs/validation.md)。
+可重复 offline / online / full / stress 模式、可控 HLS/DASH 和中文报告见
+[自动化测试说明](docs/automated-testing.md)。运行 `python scripts\run_full_tests.py`
+执行本地回归与限量线上 smoke；报告输出到 `reports/latest.html`、`.md`、`.json`。
 常见问题：合并失败检查 FFmpeg；缺少格式重新解析；Range 内容变化会重新下载；
 源站拒绝不要反复高速重试；深度解析缺少浏览器按上面安装；日志在应用数据目录。
 依赖升级需重跑续传、GUI、打包测试；`requirements-lock.txt` 记录本次验证版本。

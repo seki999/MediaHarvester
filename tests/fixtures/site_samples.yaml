@@ -1,0 +1,178 @@
+[
+  {
+    "id": "YoutubeIE-0",
+    "site": "YouTube",
+    "url": "https://www.youtube.com/watch?v=YE7VzlLtp-4",
+    "source": "https://www.youtube.com/watch?v=YE7VzlLtp-4",
+    "license": "CC BY; Blender Foundation",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "VimeoIE-0",
+    "site": "Vimeo",
+    "url": "https://vimeo.com/17466681",
+    "source": "https://vimeo.com/17466681",
+    "license": "CC BY; Blender Foundation",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "DailymotionIE-0",
+    "site": "Dailymotion",
+    "url": "https://www.dailymotion.com/video/x3rtcmg",
+    "source": "https://www.dailymotion.com/video/x3rtcmg",
+    "license": "CC BY; Blender Foundation film; metadata only",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "TwitchVodIE-0",
+    "site": "Twitch VOD",
+    "url": "http://www.twitch.tv/riotgames/v/6528877?t=5m10s",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "TwitchClipsIE-0",
+    "site": "Twitch Clips",
+    "url": "https://clips.twitch.tv/FaintLightGullWholeWheat",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "TikTokIE-0",
+    "site": "TikTok",
+    "url": "https://www.tiktok.com/@leenabhushan/video/6748451240264420610",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "InstagramIE-1",
+    "site": "Instagram Reels",
+    "url": "https://www.instagram.com/reel/Chunk8-jurw/",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "InstagramIE-0",
+    "site": "Instagram video",
+    "url": "https://instagram.com/p/aye83DjauH/?foo=bar#abc",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "FacebookIE-0",
+    "site": "Facebook Video",
+    "url": "https://www.facebook.com/radiokicksfm/videos/3676516585958356/",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "TwitterIE-0",
+    "site": "X / Twitter",
+    "url": "https://twitter.com/freethenipple/status/643211948184596480",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "BiliBiliIE-0",
+    "site": "Bilibili",
+    "url": "https://www.bilibili.com/video/BV15z4y1U7HS",
+    "source": "https://www.bilibili.com/video/BV15z4y1U7HS",
+    "license": "CC BY; Blender Foundation film; metadata only",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "NiconicoIE-0",
+    "site": "Niconico",
+    "url": "https://www.nicovideo.jp/watch/1173108780",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "ArchiveOrgIE-1",
+    "site": "Internet Archive",
+    "url": "https://archive.org/details/BigBuckBunny",
+    "source": "https://peach.blender.org/2008/05/big-buck-bunny-movie-files-released/",
+    "license": "CC BY; Blender Foundation",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "RedditIE-0",
+    "site": "Reddit",
+    "url": "https://www.reddit.com/r/videos/comments/6rrwyj/that_small_heart_attack/",
+    "source": "https://github.com/yt-dlp/yt-dlp/tree/master/yt_dlp/extractor",
+    "license": "",
+    "kind": "video",
+    "download": false,
+    "sample_status": "candidate; existence verified by actual run"
+  },
+  {
+    "id": "YouTube-Shorts",
+    "site": "YouTube Shorts",
+    "url": "",
+    "source": "No verified authorized URL found in this run",
+    "license": "",
+    "kind": "video",
+    "download": false
+  },
+  {
+    "id": "Instagram-single-image",
+    "site": "Instagram single image",
+    "url": "",
+    "source": "No verified authorized URL found in this run",
+    "license": "",
+    "kind": "image",
+    "download": false
+  },
+  {
+    "id": "Instagram-carousel",
+    "site": "Instagram carousel",
+    "url": "",
+    "source": "No verified authorized URL found in this run",
+    "license": "",
+    "kind": "image",
+    "download": false
+  },
+  {
+    "id": "Wikimedia-page",
+    "site": "Wikimedia Commons",
+    "url": "https://commons.wikimedia.org/wiki/File:Example.ogg",
+    "source": "https://commons.wikimedia.org/wiki/File:Example.ogg",
+    "license": "GFDL / CC BY-SA 3.0; JesseW",
+    "kind": "audio",
+    "download": false
+  }
+]

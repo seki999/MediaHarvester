@@ -5,6 +5,9 @@ from ctypes import wintypes
 
 def attach_job(process):
     if os.name!='nt': return
+    # Short-lived FFprobe can finish between Popen and Job Object assignment.
+    # An exited process has no remaining lifetime to protect.
+    if process.poll() is not None: return
     class Basic(ctypes.Structure):
         _fields_=[('PerProcessUserTimeLimit',ctypes.c_int64),('PerJobUserTimeLimit',ctypes.c_int64),
                   ('LimitFlags',wintypes.DWORD),('MinimumWorkingSetSize',ctypes.c_size_t),
@@ -25,6 +28,7 @@ def attach_job(process):
     if not handle or not kernel.SetInformationJobObject(handle,9,ctypes.byref(limits),ctypes.sizeof(limits)) or not kernel.AssignProcessToJobObject(handle,wintypes.HANDLE(int(process._handle))):
         error=ctypes.get_last_error()
         if handle: kernel.CloseHandle(handle)
+        if process.poll() is not None: return
         process.kill(); process.wait()
         raise OSError(error,'无法创建下载进程生命周期保护')
     process._mh_job=(kernel,handle)

@@ -1,5 +1,13 @@
 # 实际验证记录
 
+## 2026-10-12 自动化扩展与修复
+
+原有基线 70 项通过。新增可控 HTTP/HLS/DASH、认证、动态页面、完整性、并发、TLS 和故障测试后，最终完整回归 **208 PASS / 0 FAIL / 2 SKIPPED**（两个默认不执行的压力用例）；独立压力运行 11 项通过，包含 100 MB/1 GB 全文件 SHA-256。确认并修复 13 类问题，逐项有修复前失败和修复后回归证据。
+
+真实 Windows Qt 工作流通过；onedir/onefile 均构建、启动、实际提取和下载通过，4372373 字节 W3C 视频 SHA-256 一致，并检出视频、音频及 52.208333 秒。归档中全部项目模块字节码与当前源码比较通过。
+
+公网 MDN 两个完整下载通过；Wikimedia 两个直链被 403 阻止。其他平台区分信息提取、授权限制、样例失效和上游失败，没有把提取成功当成下载成功，尚未验证授权网站下载率 ≥90%。GitHub Actions 已定义但尚未在云端运行。完整范围、失败、命令与修复记录见 [HTML 报告](../reports/latest.html)、[Markdown](../reports/latest.md)、[JSON](../reports/latest.json) 和 [测试说明](automated-testing.md)。
+
 日期：2026-10-10；Windows 11 10.0.26200，Python 3.13.14，PySide6 6.8.3，
 yt-dlp 2026.8.19，PyInstaller 6.22.3，FFmpeg/FFprobe 9.0.1（WinGet Gyan），
 aria2 1.37.0 官方 Windows 64 位构建（仅开发测试用），Playwright 1.63.0。

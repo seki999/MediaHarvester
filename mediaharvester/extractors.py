@@ -2,11 +2,26 @@ import re
 import threading
 import time
 from pathlib import PurePosixPath
-from urllib.parse import urljoin, urlsplit, urldefrag
+from urllib.parse import urljoin, urlsplit, urldefrag, unquote
+from email.message import Message
 from bs4 import BeautifulSoup
 from .security import client, validate_url
 from .models import Media
 from .worker import run_job
+
+def sniff_mime(prefix):
+    """Recognize bounded file signatures only; this is not integrity verification."""
+    if prefix.startswith(b'\x89PNG\r\n\x1a\n'): return 'image/png'
+    if prefix.startswith(b'\xff\xd8\xff'): return 'image/jpeg'
+    if prefix.startswith((b'GIF87a',b'GIF89a')): return 'image/gif'
+    if prefix[:4]==b'RIFF' and prefix[8:12]==b'WEBP': return 'image/webp'
+    if prefix[4:8]==b'ftyp':
+        if prefix[8:12] in (b'avif',b'avis'): return 'image/avif'
+        return 'audio/mp4' if prefix[8:12] in (b'M4A ',b'M4B ') else 'video/mp4'
+    if prefix.startswith(b'OggS'):
+        return 'video/ogg' if b'theora' in prefix else 'audio/ogg'
+    if prefix.startswith(b'ID3'): return 'audio/mpeg'
+    return ''
 
 class HtmlImageExtractor:
     def can_handle(self, url):
@@ -56,7 +71,8 @@ class HtmlImageExtractor:
 
 def format_options(formats):
     choices = []
-    audios = [f for f in formats if f.get('acodec') not in (None,'none') and f.get('vcodec') == 'none']
+    audios = [f for f in formats if f.get('acodec') not in (None,'none') and f.get('vcodec') == 'none'
+              and not f.get('has_drm') and f.get('format_id')]
     for f in formats:
         if f.get('has_drm') or not f.get('format_id'):
             continue
@@ -111,9 +127,15 @@ class ExtractorRegistry:
     def __init__(self, settings):
         self.settings = settings
         self.plugins = [HtmlImageExtractor(), YtDlpExtractor(settings)]
-    def analyze(self, url, cancel=None, deep=False):
+    def analyze(self, url, cancel=None, deep=False, _context=None, _depth=0):
         cancel = cancel or threading.Event()
         validate_url(url)
+        context=_context if _context is not None else {'seen':set(),'started':time.monotonic()}
+        if cancel.is_set(): raise InterruptedError('解析已取消')
+        if _depth>3 or url in context['seen'] or len(context['seen'])>=20:
+            return []
+        if time.monotonic()-context['started']>30: raise TimeoutError('网页解析超过 30 秒')
+        context['seen'].add(url)
         if self.settings.get('cookie_file'):
             from .cookies import scoped_cookies
             try:
@@ -123,7 +145,7 @@ class ExtractorRegistry:
                 available=0
             if available:
                 return self.plugins[1].extract(url,cancel,self.settings['cookie_file'])
-        started=time.monotonic()
+        started=context['started']
         with client() as c, c.stream('GET', url) as response:
             if response.is_error:
                 # Some video sites reject ordinary HTML requests while their
@@ -131,10 +153,22 @@ class ExtractorRegistry:
                 return self.plugins[1].extract(url,cancel,self.settings.get('cookie_file',''))
             response.raise_for_status()
             mime = response.headers.get('content-type','').split(';')[0].lower()
+            if mime in ('','application/octet-stream','application/ogg','video/ogg','audio/ogg'):
+                prefix=next(response.iter_bytes(64*1024),b'')
+                mime=sniff_mime(prefix) or mime
             if mime.startswith(('image/','video/','audio/')) and 'mpegurl' not in mime:
                 kind = mime.split('/')[0]
                 ext = mime.split('/')[1].replace('jpeg','jpg')
+                ext={'quicktime':'mov','mpeg':'mp3','x-m4a':'m4a','x-wav':'wav','mp4':'m4a' if kind=='audio' else 'mp4'}.get(ext,ext)
                 title = PurePosixPath(urlsplit(str(response.url)).path).name or f'media.{ext}'
+                disposition=Message()
+                disposition['Content-Disposition']=response.headers.get('content-disposition','')
+                filename=disposition.get_filename()
+                from .files import safe_name
+                title=safe_name(filename or unquote(title))
+                suffix=PurePosixPath(title).suffix
+                if suffix.lower()!='.'+ext:
+                    title=(title[:-len(suffix)] if suffix else title)+'.'+ext
                 return [Media(str(response.url), url, title, kind, ext,
                               int(response.headers.get('content-length') or 0), source=urlsplit(url).hostname or '')]
             html = bytearray()
@@ -147,10 +181,24 @@ class ExtractorRegistry:
                     html.extend(chunk)
                     if len(html)>5*1024*1024:
                         raise ValueError('网页超过 5 MB 解析上限')
-        images = self.plugins[0].extract_html(html.decode('utf-8',errors='replace'), url, self.settings['max_images'],self.settings.get('prefer_original',True)) if html else []
+        page_html=html.decode('utf-8',errors='replace')
         if deep:
             rendered = run_job({'action':'dynamic','url':url}, cancel, timeout=45)
-            images = self.plugins[0].extract_html(rendered['html'], url, self.settings['max_images'],self.settings.get('prefer_original',True))
+            page_html=rendered['html']
+        images = self.plugins[0].extract_html(page_html, url, self.settings['max_images'],self.settings.get('prefer_original',True)) if page_html else []
+        soup=BeautifulSoup(page_html,'lxml')
+        native=[]
+        # Concrete HTML5 sources retain MIME detection, redirect guards and normal
+        # stream extraction, including sources inserted by the optional browser.
+        for tag in soup.select('video[src], audio[src], video source[src], audio source[src]'):
+            candidate=urljoin(url,tag['src'])
+            try: validate_url(candidate)
+            except ValueError: continue  # blob/private URLs cannot become direct downloads.
+            for item in self.analyze(candidate,cancel,_context=context,_depth=_depth+1):
+                if item.kind in ('video','audio'):
+                    item.page=url; item.headers['Referer']=url; native.append(item)
+        if native:
+            return list({(item.url,item.kind):item for item in native+images}.values())
         try:
             videos = self.plugins[1].extract(url,cancel)
         except InterruptedError:
@@ -159,6 +207,15 @@ class ExtractorRegistry:
             from .browser_cookies import login_error
             if login_error(str(exc)):
                 raise
+            frames=[]
+            if 'unsupported url' in str(exc).lower():
+                for tag in soup.select('iframe[src]'):
+                    candidate=urljoin(url,tag['src'])
+                    try: validate_url(candidate)
+                    except ValueError: continue
+                    frames.extend(self.analyze(candidate,cancel,_context=context,_depth=_depth+1))
+            if frames:
+                return list({(item.url,item.kind):item for item in frames+images}.values())
             if not images:
                 raise
             videos = []
