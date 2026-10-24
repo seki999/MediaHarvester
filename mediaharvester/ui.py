@@ -279,6 +279,7 @@ class Window(QMainWindow):
     def enqueue(self):
         selected=[i for i in range(len(self.media)) if not self.results.isRowHidden(i) and self.results.item(i,0).checkState()==Qt.CheckState.Checked]
         if not selected: self.analysis_status.setText('请勾选要下载的媒体'); return
+        added=[]
         for i in selected:
             item=self.media[i]; selector=self.results.cellWidget(i,5).currentData() or ''
             audio_widget=self.results.cellWidget(i,6)
@@ -290,8 +291,41 @@ class Window(QMainWindow):
                 media['kind']='audio'
             if audio: media['kind']='audio'
             if len(selected)==1 and self.custom_name.text().strip(): media['title']=self.custom_name.text().strip()
-            self.manager.add(media,selector,audio)
-        self.nav.setCurrentRow(4)
+            try:
+                self.manager.add(media,selector,audio)
+            except Exception:
+                log.exception('Could not add download task')
+                self.analysis_status.setText('部分媒体未能加入下载列表，请重试')
+                continue
+            added.append(i)
+        if added:
+            self.remove_enqueued_results(added)
+            self.nav.setCurrentRow(4)
+
+    def remove_enqueued_results(self,indices):
+        removed=set(indices)
+        remaining=[i for i in range(len(self.media)) if i not in removed]
+        new_indices={old:new for new,old in enumerate(remaining)}
+        # Invalidate thumbnail callbacks carrying the old row indices.
+        self.generation+=1
+        self.gallery.blockSignals(True)
+        try:
+            for row in range(self.gallery.count()-1,-1,-1):
+                item=self.gallery.item(row)
+                old=item.data(Qt.ItemDataRole.UserRole)
+                if old in removed:
+                    self.gallery.takeItem(row)
+                else:
+                    item.setData(Qt.ItemDataRole.UserRole,new_indices[old])
+            for row in sorted(removed,reverse=True):
+                self.results.removeRow(row)
+            self.media=[self.media[i] for i in remaining]
+        finally:
+            self.gallery.blockSignals(False)
+        self.filter_results()
+        for i,item in enumerate(self.media):
+            if item.url not in self.thumbnail_cache and (item.kind=='image' or item.thumbnail):
+                self.pool.submit(self.fetch_thumbnail,i,item,self.generation)
 
     def create_tasks(self):
         page=QWidget(); box=QVBoxLayout(page)
