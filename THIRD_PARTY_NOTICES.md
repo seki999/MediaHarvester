@@ -11,6 +11,9 @@ MediaHarvester source is MIT licensed. Bundled dependencies retain their license
 | lxml | BSD-3-Clause; libxml2/libxslt MIT | https://github.com/lxml/lxml |
 | Pillow | MIT-CMU | https://github.com/python-pillow/Pillow |
 | PyInstaller | GPL-2.0-or-later with distribution exception | https://github.com/pyinstaller/pyinstaller |
+| Playwright | Apache-2.0 | https://github.com/microsoft/playwright-python |
+| Chromium | BSD and third-party licenses | https://chromium.googlesource.com/chromium/src/ |
+| greenlet / pyee | MIT / PSF-2.0; MIT | https://github.com/python-greenlet/greenlet / https://github.com/jfhbrook/pyee |
 | aria2 (optional, not included) | GPL-2.0-or-later | https://github.com/aria2/aria2 |
 | FFmpeg (optional, not included) | LGPL/GPL depending on build | https://ffmpeg.org/ |
 

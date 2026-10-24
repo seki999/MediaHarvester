@@ -4,7 +4,7 @@ EN={
  '未知':'Unknown','等待 URL':'Enter URLs to begin','开始解析 URL':'Analyze URLs',
  '解析网页中的视频、音频和图片':'Find videos, audio and images on a web page',
  '输入网页地址，选择真实媒体格式，然后下载。\n任务、进度和临时文件会自动保存。':'Enter a page URL, select an available format, and download.\nTasks, progress and partial files are saved automatically.',
- '粘贴':'Paste','解析 / 重新解析':'Analyze / Refresh','清空':'Clear','取消解析':'Cancel analysis','深度解析（可选 Playwright）':'Deep analysis (optional Playwright)',
+ '粘贴':'Paste','解析 / 重新解析':'Analyze / Refresh','清空':'Clear','取消解析':'Cancel analysis','深度解析（动态网页）':'Deep analysis (dynamic pages)',
  '隐藏重复 URL':'Hide duplicate URLs','全选':'Select all','取消全选':'Clear selection','按分辨率排序':'Sort by resolution','下载选中媒体':'Download selected',
  '暂停':'Pause','继续 / 重试':'Resume / Retry','取消':'Cancel','删除记录':'Delete records','打开文件':'Open file','打开文件夹':'Open folder',
  '前往解析':'Go to analysis','视频格式在 URL 解析页选择；这里显示视频下载任务。':'Choose video formats on the analysis page. Video tasks appear here.',

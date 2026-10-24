@@ -14,7 +14,7 @@ Windows 11 媒体下载桌面程序，使用 PySide6、yt-dlp、httpx、SQLite�
 - 异步预览、缩略图展示、格式/宽高/大小筛选、全选、分辨率排序、批量下载。
 - 后台并发队列、限速、暂停/继续/取消/重试、完成/历史视图、系统托盘通知。
 - SQLite WAL + FULL、临时文件、HTTP Range 验证、提交日志、重启恢复、SHA-256 图片去重。
-- aria2 可选后端及原生控制文件，缺失时使用 httpx；深度解析可选 Playwright。
+- aria2 可选后端及原生控制文件，缺失时使用 httpx；深度解析使用 Playwright 执行网页脚本、滚动并发现动态媒体。
 - 设置持久化、深浅/系统主题、Windows 文件名处理、重名自动编号。
 - HTTP/DNS/重定向公网限制，外部引擎使用有认证的临时代理，不读取浏览器 Cookie。
 
@@ -45,12 +45,18 @@ python main.py
 可选深度解析：
 
 ```powershell
-python -m pip install playwright
+python -m pip install -r requirements-optional.txt
 python -m playwright install chromium
 ```
 
-Playwright 在源码运行时按需启动单个无头浏览器，20 秒导航、5 次滚动、45 秒总超时；
-无法绕过登录、CAPTCHA 或 DRM。本次 EXE 未包含 Playwright/Chromium，深度解析请使用源码版本。
+勾选 URL 解析页的“深度解析（动态网页）”后，按需启动一个隔离的无头浏览器：
+执行 JavaScript，滚动 5 次，解析动态图片、外部 CSS 背景、video/audio 实际地址，
+并捕获浏览器请求到的视频、音频及 HLS/DASH 清单。优先保留网站解析器的画质选择。
+导航超时 20 秒，浏览器任务总超时 45 秒；取消解析会结束浏览器进程。
+手动应用的网站 Cookie 可用于浏览器渲染；不会复制到任务元数据。
+无法绕过登录、CAPTCHA 或 DRM，也不支持只能通过 blob/MSE 获取且没有可用清单的媒体。
+新版构建脚本会安装并打包 Playwright/Chromium，EXE 用户无需另装 Python 或浏览器。
+旧 EXE 需要重新构建/下载新版；源码缺少浏览器时会显示安装提示。
 
 ```powershell
 python -m pip install -r requirements-build.txt
@@ -132,4 +138,4 @@ main.py / mediaharvester.spec / build_exe.ps1 / build_exe.bat
 
 ### 在界面直接粘贴 Cookie
 
-URL 解析页的地址框下面新增“登录 Cookie（需要时粘贴）”。先输入同一网站的地址，把开发者工具 Network 请求头中整行 Cookie 的值粘贴到隐藏输入框，点击“应用 Cookie”，再重新解析。可带 Cookie: 前缀；不能只粘贴单个值、整个请求头块或 JSON。程序自动转换并仅保存在当前 Windows 用户的本地应用目录，记住路径，应用后清空输入框。不同网站分别应用，保留各站登录态；Instagram 同域媒体 API 可使用该会话。点击“停用 Cookie”可停止使用手动 Cookie（自动浏览器读取仍按设置运行）。当前 EXE 禁用未包含的 Playwright 深度解析选项。
+URL 解析页的地址框下面新增“登录 Cookie（需要时粘贴）”。先输入同一网站的地址，把开发者工具 Network 请求头中整行 Cookie 的值粘贴到隐藏输入框，点击“应用 Cookie”，再重新解析。可带 Cookie: 前缀；不能只粘贴单个值、整个请求头块或 JSON。程序自动转换并仅保存在当前 Windows 用户的本地应用目录，记住路径，应用后清空输入框。不同网站分别应用，保留各站登录态；Instagram 同域媒体 API 可使用该会话。点击“停用 Cookie”可停止使用手动 Cookie（自动浏览器读取仍按设置运行）。

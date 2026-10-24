@@ -6,7 +6,8 @@ import shutil
 root=Path(__file__).resolve().parents[1]
 output=root/'licenses'; output.mkdir(exist_ok=True)
 packages=['PySide6','PySide6_Essentials','PySide6_Addons','shiboken6','yt-dlp','httpx','httpcore',
-          'beautifulsoup4','lxml','Pillow','certifi','idna','h11','anyio','soupsieve','typing_extensions','curl_cffi','cffi','pycparser']
+          'beautifulsoup4','lxml','Pillow','certifi','idna','h11','anyio','soupsieve','typing_extensions','curl_cffi','cffi','pycparser',
+          'playwright','greenlet','pyee']
 versions=[]
 for package in packages:
     try: dist=distribution(package)

@@ -155,7 +155,7 @@ class DownloadManager:
                             for key in ('state','downloaded','total','speed','phase'):
                                 if key in data: setattr(task,key,data[key])
                             self.save(task)
-                        result=run_job(dict(action='download',url=task.media['url'],selector=task.selector,
+                        result=run_job(dict(action='download',url=task.media['url'],selector=task.selector,referer=task.media.get('headers',{}).get('Referer',''),
                                             identity=task.media['identity'],temp=str(temp),audio=task.audio,
                                             rate=self.settings['rate'],subtitles=self.settings['subtitles'],
                                             thumbnail=self.settings['thumbnail'],cookie_file=self.settings.get('cookie_file',''),browser_cookie=task.media.get('auth',{}),auto_browser_cookies=self.settings.get('auto_browser_cookies',False),cookie_browser=self.settings.get('cookie_browser','auto'),container=self._container(task)),cancel,progress,timeout=0)

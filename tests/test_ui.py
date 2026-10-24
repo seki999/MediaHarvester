@@ -15,7 +15,10 @@ def test_enqueue_removes_only_successful_results(tmp_path,monkeypatch,fail_image
     app=QApplication.instance() or QApplication([])
     settings=Settings(tmp_path/'settings.json')
     repo=Repository(tmp_path/'db'); manager=DownloadManager(repo,settings.values)
+    monkeypatch.setattr('sys.frozen',True,raising=False)
     window=Window(manager,settings)
+    assert window.deep.isEnabled()
+    assert window.deep.text()=='深度解析（动态网页）'
     monkeypatch.setattr(window,'fetch_thumbnail',lambda *args:None)
     video=Media('https://example.com/v.mp4','','Video','video','mp4')
     image=Media('https://example.com/i.png','','Image','image','png')

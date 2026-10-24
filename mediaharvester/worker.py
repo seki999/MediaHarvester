@@ -1,6 +1,7 @@
 """Isolated yt-dlp/browser process. Cancellation terminates its complete process tree."""
 import json
 import os
+import signal
 import subprocess
 import sys
 import tempfile
@@ -21,7 +22,7 @@ def kill_tree(process):
         subprocess.run(['taskkill','/PID',str(process.pid),'/T','/F'], stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, creationflags=subprocess.CREATE_NO_WINDOW)
     else:
-        process.kill()
+        os.killpg(process.pid,signal.SIGKILL)
     process.wait()
 
 def run_job(job, cancel, progress=None, timeout=180):
@@ -61,7 +62,7 @@ def _run_job(job, cancel, progress=None, timeout=180):
         args = [sys.executable, '--worker'] if getattr(sys,'frozen',False) else [sys.executable,'-m','mediaharvester.worker']
         flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
         proc = subprocess.Popen(args + [str(request),str(result),str(events)], stdout=subprocess.DEVNULL,
-                                stderr=subprocess.DEVNULL, creationflags=flags)
+                                stderr=subprocess.DEVNULL, creationflags=flags,start_new_session=os.name!='nt')
         attach_job(proc)
         start, offset = time.monotonic(), 0
         try:
@@ -96,27 +97,8 @@ def worker_main():
     try:
         validate_url(job['url'])
         if job['action']=='dynamic':
-            from playwright.sync_api import sync_playwright
-            with sync_playwright() as p:
-                browser=p.chromium.launch(headless=True,proxy=proxy.browser,
-                                          args=['--disable-quic','--force-webrtc-ip-handling-policy=disable_non_proxied_udp'])
-                page=browser.new_page()
-                requests=[0]
-                def route_request(route):
-                    try:
-                        requests[0]+=1
-                        if requests[0]>1000: route.abort(); return
-                        validate_url(route.request.url)
-                        route.continue_()
-                    except Exception:
-                        route.abort()
-                page.route('**/*',route_request)
-                page.goto(job['url'],timeout=20000,wait_until='domcontentloaded')
-                for _ in range(5):
-                    page.evaluate('window.scrollBy(0, window.innerHeight)')
-                    page.wait_for_timeout(500)
-                payload={'html':page.content()}
-                browser.close()
+            from .dynamic import render_page
+            payload=render_page(job,proxy)
         else:
             import yt_dlp
             from yt_dlp.networking.impersonate import ImpersonateTarget
@@ -138,6 +120,8 @@ def worker_main():
                       hls_prefer_native=True,http_headers={'User-Agent':'MediaHarvester/0.1'},
                       postprocessor_args={'ffmpeg_i':['-protocol_whitelist','file,pipe',
                           '-format_whitelist','mov,matroska,webm,ogg,mp3,flac,wav,mpegts,aac']})
+            if job.get('referer'):
+                opts['http_headers']['Referer']=validate_url(job['referer'])
             if job.get('browser_cookie') or job.get('cookie_file'):
                 from .cookies import scoped_cookies
                 if job.get('browser_cookie'):

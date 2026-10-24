@@ -95,10 +95,8 @@ class Window(QMainWindow):
         row=QHBoxLayout()
         for label,callback in [('粘贴',self.paste),('解析 / 重新解析',self.analyze),('清空',self.urls.clear),('取消解析',self.cancel_analysis.set)]:
             b=QPushButton(label); b.clicked.connect(callback); row.addWidget(b)
-        self.deep=QCheckBox('深度解析（可选 Playwright）'); row.addWidget(self.deep); box.addLayout(row)
-        import sys
-        if getattr(sys,'frozen',False):
-            self.deep.setEnabled(False); self.deep.setText('深度解析（此版本未安装）')
+        self.deep=QCheckBox('深度解析（动态网页）'); row.addWidget(self.deep); box.addLayout(row)
+        self.deep.setToolTip('启动浏览器执行网页脚本并滚动，查找动态图片、视频和音频。耗时较长；不绕过登录、验证码或 DRM。')
         self.analysis_status=QLabel('等待 URL'); self.analysis_status.setWordWrap(True); box.addWidget(self.analysis_status)
         filters=QHBoxLayout()
         self.kind=QComboBox(); self.kind.addItems(['全部','video','image','audio']); filters.addWidget(self.kind)

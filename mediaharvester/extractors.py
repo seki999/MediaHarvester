@@ -82,8 +82,8 @@ class YtDlpExtractor:
         self.settings=settings or {}
     def can_handle(self, url):
         return urlsplit(url).scheme in ('http','https')
-    def extract(self, url, cancel, cookie_file=''):
-        info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
+    def extract(self, url, cancel, cookie_file='',referer=''):
+        info = run_job({'action':'extract','url':url,'cookie_file':cookie_file,'referer':referer,'auto_browser_cookies':self.settings.get('auto_browser_cookies',False),'cookie_browser':self.settings.get('cookie_browser','auto')}, cancel)
         results = []
         for index,entry in enumerate(info.get('entries', [info]),1):
             if not entry:
@@ -114,6 +114,8 @@ class ExtractorRegistry:
     def analyze(self, url, cancel=None, deep=False):
         cancel = cancel or threading.Event()
         validate_url(url)
+        if deep:
+            return self.analyze_dynamic(url,cancel)
         if self.settings.get('cookie_file'):
             from .cookies import scoped_cookies
             try:
@@ -148,9 +150,6 @@ class ExtractorRegistry:
                     if len(html)>5*1024*1024:
                         raise ValueError('网页超过 5 MB 解析上限')
         images = self.plugins[0].extract_html(html.decode('utf-8',errors='replace'), url, self.settings['max_images'],self.settings.get('prefer_original',True)) if html else []
-        if deep:
-            rendered = run_job({'action':'dynamic','url':url}, cancel, timeout=45)
-            images = self.plugins[0].extract_html(rendered['html'], url, self.settings['max_images'],self.settings.get('prefer_original',True))
         try:
             videos = self.plugins[1].extract(url,cancel)
         except InterruptedError:
@@ -163,3 +162,54 @@ class ExtractorRegistry:
                 raise
             videos = []
         return videos + images
+
+    def analyze_dynamic(self,url,cancel):
+        rendered=run_job({'action':'dynamic','url':url,'cookie_file':self.settings.get('cookie_file','')},cancel,timeout=45)
+        if cancel.is_set(): raise InterruptedError('解析已取消')
+        page=rendered['url']; base=rendered.get('base',page)
+        limit=self.settings.get('max_images',200)
+        images=self.plugins[0].extract_html(rendered['html'],base,limit,self.settings.get('prefer_original',True))
+        for image in images:
+            image.page=page; image.headers={'Referer':page}
+        # Prefer the site's metadata/formats when its extractor supports the page.
+        try:
+            videos=self.plugins[1].extract(url,cancel,self.settings.get('cookie_file',''))
+        except InterruptedError:
+            raise
+        except Exception:
+            videos=[]
+        seen={item.url for item in videos+images}
+        streams=0
+        for source in rendered.get('media',[]):
+            if cancel.is_set(): raise InterruptedError('解析已取消')
+            candidate=source['url']
+            try: validate_url(candidate)
+            except ValueError: continue
+            if candidate in seen: continue
+            seen.add(candidate)
+            kind=source['kind']
+            if kind=='image' and len(images)>=limit: continue
+            if kind=='stream':
+                # Site extractors already supply adaptive formats; avoid listing
+                # each manifest/variant as another copy of the same video.
+                if videos or streams>=3: continue
+                streams+=1
+                try:
+                    extracted=self.plugins[1].extract(candidate,cancel,self.settings.get('cookie_file',''),page)
+                    for item in extracted:
+                        item.page=page; item.headers={'Referer':page}
+                    videos.extend(extracted)
+                except InterruptedError:
+                    raise
+                except Exception:
+                    continue
+            elif kind in ('image','video','audio'):
+                name=PurePosixPath(urlsplit(candidate).path).name or rendered.get('title') or kind
+                ext=PurePosixPath(urlsplit(candidate).path).suffix.lstrip('.').lower()
+                mime=source.get('mime','')
+                if not ext and '/' in mime: ext=mime.split('/')[1].replace('jpeg','jpg')
+                item=Media(candidate,page,name,kind,ext,source=urlsplit(page).hostname or '',headers={'Referer':page})
+                (images if kind=='image' else videos).append(item)
+        if not videos and not images:
+            raise ValueError('深度解析未发现可下载媒体。请确认页面已公开可访问；需要登录时先应用该网站 Cookie。')
+        return videos+images

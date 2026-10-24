@@ -1,10 +1,35 @@
 import threading
+import os
+import signal
+import subprocess
+import sys
+from pathlib import Path
+import pytest
 from dataclasses import asdict
 from mediaharvester.models import Media,State
 from mediaharvester.database import Repository
 from mediaharvester.config import Settings
 from mediaharvester.download import DownloadManager
 from test_core import FORMATS,wait_for
+
+
+@pytest.mark.skipif(not sys.platform.startswith('linux'),reason='Linux process-group regression; Windows uses job objects')
+def test_worker_kill_terminates_browser_children():
+    from mediaharvester.worker import kill_tree
+    code='import subprocess,sys,time; p=subprocess.Popen([sys.executable,"-c","import time; time.sleep(60)"]); print(p.pid,flush=True); time.sleep(60)'
+    process=subprocess.Popen([sys.executable,'-c',code],start_new_session=True,stdout=subprocess.PIPE,text=True)
+    try:
+        child=int(process.stdout.readline())
+        kill_tree(process)
+        assert process.returncode==-signal.SIGKILL
+        def child_stopped():
+            path=Path(f'/proc/{child}/stat')
+            return not path.exists() or path.read_text().split()[2]=='Z'
+        wait_for(child_stopped)
+    finally:
+        if process.poll() is None:
+            os.killpg(process.pid,signal.SIGKILL); process.wait()
+        process.stdout.close()
 
 def test_cancel_survives_late_backend_progress(tmp_path,monkeypatch):
     entered=threading.Event()
