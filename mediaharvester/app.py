@@ -12,6 +12,12 @@ def main():
     logging.basicConfig(level=logging.WARNING,handlers=[handler],format='%(asctime)s %(levelname)s %(name)s %(message)s')
     app=QApplication(sys.argv)
     app.setApplicationName('MediaHarvester'); app.setOrganizationName('MediaHarvester')
+    from pathlib import Path
+    from PySide6.QtGui import QIcon
+    if sys.platform == 'win32':
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('MediaHarvester.Desktop')
+    app.setWindowIcon(QIcon(str(Path(__file__).parent/'assets'/'app.ico')))
     from PySide6.QtCore import QLockFile
     from PySide6.QtWidgets import QMessageBox
     lock=QLockFile(str(DATA/'app.lock'))

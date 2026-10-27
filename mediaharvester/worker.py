@@ -173,30 +173,29 @@ def worker_main():
                     proof=[]
                     for format_id in job['selector'].split('+'):
                         f=next((f for f in info.get('formats',[]) if str(f.get('format_id'))==format_id),None)
-                        if not f or f.get('protocol') not in ('http','https'):
-                            proof=[]; break
+                        if not f:
+                            raise ValueError('所选媒体格式已不存在，已停止续传')
+                        if f.get('protocol') in ('m3u8','m3u8_native'):
+                            proof.append(dict(id=format_id,mode='hls-native',
+                                              **{k:f.get(k) for k in ('vcodec','acodec','ext','width','height')},
+                                              duration=info.get('duration')))
+                            continue
+                        if f.get('protocol') not in ('http','https'):
+                            proof.append({'id':format_id,'mode':'restart'}); continue
                         try:
                             with client() as c:
                                 r=c.head(f['url']); r.raise_for_status()
                             etag=r.headers.get('etag','')
                             length=int(r.headers.get('content-length') or 0)
                             if not etag or etag.startswith('W/') or not length:
-                                proof=[]; break
+                                proof.append({'id':format_id,'mode':'restart'}); continue
                             proof.append({'id':format_id,'etag':etag,'length':length,
                                           'vcodec':f.get('vcodec'),'acodec':f.get('acodec'),'ext':f.get('ext')})
                         except Exception:
-                            proof=[]; break
-                    proof_path=temp/'resume-proof.json'
-                    old=json.loads(proof_path.read_text('utf-8')) if proof_path.exists() else None
-                    if not proof or old!={'identity':job['identity'],'formats':proof}:
-                        old_files=[p for p in temp.glob('media*') if p.is_file()]
-                        if old_files:
-                            archived=temp/'previous'/str(time.time_ns()); archived.mkdir(parents=True)
-                            for item in old_files: item.rename(archived/item.name)
-                            emit({'state':'DOWNLOADING','downloaded':0,'total':0,'speed':0})
-                    with proof_path.open('w',encoding='utf-8') as proof_file:
-                        json.dump({'identity':job['identity'],'formats':proof},proof_file)
-                        proof_file.flush(); os.fsync(proof_file.fileno())
+                            proof.append({'id':format_id,'mode':'restart'})
+                    from .resume import prepare_resume
+                    if prepare_resume(temp,job['identity'],proof,'+' in job['selector']):
+                        emit({'state':'DOWNLOADING','downloaded':0,'total':0,'speed':0})
                     ydl.process_ie_result(info, download=True)
                     paths=[str(p) for p in temp.glob('media.*') if p.suffix in ('.mp4','.webm','.mkv','.m4a','.mp3','.opus','.ogg','.flac','.wav')]
                     payload={'files':paths}

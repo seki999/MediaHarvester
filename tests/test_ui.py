@@ -77,3 +77,44 @@ def test_gui_workflow(tmp_path,monkeypatch):
     QTimer.singleShot(5000,app.quit)
     app.exec()
     assert window.closed
+
+
+def test_bulk_selection_and_copy_task_urls(tmp_path,monkeypatch):
+    from mediaharvester.models import Task,State
+    from PySide6.QtCore import QItemSelectionModel
+    monkeypatch.setenv('QT_QPA_PLATFORM','offscreen')
+    app=QApplication.instance() or QApplication([])
+    settings=Settings(tmp_path/'settings.json')
+    repo=Repository(tmp_path/'db'); manager=DownloadManager(repo,settings.values)
+    window=Window(manager,settings)
+    try:
+        window.media=[Media(f'https://example.com/{i}.mp4','','Video','video','mp4') for i in range(100)]
+        window.media.append(Media('https://example.com/image.png','','Image','image','png'))
+        window.populate_results()
+        window.kind.setCurrentText('video')
+        window.select_all.click()
+        assert all(window.results.item(i,0).checkState()==Qt.CheckState.Checked for i in range(100))
+        assert window.results.item(100,0).checkState()==Qt.CheckState.Unchecked
+        assert window.selection_count.text()=='已选 100 / 100 项'
+        window.results.item(20,0).setCheckState(Qt.CheckState.Unchecked)
+        assert window.select_all.checkState()==Qt.CheckState.PartiallyChecked
+        window.select_all.click()
+        assert window.results.item(20,0).checkState()==Qt.CheckState.Checked
+        window.select_all.click()
+        assert all(window.results.item(i,0).checkState()==Qt.CheckState.Unchecked for i in range(100))
+        for i,page in enumerate(['https://example.com/watch','https://example.com/watch','']):
+            task=Task(asdict(Media(f'https://example.com/{i}.mp4',page,'Video','video','mp4')),str(tmp_path),state=State.PAUSED)
+            manager.tasks[task.id]=task; repo.save(task)
+        window.nav.setCurrentRow(4); window.refresh()
+        for row in range(3):
+            window.tasks.selectionModel().select(window.tasks.model().index(row,0),QItemSelectionModel.SelectionFlag.Select|QItemSelectionModel.SelectionFlag.Rows)
+        window.task_action('copy_url')
+        assert app.clipboard().text()=='https://example.com/watch\nhttps://example.com/2.mp4'
+        window.tasks.clearSelection()
+        window.task_action('copy_url')
+        assert app.clipboard().text()=='https://example.com/watch\nhttps://example.com/2.mp4'
+    finally:
+        window.close()
+        QTimer.singleShot(5000,app.quit)
+        app.exec()
+        assert window.closed

@@ -11,6 +11,7 @@ if not browser_path.is_dir() or not any(browser_path.glob('chromium-*')):
     raise RuntimeError('Install Chromium with build_exe.ps1 before building the EXE')
 datas.append((str(browser_path),'ms-playwright'))
 datas += [(str(root/'mediaharvester'/'i18n'),'mediaharvester/i18n'),(str(root/'THIRD_PARTY_NOTICES.md'),'.')]
+datas.append((str(root/'mediaharvester'/'assets'),'mediaharvester/assets'))
 if (root/'licenses').exists(): datas.append((str(root/'licenses'),'licenses'))
 # Tools are optional and must have their redistribution notices/sources supplied.
 tools=root/'tools'
@@ -21,7 +22,7 @@ a=Analysis(['main.py'],pathex=[str(root)],binaries=binaries,datas=datas,hiddenim
            excludes=['PySide6.QtWebEngineCore','PySide6.QtWebEngineWidgets','PySide6.QtWebEngineQuick','PySide6.QtPdf','PySide6.QtPdfWidgets','pytest','__main__'])
 pyz=PYZ(a.pure)
 if onefile:
-    exe=EXE(pyz,a.scripts,a.binaries,a.datas,[],name='MediaHarvester',console=False)
+    exe=EXE(pyz,a.scripts,a.binaries,a.datas,[],name='MediaHarvester',console=False,icon=str(root/'mediaharvester'/'assets'/'app.ico'))
 else:
-    exe=EXE(pyz,a.scripts,[],exclude_binaries=True,name='MediaHarvester',console=False)
+    exe=EXE(pyz,a.scripts,[],exclude_binaries=True,name='MediaHarvester',console=False,icon=str(root/'mediaharvester'/'assets'/'app.ico'))
     coll=COLLECT(exe,a.binaries,a.datas,name='MediaHarvester')

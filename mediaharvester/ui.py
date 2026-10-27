@@ -107,6 +107,13 @@ class Window(QMainWindow):
         self.min_size=QSpinBox(); self.min_size.setRange(0,1000000); self.min_size.setSuffix(' KB ≥'); filters.addWidget(self.min_size)
         self.hide_duplicates=QCheckBox('隐藏重复 URL'); self.hide_duplicates.setChecked(True); filters.addWidget(self.hide_duplicates)
         box.addLayout(filters)
+        selection=QHBoxLayout()
+        self.select_all=QCheckBox('全选当前结果')
+        self.select_all.setToolTip('一次勾选所有筛选后可见的媒体，包括列表下方尚未滚动到的内容')
+        self.select_all.clicked.connect(self.select_results)
+        selection.addWidget(self.select_all)
+        self.selection_count=QLabel('已选 0 / 0 项'); selection.addWidget(self.selection_count)
+        selection.addStretch(); box.addLayout(selection)
         self.results=QTableWidget(0,8)
         self.results.setHorizontalHeaderLabels(['选择 / 预览','类型','标题 / 来源','尺寸 / 时长','格式 / 大小','画质 / 格式选择','音频输出','原始地址'])
         self.results.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
@@ -116,6 +123,7 @@ class Window(QMainWindow):
         self.gallery.setIconSize(QSize(90,65)); self.gallery.setMaximumHeight(125)
         self.gallery.setResizeMode(QListWidget.ResizeMode.Adjust); box.addWidget(self.gallery)
         self.gallery.itemChanged.connect(self.gallery_changed)
+        self.results.itemChanged.connect(self.result_selection_changed)
         actions=QHBoxLayout()
         for label,callback in [('全选',lambda:self.select_results(True)),('取消全选',lambda:self.select_results(False)),
                                ('按分辨率排序',self.sort_results),('下载选中媒体',self.enqueue)]:
@@ -265,12 +273,34 @@ class Window(QMainWindow):
                 hidden=hidden or m.width<self.min_width.value() or m.height<self.min_height.value() or m.size<self.min_size.value()*1024
             hidden=hidden or (self.hide_duplicates.isChecked() and m.url in seen)
             seen.add(m.url); self.results.setRowHidden(i,bool(hidden))
+        self.update_selection_count()
+    def update_selection_count(self):
+        rows=[i for i in range(self.results.rowCount()) if not self.results.isRowHidden(i) and self.results.item(i,0)]
+        selected=sum(self.results.item(i,0).checkState()==Qt.CheckState.Checked for i in rows)
+        self.select_all.blockSignals(True)
+        self.select_all.setCheckState(Qt.CheckState.Checked if rows and selected==len(rows) else
+                                     Qt.CheckState.PartiallyChecked if selected else Qt.CheckState.Unchecked)
+        self.select_all.blockSignals(False)
+        self.selection_count.setText(f'已选 {selected} / {len(rows)} 项')
+    def result_selection_changed(self,cell):
+        if cell.column()!=0: return
+        self.gallery.blockSignals(True)
+        for i in range(self.gallery.count()):
+            item=self.gallery.item(i)
+            if item.data(Qt.ItemDataRole.UserRole)==cell.row(): item.setCheckState(cell.checkState())
+        self.gallery.blockSignals(False)
+        self.update_selection_count()
     def select_results(self,selected):
+        self.results.blockSignals(True)
         for i in range(len(self.media)):
             if not self.results.isRowHidden(i): self.results.item(i,0).setCheckState(Qt.CheckState.Checked if selected else Qt.CheckState.Unchecked)
+        self.results.blockSignals(False)
+        self.gallery.blockSignals(True)
         for i in range(self.gallery.count()):
             item=self.gallery.item(i); index=item.data(Qt.ItemDataRole.UserRole)
             item.setCheckState(self.results.item(index,0).checkState())
+        self.gallery.blockSignals(False)
+        self.update_selection_count()
     def sort_results(self):
         self.media.sort(key=lambda m:m.width*m.height,reverse=True)
         self.generation+=1; self.populate_results()
@@ -329,7 +359,7 @@ class Window(QMainWindow):
         page=QWidget(); box=QVBoxLayout(page)
         self.task_title=QLabel('下载任务'); self.task_title.setStyleSheet('font-size:22px'); box.addWidget(self.task_title)
         actions=QHBoxLayout()
-        for text,action in [('暂停','pause'),('继续 / 重试','resume'),('取消','cancel'),('删除记录','delete'),('打开文件','file'),('打开文件夹','folder')]:
+        for text,action in [('暂停','pause'),('继续 / 重试','resume'),('取消','cancel'),('删除记录','delete'),('复制 URL','copy_url'),('打开文件','file'),('打开文件夹','folder')]:
             button=QPushButton(text); button.clicked.connect(lambda checked=False,a=action:self.task_action(a)); actions.addWidget(button)
         box.addLayout(actions)
         self.tasks=QTableWidget(0,9); self.tasks.setHorizontalHeaderLabels(['文件','类型 / 引擎','状态','进度','已下载 / 总量','速度','剩余时间','错误信息','ID'])
@@ -344,7 +374,18 @@ class Window(QMainWindow):
             self.task_title.setText(NAV[index]); self.refresh()
         else: self.stack.setCurrentIndex(index)
     def task_action(self,action):
-        ids=[self.tasks.item(index.row(),8).text() for index in self.tasks.selectionModel().selectedRows()]
+        ids=[self.tasks.item(index.row(),8).text() for index in sorted(self.tasks.selectionModel().selectedRows(),key=lambda index:index.row())]
+        if action=='copy_url':
+            from PySide6.QtWidgets import QApplication
+            urls=[]
+            for id in ids:
+                task=self.manager.tasks.get(id)
+                if task:
+                    url=task.media.get('page') or task.media.get('url','')
+                    if url and url not in urls: urls.append(url)
+            if urls: QApplication.clipboard().setText('\n'.join(urls))
+            self.statusBar().showMessage(f'已复制 {len(urls)} 个 URL' if urls else '请先选中需要复制 URL 的任务',5000)
+            return
         for id in ids:
             task=self.manager.tasks.get(id)
             if not task: continue
